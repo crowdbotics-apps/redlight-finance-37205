@@ -218,6 +218,9 @@ EMAIL_HOST_USER = env.str("SENDGRID_USERNAME", "")
 EMAIL_HOST_PASSWORD = env.str("SENDGRID_PASSWORD", "")
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+DEFAULT_FROM_EMAIL = env.str("DEFAULT_FROM_EMAIL", "")
+SUPPORT_EMAIL = env.str("SUPPORT_EMAIL", "")
 
 
 # AWS S3 config
