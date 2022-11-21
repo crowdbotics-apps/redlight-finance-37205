@@ -21,6 +21,11 @@ class User(AbstractUser):
     # First Name and Last Name do not cover name patterns
     # around the globe.
     name = models.CharField(_("Name of User"), blank=True, null=True, max_length=255)
+    phone_number = models.CharField(max_length = 12, null=True, blank=True)
 
     def get_absolute_url(self):
         return reverse("users:detail", kwargs={"username": self.username})
+
+class UserOTP(models.Model):
+    user_email = models.EmailField(_("Email Address"), blank=True)
+    otp = models.IntegerField()

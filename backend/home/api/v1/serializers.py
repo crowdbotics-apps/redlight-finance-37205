@@ -16,7 +16,7 @@ User = get_user_model()
 class SignupSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'name', 'email', 'password')
+        fields = ('id', 'name', 'email', 'password', 'phone_number')
         extra_kwargs = {
             'password': {
                 'write_only': True,
@@ -25,6 +25,10 @@ class SignupSerializer(serializers.ModelSerializer):
                 }
             },
             'email': {
+                'required': True,
+                'allow_blank': False,
+            },
+            'phone_number': {
                 'required': True,
                 'allow_blank': False,
             }
@@ -44,10 +48,16 @@ class SignupSerializer(serializers.ModelSerializer):
                     _("A user is already registered with this e-mail address."))
         return email
 
+    def validate_phone_number(self, phone_number):
+        if len(phone_number)!=10: #Update length here
+            raise serializers.ValidationError(_("Phone Number Should be of 10 digits"))
+        return phone_number
+
     def create(self, validated_data):
         user = User(
             email=validated_data.get('email'),
             name=validated_data.get('name'),
+            phone_number = validated_data.get('phone_number'),
             username=generate_unique_username([
                 validated_data.get('name'),
                 validated_data.get('email'),
