@@ -10,12 +10,11 @@ User = get_user_model()
 
 class SendgridClient(object):
     '''The class is used to send OTP through email and verify based on the request endpoints'''
-    def send(self, request):
-        email = request.data.get('email', None)
-        user = User.objects.filter(email=email)
+    def send(self, email):
+        user = User.objects.filter(email=email).first()
         if user and email: 
             subject = "Activate your account"
-            otp = random.randint(000000, 999999) #To generate 6 digit OTP for account verification
+            otp = random.randint(100000, 999999) #To generate 6 digit OTP for account verification
             message = f"OTP for Account Verification is {otp}"
             obj_email = EmailMessage(subject=subject, body=message, to=(email,))
             obj_email.send()
@@ -26,10 +25,8 @@ class SendgridClient(object):
             return {'response': 'Email Send Successfully', 'status': status.HTTP_202_ACCEPTED}
         return {'response': 'Email Send Failed', 'status': status.HTTP_400_BAD_REQUEST}
             
-    def verify(self, request):
-        email = request.data.get('email', None)
-        otp = request.data.get('otp', None)
-        otp_user = UserOTP.objects.filter(user_email= email, otp= otp)
+    def verify(self, email, otp):
+        otp_user = UserOTP.objects.filter(user_email= email, otp= otp).first()
         if otp_user:
             otp_user.delete()
             return {'response': 'OTP Verification successful', 'status': status.HTTP_202_ACCEPTED}

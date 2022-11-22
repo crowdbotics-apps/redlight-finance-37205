@@ -84,3 +84,12 @@ class UserSerializer(serializers.ModelSerializer):
 class PasswordSerializer(PasswordResetSerializer):
     """Custom serializer for rest_auth to solve reset password error"""
     password_reset_form_class = ResetPasswordForm
+
+class SendEmailOTPSerializer(serializers.Serializer):
+    """serializer for OTP send email"""
+    email = serializers.EmailField()
+
+class VerifyEmailOTPSerializer(serializers.Serializer):
+    """serializer for OTP verification"""
+    email = serializers.EmailField()
+    otp = serializers.CharField(max_length=6, min_length=6)
