@@ -11,8 +11,7 @@ User = get_user_model()
 class SendgridClient(object):
     '''The class is used to send OTP through email and verify based on the request endpoints'''
     def send(self, email):
-        user = User.objects.filter(email=email).first()
-        if user and email: 
+        if email: 
             subject = "Activate your account"
             otp = random.randint(100000, 999999) #To generate 6 digit OTP for account verification
             message = f"OTP for Account Verification is {otp}"

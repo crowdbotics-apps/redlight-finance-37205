@@ -1,4 +1,4 @@
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, password_validation
 from django.http import HttpRequest
 from django.utils.translation import ugettext_lazy as _
 from allauth.account import app_settings as allauth_settings
@@ -8,7 +8,7 @@ from allauth.account.adapter import get_adapter
 from allauth.account.utils import setup_user_email
 from rest_framework import serializers
 from rest_auth.serializers import PasswordResetSerializer
-
+from users.models import UserProfile
 
 User = get_user_model()
 
@@ -16,7 +16,7 @@ User = get_user_model()
 class SignupSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'name', 'email', 'password', 'phone_number')
+        fields = ('id', 'name', 'email', 'password',)
         extra_kwargs = {
             'password': {
                 'write_only': True,
@@ -28,10 +28,6 @@ class SignupSerializer(serializers.ModelSerializer):
                 'required': True,
                 'allow_blank': False,
             },
-            'phone_number': {
-                'required': True,
-                'allow_blank': False,
-            }
         }
 
     def _get_request(self):
@@ -48,16 +44,11 @@ class SignupSerializer(serializers.ModelSerializer):
                     _("A user is already registered with this e-mail address."))
         return email
 
-    def validate_phone_number(self, phone_number):
-        if len(phone_number)!=10: #Update length here
-            raise serializers.ValidationError(_("Phone Number Should be of 10 digits"))
-        return phone_number
 
     def create(self, validated_data):
         user = User(
             email=validated_data.get('email'),
             name=validated_data.get('name'),
-            phone_number = validated_data.get('phone_number'),
             username=generate_unique_username([
                 validated_data.get('name'),
                 validated_data.get('email'),
@@ -74,12 +65,73 @@ class SignupSerializer(serializers.ModelSerializer):
         """rest_auth passes request so we must override to accept it"""
         return super().save()
 
+class UserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserProfile
+        fields = ('middle_name', 'phone_number',)
+
+
+class SignupAndLoginSerializer(SignupSerializer):
+
+    user_profile = UserProfileSerializer()
+
+    class Meta:
+        model = User
+        fields = ['id','first_name', 'last_name', 'email', 'user_profile' , 'password', 'username']
+        extra_kwargs = {
+            'password': {
+                'write_only': True,
+                'style': {
+                    'input_type': 'password'
+                }
+            },
+            'email': {
+                'required': False,
+                'allow_blank': False,
+            },
+            'phone_number':{
+                'required': False,
+                'allow_blank': True,
+            },
+            'username':{
+                'required':True,
+                'allow_blank': False,
+            }
+        }
+
+    def create(self, validated_data):
+        profile_data = validated_data.pop('user_profile')
+        user = User.objects.create(**validated_data)
+        print(type(user.last_name))
+        user.name = user.first_name + ' ' + user.last_name if len(user.last_name)>0 else user.first_name
+        user.set_password(validated_data.get('password'))
+        user_profile = UserProfile.objects.create(user=user, **profile_data)
+        user.user_profile.is_verified = True
+        user.save()
+        user_profile.save()
+        return user
+
+    def validate(self, data):
+        if data['email'] is None and data['phone_number'] is None:
+            raise serializers.ValidationError('Either email or phone number must be provided')
+        return data
+
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'email', 'name']
 
+class ForgotPasswordSendOTPSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+
+class ForgotPasswordVerifyOTPSerializer(ForgotPasswordSendOTPSerializer):
+    otp = serializers.CharField(max_length=6, min_length=6)
+    password = serializers.CharField()
+
+    def validate_password(self, password):
+        password_validation.validate_password(password=password)
+        return password
 
 class PasswordSerializer(PasswordResetSerializer):
     """Custom serializer for rest_auth to solve reset password error"""
