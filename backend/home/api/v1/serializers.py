@@ -44,7 +44,6 @@ class SignupSerializer(serializers.ModelSerializer):
                     _("A user is already registered with this e-mail address."))
         return email
 
-
     def create(self, validated_data):
         user = User(
             email=validated_data.get('email'),
@@ -65,6 +64,7 @@ class SignupSerializer(serializers.ModelSerializer):
         """rest_auth passes request so we must override to accept it"""
         return super().save()
 
+
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
@@ -77,8 +77,15 @@ class SignupAndLoginSerializer(SignupSerializer):
 
     class Meta:
         model = User
-        fields = ['id','first_name', 'last_name', 'email', 'user_profile' , 'password', 'username']
+        fields = ['id', 'first_name', 'last_name', 'email',
+                  'user_profile', 'password', 'username']
         extra_kwargs = {
+            'first_name': {
+                "required": True,
+            },
+            'last_name': {
+                "required": True,
+            },
             'password': {
                 'write_only': True,
                 'style': {
@@ -89,12 +96,12 @@ class SignupAndLoginSerializer(SignupSerializer):
                 'required': False,
                 'allow_blank': False,
             },
-            'phone_number':{
+            'phone_number': {
                 'required': False,
                 'allow_blank': True,
             },
-            'username':{
-                'required':True,
+            'username': {
+                'required': True,
                 'allow_blank': False,
             }
         }
@@ -103,7 +110,8 @@ class SignupAndLoginSerializer(SignupSerializer):
         profile_data = validated_data.pop('user_profile')
         user = User.objects.create(**validated_data)
         print(type(user.last_name))
-        user.name = user.first_name + ' ' + user.last_name if len(user.last_name)>0 else user.first_name
+        user.name = user.first_name + ' ' + \
+            user.last_name if len(user.last_name) > 0 else user.first_name
         user.set_password(validated_data.get('password'))
         user_profile = UserProfile.objects.create(user=user, **profile_data)
         user.user_profile.is_verified = True
@@ -112,8 +120,9 @@ class SignupAndLoginSerializer(SignupSerializer):
         return user
 
     def validate(self, data):
-        if data['email'] is None and data['phone_number'] is None:
-            raise serializers.ValidationError('Either email or phone number must be provided')
+        if data.get('email', None) is None and data.get('phone_number', None) is None:
+            raise serializers.ValidationError(
+                'Either email or phone number must be provided')
         return data
 
 
@@ -122,8 +131,10 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ['id', 'email', 'name']
 
+
 class ForgotPasswordSendOTPSerializer(serializers.Serializer):
     email = serializers.EmailField()
+
 
 class ForgotPasswordVerifyOTPSerializer(ForgotPasswordSendOTPSerializer):
     otp = serializers.CharField(max_length=6, min_length=6)
@@ -133,15 +144,50 @@ class ForgotPasswordVerifyOTPSerializer(ForgotPasswordSendOTPSerializer):
         password_validation.validate_password(password=password)
         return password
 
+
 class PasswordSerializer(PasswordResetSerializer):
     """Custom serializer for rest_auth to solve reset password error"""
     password_reset_form_class = ResetPasswordForm
+
 
 class SendEmailOTPSerializer(serializers.Serializer):
     """serializer for OTP send email"""
     email = serializers.EmailField()
 
+
 class VerifyEmailOTPSerializer(serializers.Serializer):
     """serializer for OTP verification"""
     email = serializers.EmailField()
     otp = serializers.CharField(max_length=6, min_length=6)
+
+
+class ChangePasswordSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True, required=True, validators=[
+                                     password_validation.validate_password])
+    password2 = serializers.CharField(write_only=True, required=True)
+    old_password = serializers.CharField(write_only=True, required=True)
+
+    class Meta:
+        model = User
+        fields = ('old_password', 'password', 'password2')
+
+    def validate(self, data):
+        if data['password'] != data['password2']:
+            raise serializers.ValidationError(
+                {"password": "Password fields didn't match."})
+        return data
+
+    def validate_old_password(self, value):
+        user = self.context['request'].user
+        if not user.check_password(value):
+            print("Hello", value)
+            raise serializers.ValidationError(
+                {"old_password": "Old password is not correct"})
+        return value
+
+    def save(self, **kwargs):
+        password = self.validated_data['password']
+        user = self.context['request'].user
+        user.set_password(password)
+        user.save()
+        return user

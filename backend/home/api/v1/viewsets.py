@@ -11,10 +11,12 @@ from home.api.v1.serializers import (
     SendEmailOTPSerializer,
     VerifyEmailOTPSerializer,
     ForgotPasswordSendOTPSerializer,
-    ForgotPasswordVerifyOTPSerializer
+    ForgotPasswordVerifyOTPSerializer,
+    ChangePasswordSerializer,
 )
 from rest_framework import status
-
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
 
 User = get_user_model()
 
@@ -40,7 +42,7 @@ class LoginViewSet(ViewSet):
 
 
 
-class ForgotPasswordSendOTPViewSet(ViewSet):
+class ForgotPasswordSendEmailOTPViewSet(ViewSet):
     """Forgot Password Send OTP Viewset"""
 
     http_method_names = ["post"]
@@ -57,7 +59,7 @@ class ForgotPasswordSendOTPViewSet(ViewSet):
         return Response("User Doesn't Exists", status=status.HTTP_403_FORBIDDEN)
 
 
-class ForgotPasswordVerifyOTPViewSet(ViewSet):
+class ForgotPasswordVerifyEmailOTPViewSet(ViewSet):
     """Forgot Password Verification"""
     http_method_names=['post']
     def create(self, request):
@@ -111,3 +113,23 @@ class VerifyEmailOTPViewSet(ViewSet):
         serializer.is_valid(raise_exception=True)
         verify = EmailOTP.verify(serializer.validated_data['email'], serializer.validated_data['otp'])
         return Response({"message": verify.get('response')}, status=verify.get('status'))
+
+
+class ChangePasswordViewset(ViewSet):
+    """Change Password viewset for Changing password for cuurently logged in user (using token)"""
+    permission_classes = (IsAuthenticated,)
+    authentication_classes = (TokenAuthentication,)
+    http_method_names=['put']
+
+    def update(self, request, *args, **kwargs):
+        serializer = ChangePasswordSerializer(data = request.data, context= {'request': request})
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        # if using drf authtoken, create a new token 
+        if hasattr(user, 'auth_token'):
+            user.auth_token.delete()
+        token, created = Token.objects.get_or_create(user=user)
+        # return new token
+        return Response({'token': token.key, 'message':'Password Changed'}, status=status.HTTP_200_OK)
+
+    
