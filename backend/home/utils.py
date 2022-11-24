@@ -3,6 +3,9 @@ from django.contrib.auth import get_user_model
 from django.core.mail import EmailMessage
 from users.models import UserOTP
 from rest_framework import status
+from twilio.rest import Client
+from redlight_finance_37205.settings import TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_VERIFY_SERVICE_SID
+from twilio.base.exceptions import TwilioRestException
 
 User = get_user_model()
 
@@ -45,3 +48,37 @@ class EmailOTP:
     @classmethod
     def verify(cls, *args):
         return SendgridClient().verify(*args)
+
+
+class TwilioClient(object):
+    '''Class is used to send SMS OTP for Phone Number Verification'''
+
+    client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
+    verify = client.verify.services(TWILIO_VERIFY_SERVICE_SID)
+
+    def send(self, phone):
+        try:
+            instance = self.verify.verifications.create(
+                to=phone, channel='sms')
+            return {'response': "OTP Send Successfully", 'status': status.HTTP_201_CREATED}
+        except TwilioRestException:
+            return {'response': 'OTP Sending Failed', 'status': status.HTTP_400_BAD_REQUEST}
+
+    def check(self, phone, code):
+        try:
+            result = self.verify.verification_checks.create(
+                to=phone, code=code)
+        except TwilioRestException:
+            return {'response': 'OTP Verification Failed', 'status': status.HTTP_400_BAD_REQUEST}
+        return {'response': "OTP Verification Successful", 'status': status.HTTP_202_ACCEPTED} if result.status == "approved" else {'response': "OTP Verification Failed", 'status': status.HTTP_400_BAD_REQUEST}
+
+
+class PhoneOTP:
+
+    @classmethod
+    def send(cls, *args):
+        return TwilioClient().send(*args)
+
+    @classmethod
+    def verify(cls, *args):
+        return TwilioClient().check(*args)

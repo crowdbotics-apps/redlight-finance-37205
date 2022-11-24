@@ -72,7 +72,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
 
 class SignupAndLoginSerializer(SignupSerializer):
-
+    """Serializer for signup and login simultaneously"""
     user_profile = UserProfileSerializer()
 
     class Meta:
@@ -109,7 +109,6 @@ class SignupAndLoginSerializer(SignupSerializer):
     def create(self, validated_data):
         profile_data = validated_data.pop('user_profile')
         user = User.objects.create(**validated_data)
-        print(type(user.last_name))
         user.name = user.first_name + ' ' + \
             user.last_name if len(user.last_name) > 0 else user.first_name
         user.set_password(validated_data.get('password'))
@@ -132,11 +131,29 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['id', 'email', 'name']
 
 
-class ForgotPasswordSendOTPSerializer(serializers.Serializer):
+class ForgotPasswordSendEmailOTPSerializer(serializers.Serializer):
+    """Serializer for forgot password send email OTP"""
     email = serializers.EmailField()
 
 
-class ForgotPasswordVerifyOTPSerializer(ForgotPasswordSendOTPSerializer):
+class ForgotPasswordVerifyEmailOTPSerializer(ForgotPasswordSendEmailOTPSerializer):
+    """Serializer for forgot password verify email OTP"""
+    otp = serializers.CharField(max_length=6, min_length=6)
+    password = serializers.CharField()
+
+    def validate_password(self, password):
+        password_validation.validate_password(password=password)
+        return password
+
+
+class ForgotPasswordSendPhoneOTPSerializer(serializers.Serializer):
+    """Serializer for ForgotPassword send OTP on phone"""
+    country_code = serializers.CharField(max_length=5)
+    phone_number = serializers.CharField(max_length=12)
+
+
+class ForgotPasswordVerifyPhoneOTPSerializer(ForgotPasswordSendPhoneOTPSerializer):
+    """Serializer for ForgotPassword verify phone number message"""
     otp = serializers.CharField(max_length=6, min_length=6)
     password = serializers.CharField()
 
@@ -151,17 +168,29 @@ class PasswordSerializer(PasswordResetSerializer):
 
 
 class SendEmailOTPSerializer(serializers.Serializer):
-    """serializer for OTP send email"""
+    """Serializer for OTP send email"""
     email = serializers.EmailField()
 
 
 class VerifyEmailOTPSerializer(serializers.Serializer):
-    """serializer for OTP verification"""
+    """Serializer for OTP verification"""
     email = serializers.EmailField()
     otp = serializers.CharField(max_length=6, min_length=6)
 
 
+class SendPhoneOTPSerializer(serializers.Serializer):
+    """Serializer for Phone OTP send"""
+    country_code = serializers.CharField(max_length=5)
+    phone_number = serializers.CharField(max_length=12)
+
+
+class VerifyPhoneOTPSerializer(SendPhoneOTPSerializer):
+    """Serializer for Phone OTP verification"""
+    otp = serializers.CharField(max_length=6, min_length=6)
+
+
 class ChangePasswordSerializer(serializers.ModelSerializer):
+    """Serializer for Change Password"""
     password = serializers.CharField(write_only=True, required=True, validators=[
                                      password_validation.validate_password])
     password2 = serializers.CharField(write_only=True, required=True)
@@ -180,7 +209,6 @@ class ChangePasswordSerializer(serializers.ModelSerializer):
     def validate_old_password(self, value):
         user = self.context['request'].user
         if not user.check_password(value):
-            print("Hello", value)
             raise serializers.ValidationError(
                 {"old_password": "Old password is not correct"})
         return value

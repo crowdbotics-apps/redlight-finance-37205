@@ -230,6 +230,10 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 DEFAULT_FROM_EMAIL = env.str("DEFAULT_FROM_EMAIL", "")
 SUPPORT_EMAIL = env.str("SUPPORT_EMAIL", "")
 
+#Twilio configurations
+TWILIO_VERIFY_SERVICE_SID = env.str("TWILIO_VERIFY_SERVICE_SID","")
+TWILIO_ACCOUNT_SID = env.str("TWILIO_ACCOUNT_SID","")
+TWILIO_AUTH_TOKEN = env.str("TWILIO_AUTH_TOKEN","")
 
 # AWS S3 config
 AWS_ACCESS_KEY_ID = env.str("AWS_ACCESS_KEY_ID", "")

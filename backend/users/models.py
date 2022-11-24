@@ -40,7 +40,7 @@ class UserProfile(BaseModels):
     user = models.OneToOneField(
         User, on_delete=models.CASCADE, related_name='user_profile')
     middle_name = models.CharField(max_length=255, blank=True)
-    phone_number = models.CharField(max_length=12, null=True, blank=True)
+    phone_number = models.CharField(max_length=15, null=True, blank=True)
     is_verified = models.BooleanField(default=False)
 
 

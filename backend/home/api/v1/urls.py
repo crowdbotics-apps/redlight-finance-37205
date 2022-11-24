@@ -10,6 +10,10 @@ from home.api.v1.viewsets import (
     ForgotPasswordSendEmailOTPViewSet,
     ForgotPasswordVerifyEmailOTPViewSet,
     ChangePasswordViewset,
+    SendPhoneOTPViewSet,
+    VerifyPhoneOTPViewSet,
+    ForgotPasswordSendPhoneOTPViewSet,
+    ForgotPasswordVerifyPhoneOTPViewSet
 )
 
 router = DefaultRouter()
@@ -20,10 +24,18 @@ router.register("forgot_password/send_email_otp",
                 ForgotPasswordSendEmailOTPViewSet, basename="forgot_password_send_email_otp")
 router.register("forgot_password/verify_email_otp",
                 ForgotPasswordVerifyEmailOTPViewSet, basename="forgot_password_verify_email_otp")
+router.register("forgot_password/send_phone_otp",
+                ForgotPasswordSendPhoneOTPViewSet, basename="forgot_password_send_phone_otp")
+router.register("forgot_password/verify_phone_otp",
+                ForgotPasswordVerifyPhoneOTPViewSet, basename="forgot_password_verify_phone_otp")
 router.register("send_email_otp", SendEmailOTPViewSet,
                 basename="send_email_otp")
 router.register("verify_email_otp", VerifyEmailOTPViewSet,
                 basename="verify_email_otp")
+router.register("send_phone_otp", SendPhoneOTPViewSet,
+                basename="send_phone_otp")
+router.register("verify_phone_otp", VerifyPhoneOTPViewSet,
+                basename="verify_phone_otp")
 urlpatterns = [
     path("", include(router.urls)),
     path("change_password/",
