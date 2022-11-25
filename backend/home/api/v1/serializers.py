@@ -73,7 +73,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
 class SignupAndLoginSerializer(SignupSerializer):
     """Serializer for signup and login simultaneously"""
-    user_profile = UserProfileSerializer()
+    user_profile = UserProfileSerializer(required=False)
 
     class Meta:
         model = User
@@ -94,7 +94,7 @@ class SignupAndLoginSerializer(SignupSerializer):
             },
             'email': {
                 'required': False,
-                'allow_blank': False,
+                'allow_blank': True,
             },
             'phone_number': {
                 'required': False,
