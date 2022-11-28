@@ -219,3 +219,27 @@ class ChangePasswordSerializer(serializers.ModelSerializer):
         user.set_password(password)
         user.save()
         return user
+
+
+class SettingsProfileScreenSerializer(serializers.ModelSerializer):
+    """Serializer for settings profile screen to retrieve profile screen information (username, email)"""
+    class Meta:
+        model = User
+        fields = ('username', 'email',)
+
+
+class DeleteAccountSerializer(serializers.ModelSerializer):
+    """Serializer for deleting user account information after password validation, verification"""
+    password = serializers.CharField(write_only=True, required=True, validators=[
+                                     password_validation.validate_password])
+
+    class Meta:
+        model = User
+        fields = ('password',)
+
+    def validate_password(self, value):
+        user = self.context['request'].user
+        if not user.check_password(value):
+            raise serializers.ValidationError(
+                {"password": "Password is incorrect"})
+        return value

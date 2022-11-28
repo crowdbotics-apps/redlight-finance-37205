@@ -13,7 +13,10 @@ from home.api.v1.viewsets import (
     SendPhoneOTPViewSet,
     VerifyPhoneOTPViewSet,
     ForgotPasswordSendPhoneOTPViewSet,
-    ForgotPasswordVerifyPhoneOTPViewSet
+    ForgotPasswordVerifyPhoneOTPViewSet,
+    SettingsProfileScreenViewset,
+    LogoutViewset,
+    DeleteAccountViewset
 )
 
 router = DefaultRouter()
@@ -39,5 +42,10 @@ router.register("verify_phone_otp", VerifyPhoneOTPViewSet,
 urlpatterns = [
     path("", include(router.urls)),
     path("change_password/",
-         ChangePasswordViewset.as_view({'put': 'update'}), name="change_password")
+         ChangePasswordViewset.as_view({'put': 'update'}), name="change_password"),
+    path("settings/profile_screen/",
+         SettingsProfileScreenViewset.as_view(), name="settings_profile_screen"),
+    path("logout/", LogoutViewset.as_view(), name="logout"),
+    path("delete_account/",
+         DeleteAccountViewset.as_view({'delete': 'destroy'}), name="delete_account")
 ]
