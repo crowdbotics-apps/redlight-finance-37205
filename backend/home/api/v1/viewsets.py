@@ -18,12 +18,13 @@ from home.api.v1.serializers import (
     ForgotPasswordSendPhoneOTPSerializer,
     ForgotPasswordVerifyPhoneOTPSerializer,
     SettingsProfileScreenSerializer,
-    DeleteAccountSerializer
+    DeleteAccountSerializer,
+    WalletSerializer
 )
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
-from users.models import UserProfile
+from users.models import UserProfile, Wallet
 from rest_auth.views import LogoutView
 from rest_framework.views import APIView
 
@@ -177,7 +178,7 @@ class VerifyEmailOTPViewSet(ViewSet):
 
 
 class SendPhoneOTPViewSet(ViewSet):
-    """The view set for sending email verification OTP for endpoint send_email_otp"""
+    """The view set for sending phone verification OTP for endpoint send_phone_otp"""
 
     http_method_names = ["post"]
 
@@ -192,7 +193,7 @@ class SendPhoneOTPViewSet(ViewSet):
 
 
 class VerifyPhoneOTPViewSet(ViewSet):
-    """The view set for verifying OTP for endpoint verify_email_otp"""
+    """The view set for verifying OTP for endpoint verify_phone_otp"""
 
     http_method_names = ["post"]
 
@@ -264,3 +265,13 @@ class DeleteAccountViewset(ViewSet):
             return Response({'message': 'Account deleted successfully'}, status=status.HTTP_200_OK)
         except:
             return Response({'message': 'Server error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class WalletViewset(ModelViewSet):
+    """Wallet viewset for CRUD in wallet associated with user account"""
+    permission_classes = (IsAuthenticated,)
+    authentication_classes = (TokenAuthentication,)
+    serializer_class = WalletSerializer
+
+    def get_queryset(self):
+        return Wallet.objects.filter(user=self.request.user)

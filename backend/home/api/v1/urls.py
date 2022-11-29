@@ -16,7 +16,8 @@ from home.api.v1.viewsets import (
     ForgotPasswordVerifyPhoneOTPViewSet,
     SettingsProfileScreenViewset,
     LogoutViewset,
-    DeleteAccountViewset
+    DeleteAccountViewset,
+    WalletViewset
 )
 
 router = DefaultRouter()
@@ -39,6 +40,8 @@ router.register("send_phone_otp", SendPhoneOTPViewSet,
                 basename="send_phone_otp")
 router.register("verify_phone_otp", VerifyPhoneOTPViewSet,
                 basename="verify_phone_otp")
+router.register("wallets", WalletViewset,
+                basename="wallets")
 urlpatterns = [
     path("", include(router.urls)),
     path("change_password/",

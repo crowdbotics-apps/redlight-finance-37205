@@ -8,7 +8,7 @@ from allauth.account.adapter import get_adapter
 from allauth.account.utils import setup_user_email
 from rest_framework import serializers
 from rest_auth.serializers import PasswordResetSerializer
-from users.models import UserProfile
+from users.models import UserProfile, Wallet
 
 User = get_user_model()
 
@@ -114,8 +114,11 @@ class SignupAndLoginSerializer(SignupSerializer):
         user.set_password(validated_data.get('password'))
         user_profile = UserProfile.objects.create(user=user, **profile_data)
         user.user_profile.is_verified = True
+        wallet = Wallet(user=user, subwallet_name="Redlight Wallet",
+                        amount=0, is_default=True)
         user.save()
         user_profile.save()
+        wallet.save()
         return user
 
     def validate(self, data):
@@ -243,3 +246,72 @@ class DeleteAccountSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 {"password": "Password is incorrect"})
         return value
+
+
+class WalletSerializer(serializers.ModelSerializer):
+    """Serializer for Wallets information associated with currently logged in user"""
+    class Meta:
+        model = Wallet
+        fields = ('id', 'subwallet_name', 'uuid',
+                  'amount', 'is_default', 'currency', 'user')
+        extra_kwargs = {
+            'amount': {
+                'required': True
+            },
+            'subwallet_name': {
+                'required': True
+            },
+            'is_default': {
+                'required': True
+            },
+            'user': {
+                'required': False,
+                'read_only': True
+            }
+        }
+
+    def _get_request(self):
+        request = self.context.get('request')
+        if request and not isinstance(request, HttpRequest) and hasattr(request, '_request'):
+            request = request._request
+        return request
+
+    def create(self, validated_data):
+        request = self._get_request()
+        if validated_data.get('is_default', None) is not None and validated_data.get('is_default') == True:
+            Wallet.objects.filter(
+                user=request.user, is_default=True).update(is_default=False)
+        wallet = Wallet(**validated_data)
+        wallet.user = request.user
+        wallet.save()
+        return wallet
+
+    def _update_wallet_is_default(self):
+        """To set is_default=True for the very first wallet only if all the other wallets are not set as default"""
+        request = self._get_request()
+        update_wallet = Wallet.objects.filter(user=request.user).order_by(
+            'created_at').first()
+        update_wallet.is_default = True
+        update_wallet.save()
+
+    def update(self, instance, validated_data):
+        request = self._get_request()
+        # there can only be one default wallet
+        # if user updates the wallet (is_default) to True, then update all the other wallets (is_default) to False
+        if validated_data.get('is_default', None) is not None and validated_data.get('is_default'):
+            Wallet.objects.filter(
+                user=request.user, is_default=True).update(is_default=False)
+        # if the user is updating the current default wallet to False, then update the very first wallet (is_default) to True
+        if validated_data.get('is_default', None) is not None and not validated_data.get('is_default') and instance.is_default:
+            # then fetching the very first wallet and setting the is_default to True
+            self._update_wallet_is_default()
+        instance.subwallet_name = validated_data.get(
+            'subwallet_name', instance.subwallet_name)
+        instance.amount = validated_data.get('amount', instance.amount)
+        instance.is_default = validated_data.get(
+            'is_default', instance.is_default)
+        instance.currency = validated_data.get('currency', instance.currency)
+        instance.save()
+        if Wallet.objects.filter(user=request.user, is_default=True).count() == 0:
+            self._update_wallet_is_default()
+        return instance
