@@ -19,7 +19,8 @@ from home.api.v1.serializers import (
     ForgotPasswordVerifyPhoneOTPSerializer,
     SettingsProfileScreenSerializer,
     DeleteAccountSerializer,
-    WalletSerializer
+    WalletSerializer,
+    WalletQRCodeSerializer
 )
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
@@ -239,6 +240,22 @@ class SettingsProfileScreenViewset(APIView):
             return Response({'error': 'Not found'}, status=status.HTTP_404_NOT_FOUND)
 
         serializer = SettingsProfileScreenSerializer(user)
+        return Response(serializer.data)
+
+
+class WalletQRCodeViewset(APIView):
+    """Wallet QR Code by ID currently logged in user requires Auth token and wallet ID"""
+    permission_classes = (IsAuthenticated,)
+    authentication_classes = (TokenAuthentication,)
+    http_method_names = ['get']
+
+    def get(self, request, pk):
+        try:
+            wallet = Wallet.objects.get(pk=pk, user=request.user)
+        except Wallet.DoesNotExist:
+            return Response({'error': 'Not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = WalletQRCodeSerializer(wallet)
         return Response(serializer.data)
 
 

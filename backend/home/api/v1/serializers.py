@@ -131,7 +131,7 @@ class SignupAndLoginSerializer(SignupSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'email', 'name']
+        fields = ['id', 'email', 'name', 'username']
 
 
 class ForgotPasswordSendEmailOTPSerializer(serializers.Serializer):
@@ -229,6 +229,15 @@ class SettingsProfileScreenSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('username', 'email',)
+
+
+class WalletQRCodeSerializer(serializers.ModelSerializer):
+    """Serializer for Wallet QR Code Screen"""
+    user = UserSerializer(read_only=True)
+
+    class Meta:
+        model = Wallet
+        fields = ('subwallet_name', 'uuid', 'user', 'id')
 
 
 class DeleteAccountSerializer(serializers.ModelSerializer):

@@ -17,7 +17,8 @@ from home.api.v1.viewsets import (
     SettingsProfileScreenViewset,
     LogoutViewset,
     DeleteAccountViewset,
-    WalletViewset
+    WalletViewset,
+    WalletQRCodeViewset
 )
 
 router = DefaultRouter()
@@ -49,6 +50,8 @@ urlpatterns = [
     path("settings/profile_screen/",
          SettingsProfileScreenViewset.as_view(), name="settings_profile_screen"),
     path("logout/", LogoutViewset.as_view(), name="logout"),
+    path("wallet_qr_code/<int:pk>/", WalletQRCodeViewset.as_view(),
+         name="wallet_qr_code"),
     path("delete_account/",
          DeleteAccountViewset.as_view({'delete': 'destroy'}), name="delete_account")
 ]
