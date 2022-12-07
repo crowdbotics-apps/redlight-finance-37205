@@ -3,6 +3,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from django.db.models import Model
+import uuid
 
 
 class User(AbstractUser):
@@ -47,3 +48,13 @@ class UserProfile(BaseModels):
 class UserOTP(models.Model):
     user_email = models.EmailField(_("Email Address"), blank=True)
     otp = models.IntegerField()
+
+
+class Wallet(BaseModels):
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='user_wallet')
+    subwallet_name = models.CharField(max_length=255, blank=True, null=True)
+    is_default = models.BooleanField(default=False)
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False)
+    amount = models.DecimalField(max_digits=19, decimal_places=10)
+    currency = models.CharField(max_length=5, default='PHP')
