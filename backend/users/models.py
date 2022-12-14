@@ -55,6 +55,7 @@ class Wallet(BaseModels):
         User, on_delete=models.CASCADE, related_name='user_wallet')
     subwallet_name = models.CharField(max_length=255, blank=True, null=True)
     is_default = models.BooleanField(default=False)
-    uuid = models.UUIDField(default=uuid.uuid4, editable=False)
+    # uuid = models.UUIDField(default=uuid.uuid4, editable=False)
+    private_key = models.CharField(max_length=255, blank=True, null=True)
     amount = models.DecimalField(max_digits=19, decimal_places=10)
     currency = models.CharField(max_length=5, default='PHP')
