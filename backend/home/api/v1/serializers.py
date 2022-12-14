@@ -124,7 +124,7 @@ class SignupAndLoginSerializer(SignupSerializer):
         return user
 
     def validate(self, data):
-        if data.get('email', None) is None and data.get('phone_number', None) is None:
+        if data.get('email', None) is None and data.get('user_profile').get('phone_number', None) is None:
             raise serializers.ValidationError(
                 'Either email or phone number must be provided')
         return data
