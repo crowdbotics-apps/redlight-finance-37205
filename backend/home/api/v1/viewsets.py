@@ -19,13 +19,11 @@ from home.api.v1.serializers import (
     ForgotPasswordVerifyPhoneOTPSerializer,
     SettingsProfileScreenSerializer,
     DeleteAccountSerializer,
-    WalletSerializer,
-    WalletQRCodeSerializer
 )
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
-from users.models import UserProfile, Wallet
+from users.models import UserProfile
 from rest_auth.views import LogoutView
 from rest_framework.views import APIView
 
@@ -243,22 +241,6 @@ class SettingsProfileScreenViewset(APIView):
         return Response(serializer.data)
 
 
-class WalletQRCodeViewset(APIView):
-    """Wallet QR Code by ID currently logged in user requires Auth token and wallet ID"""
-    permission_classes = (IsAuthenticated,)
-    authentication_classes = (TokenAuthentication,)
-    http_method_names = ['get']
-
-    def get(self, request, pk):
-        try:
-            wallet = Wallet.objects.get(pk=pk, user=request.user)
-        except Wallet.DoesNotExist:
-            return Response({'error': 'Not found'}, status=status.HTTP_404_NOT_FOUND)
-
-        serializer = WalletQRCodeSerializer(wallet)
-        return Response(serializer.data)
-
-
 class LogoutViewset(LogoutView):
     """LogoutViewset for Logging out currently logged in user required Authorization header"""
     http_method_names = ['post']
@@ -282,13 +264,3 @@ class DeleteAccountViewset(ViewSet):
             return Response({'message': 'Account deleted successfully'}, status=status.HTTP_200_OK)
         except:
             return Response({'message': 'Server error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-
-class WalletViewset(ModelViewSet):
-    """Wallet viewset for CRUD in wallet associated with user account"""
-    permission_classes = (IsAuthenticated,)
-    authentication_classes = (TokenAuthentication,)
-    serializer_class = WalletSerializer
-
-    def get_queryset(self):
-        return Wallet.objects.filter(user=self.request.user)

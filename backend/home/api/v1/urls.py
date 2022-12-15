@@ -17,8 +17,6 @@ from home.api.v1.viewsets import (
     SettingsProfileScreenViewset,
     LogoutViewset,
     DeleteAccountViewset,
-    WalletViewset,
-    WalletQRCodeViewset
 )
 
 router = DefaultRouter()
@@ -41,17 +39,14 @@ router.register("send_phone_otp", SendPhoneOTPViewSet,
                 basename="send_phone_otp")
 router.register("verify_phone_otp", VerifyPhoneOTPViewSet,
                 basename="verify_phone_otp")
-router.register("wallets", WalletViewset,
-                basename="wallets")
 urlpatterns = [
     path("", include(router.urls)),
+    path("", include("wallet.urls")),
     path("change_password/",
          ChangePasswordViewset.as_view({'put': 'update'}), name="change_password"),
     path("settings/profile_screen/",
          SettingsProfileScreenViewset.as_view(), name="settings_profile_screen"),
     path("logout/", LogoutViewset.as_view(), name="logout"),
-    path("wallet_qr_code/<int:pk>/", WalletQRCodeViewset.as_view(),
-         name="wallet_qr_code"),
     path("delete_account/",
          DeleteAccountViewset.as_view({'delete': 'destroy'}), name="delete_account")
 ]
