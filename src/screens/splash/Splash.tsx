@@ -14,7 +14,7 @@ const Splash : FC = () =>  {
         setIsLoading(true)
         const timer = setTimeout(()=>{
             setIsLoading(false)
-            navigation.navigate('SignupScreen')
+            navigation.navigate('SigninScreen')
         },3000)
 
         return ()=>{
