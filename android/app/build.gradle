@@ -181,6 +181,10 @@ android {
 
         }
     }
+
+    packagingOptions { 
+            pickFirst '**/*.so' 
+        } 
 }
 
 dependencies {

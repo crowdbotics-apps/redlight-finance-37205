@@ -9,6 +9,7 @@ from allauth.account.utils import setup_user_email
 from rest_framework import serializers
 from rest_auth.serializers import PasswordResetSerializer
 from users.models import UserProfile, Wallet
+from home.wallet_utils import WalletMixin
 
 User = get_user_model()
 
@@ -114,15 +115,16 @@ class SignupAndLoginSerializer(SignupSerializer):
         user.set_password(validated_data.get('password'))
         user_profile = UserProfile.objects.create(user=user, **profile_data)
         user.user_profile.is_verified = True
+        private_key = WalletMixin.get_wallet_private_key()
         wallet = Wallet(user=user, subwallet_name="Redlight Wallet",
-                        amount=0, is_default=True)
+                        amount=0, is_default=True, private_key=private_key)
         user.save()
         user_profile.save()
         wallet.save()
         return user
 
     def validate(self, data):
-        if data.get('email', None) is None and data.get('phone_number', None) is None:
+        if data.get('email', None) is None and data.get('user_profile').get('phone_number', None) is None:
             raise serializers.ValidationError(
                 'Either email or phone number must be provided')
         return data
@@ -234,10 +236,15 @@ class SettingsProfileScreenSerializer(serializers.ModelSerializer):
 class WalletQRCodeSerializer(serializers.ModelSerializer):
     """Serializer for Wallet QR Code Screen"""
     user = UserSerializer(read_only=True)
+    wallet_address = serializers.SerializerMethodField()
 
     class Meta:
         model = Wallet
-        fields = ('subwallet_name', 'uuid', 'user', 'id')
+        fields = ('subwallet_name', 'wallet_address', 'user', 'id')
+
+    def get_wallet_address(self, obj):
+        address = WalletMixin.get_wallet_address(obj.private_key)
+        return address
 
 
 class DeleteAccountSerializer(serializers.ModelSerializer):
@@ -259,10 +266,12 @@ class DeleteAccountSerializer(serializers.ModelSerializer):
 
 class WalletSerializer(serializers.ModelSerializer):
     """Serializer for Wallets information associated with currently logged in user"""
+    wallet_address = serializers.SerializerMethodField()
+
     class Meta:
         model = Wallet
-        fields = ('id', 'subwallet_name', 'uuid',
-                  'amount', 'is_default', 'currency', 'user')
+        fields = ('id', 'subwallet_name',
+                  'amount', 'is_default', 'currency', 'user', 'wallet_address',)
         extra_kwargs = {
             'amount': {
                 'required': True
@@ -285,6 +294,10 @@ class WalletSerializer(serializers.ModelSerializer):
             request = request._request
         return request
 
+    def get_wallet_address(self, obj):
+        address = WalletMixin.get_wallet_address(obj.private_key)
+        return address
+
     def create(self, validated_data):
         request = self._get_request()
         if validated_data.get('is_default', None) is not None and validated_data.get('is_default') == True:
@@ -292,6 +305,7 @@ class WalletSerializer(serializers.ModelSerializer):
                 user=request.user, is_default=True).update(is_default=False)
         wallet = Wallet(**validated_data)
         wallet.user = request.user
+        wallet.private_key = WalletMixin.get_wallet_private_key()
         wallet.save()
         return wallet
 

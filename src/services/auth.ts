@@ -52,11 +52,13 @@ const verifyEmailOTP = async (data : Object) => {
 
 const login = async (data: any) => {
   try {
-    const response = await api.post('/users/login/', data)
+    const response = await api.post('login/', data)
     return response.data
   } catch (error) {
     return getResponseErrorData(error).data
   }
 }
 
+
 export { login, signup,sendPhoneOTP,sendEmailOTP,verifyEmailOTP,verifyPhoneOTP }
+
