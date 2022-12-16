@@ -14,10 +14,10 @@ import { Colors } from '../../theme/Colors'
 import { sendEmailOTP,sendPhoneOTP,verifyEmailOTP,verifyPhoneOTP,signup } from '../../services/auth'
 
 const CodeVerification = ({route})=>{
-    const [code,setCode] = useState<string>('')
+    const {mode} = route.params   
     const [isLoading,setIsLoading] = useState<boolean>(false)
     const [isDisable,setIsDisable] = useState<boolean>(false)
-    const {mode} = route.params   
+    const [code,setCode] = useState<string>()
 
     const refRBSheet = useRef();
     const navigation = useNavigation();
@@ -134,7 +134,7 @@ const CodeVerification = ({route})=>{
             })
         }
     }
-
+    
     return(
         <View style={{marginTop : -10}}>
             <ImageBackground source={Images.Background} resizeMode="cover" style={styles.image}>

@@ -32,12 +32,6 @@ const styles = StyleSheet.create({
     circle : {
         alignSelf : 'center'
     },
-    textInputContainer : {
-        flexDirection : 'row',
-        justifyContent : 'space-between',
-        alignItems : 'center',
-        marginVertical : 40
-    },
     textInput : {
         width  : 50,
         height: 80,
@@ -64,7 +58,16 @@ const styles = StyleSheet.create({
         color : Colors.white
     },
     resendContainer : {
-        // marginBottom : '18%'
+
+    },
+    underlineStyleBase: {
+        width: 30,
+        height: 45,
+        borderWidth: 0,
+        borderBottomWidth: 1,
+      },
+      underlineStyleHighLighted: {
+        borderColor : Colors.aubergine
     },
     underlineStyleHighLighted: {
         borderColor: "#03DAC6",

@@ -10,8 +10,8 @@ import Circle  from '../../components/Circle'
 import CustomInput  from '../../components/CustomInput'
 import PrimaryButton from '../../components/PrimaryButton'
 import {sendEmailOTP,sendPhoneOTP} from '../../services/auth'
+import { isValidEmail,isValidPassword ,isValidUsername,isValidMobile,isValidName} from '../../util';
 import { Colors } from '../../theme/Colors'
-import { isValidName,isValidEmail,isValidUsername, isValidPassword,isValidMobile} from '../../util';
 
 const Signup = ()=>{
     const[email,setEmail] = useState<string>('')
