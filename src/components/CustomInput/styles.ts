@@ -4,7 +4,7 @@ import { Fonts } from '../../assets/fonts';
 
 const styles = StyleSheet.create({
     container : {
-        marginVertical : 10
+        marginVertical : 10,
     },
     label : {
         fontFamily  : Fonts.PoppinsRegular,
@@ -17,12 +17,16 @@ const styles = StyleSheet.create({
         flexDirection : 'row',
         justifyContent : 'space-between',
         alignItems : 'center',
+        color: Colors.white,
+        
+        
     },
     input : {
         height : 40,
         borderBottomColor : Colors.MediumDarkGray,
         borderBottomWidth  : 1,
         color : Colors.white,
+        marginTop: -29,
     }
 })
 

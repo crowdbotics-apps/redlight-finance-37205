@@ -31,9 +31,10 @@ const styles = StyleSheet.create({
     },
     button  : {
         alignItems: "center",
-        backgroundColor: "#DDDDDD",
+        backgroundColor: "#BC0016",
         padding: 13,
-        borderRadius : 10
+        borderRadius : 10,
+
     },
     text :{
         fontFamily : Fonts.PoppinsBold,
