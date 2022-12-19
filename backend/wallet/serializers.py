@@ -7,6 +7,7 @@ from home.api.v1.serializers import UserSerializer
 from rest_framework import serializers
 from re import match
 
+
 class WalletQRCodeSerializer(serializers.ModelSerializer):
     """Serializer for Wallet QR Code Screen"""
     user = UserSerializer(read_only=True)
@@ -99,12 +100,10 @@ class WalletSerializer(serializers.ModelSerializer):
 
 class WalletSendTokenSerializer(serializers.Serializer):
     receiver_address = serializers.CharField(required=True)
-    transaction_amount = serializers.DecimalField(required=True, max_digits=19, decimal_places=10)
+    transaction_amount = serializers.DecimalField(
+        required=True, max_digits=19, decimal_places=10)
 
     def validate_receiver_address(self, receiver_address):
         if match('^0x[a-fA-F0-9]{40}$', receiver_address):
             return receiver_address
         raise serializers.ValidationError('Address is not valid')
-
-    
-        

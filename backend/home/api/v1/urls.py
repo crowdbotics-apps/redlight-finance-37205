@@ -17,6 +17,7 @@ from home.api.v1.viewsets import (
     SettingsProfileScreenViewset,
     LogoutViewset,
     DeleteAccountViewset,
+    ForgotPasswordResetView
 )
 
 router = DefaultRouter()
@@ -48,5 +49,7 @@ urlpatterns = [
          SettingsProfileScreenViewset.as_view(), name="settings_profile_screen"),
     path("logout/", LogoutViewset.as_view(), name="logout"),
     path("delete_account/",
-         DeleteAccountViewset.as_view({'delete': 'destroy'}), name="delete_account")
+         DeleteAccountViewset.as_view({'delete': 'destroy'}), name="delete_account"),
+    path("forgot_password/reset_password/", ForgotPasswordResetView.as_view(),
+         name="forgot_password_reset_password"),
 ]

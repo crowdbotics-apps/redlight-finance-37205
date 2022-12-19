@@ -10,12 +10,10 @@ from home.api.v1.serializers import (
     SignupAndLoginSerializer,
     SendEmailOTPSerializer,
     VerifyEmailOTPSerializer,
-    ForgotPasswordSendEmailOTPSerializer,
     ForgotPasswordVerifyEmailOTPSerializer,
     ChangePasswordSerializer,
     SendPhoneOTPSerializer,
     VerifyPhoneOTPSerializer,
-    ForgotPasswordSendPhoneOTPSerializer,
     ForgotPasswordVerifyPhoneOTPSerializer,
     SettingsProfileScreenSerializer,
     DeleteAccountSerializer,
@@ -24,8 +22,11 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 from users.models import UserProfile
-from rest_auth.views import LogoutView
+from rest_auth.views import LogoutView, PasswordResetConfirmView
 from rest_framework.views import APIView
+from django.utils.encoding import force_bytes
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.http import urlsafe_base64_encode
 
 User = get_user_model()
 
@@ -57,7 +58,7 @@ class ForgotPasswordSendEmailOTPViewSet(ViewSet):
     http_method_names = ["post"]
 
     def create(self, request):
-        serializer = ForgotPasswordSendEmailOTPSerializer(
+        serializer = SendEmailOTPSerializer(
             data=request.data, context={"request": request}
         )
         serializer.is_valid(raise_exception=True)
@@ -83,10 +84,10 @@ class ForgotPasswordVerifyEmailOTPViewSet(ViewSet):
             verify = EmailOTP.verify(
                 serializer.validated_data['email'], serializer.validated_data['otp'])
             if verify.get('status') == status.HTTP_202_ACCEPTED:
-                user.set_password(serializer.validated_data["password"])
-                user.save()
-                return Response({"message": "Password reset successfully"}, status=status.HTTP_200_OK)
+                print("hello")
+                return Response({"message": "OTP verified successfully", "uid": urlsafe_base64_encode(force_bytes(user.pk)), "status": "success", "token": default_token_generator.make_token(user)}, status=status.HTTP_200_OK)
             return Response({"message": "OTP is not Valid or Expired. Please try again"}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'message': 'User Doesn\'t exists'}, status=status.HTTP_404_NOT_FOUND)
 
 
 class ForgotPasswordSendPhoneOTPViewSet(ViewSet):
@@ -95,7 +96,7 @@ class ForgotPasswordSendPhoneOTPViewSet(ViewSet):
     http_method_names = ["post"]
 
     def create(self, request):
-        serializer = ForgotPasswordSendPhoneOTPSerializer(
+        serializer = SendPhoneOTPSerializer(
             data=request.data, context={"request": request}
         )
         serializer.is_valid(raise_exception=True)
@@ -125,11 +126,12 @@ class ForgotPasswordVerifyPhoneOTPViewSet(ViewSet):
             verify = PhoneOTP.verify(
                 phone, serializer.validated_data['otp'])
             if verify.get('status') == status.HTTP_202_ACCEPTED:
-                user_profile.user.set_password(
-                    serializer.validated_data["password"])
-                user_profile.user.save()
-                return Response({"message": "Password reset successfully"}, status=status.HTTP_200_OK)
+                return Response({"message": "OTP verified successfully", "uid": urlsafe_base64_encode(force_bytes(user_profile.user.id)), "status": "success", "token": default_token_generator.make_token(user_profile.user)}, status=status.HTTP_200_OK)
             return Response({"message": "OTP is not Valid or Expired. Please try again"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ForgotPasswordResetView(PasswordResetConfirmView):
+    pass
 
 
 class SignupAndLoginViewSet(ModelViewSet):
