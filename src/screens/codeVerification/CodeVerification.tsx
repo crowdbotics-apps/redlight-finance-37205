@@ -17,7 +17,7 @@ const CodeVerification = ({route})=>{
     const {mode} = route.params   
     const [isLoading,setIsLoading] = useState<boolean>(false)
     const [isDisable,setIsDisable] = useState<boolean>(false)
-    const [code,setCode] = useState<string>()
+    const [code,setCode] = useState<string>('')
 
     const refRBSheet = useRef();
     const navigation = useNavigation();

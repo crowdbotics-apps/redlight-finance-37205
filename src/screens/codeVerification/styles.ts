@@ -69,9 +69,6 @@ const styles = StyleSheet.create({
       underlineStyleHighLighted: {
         borderColor : Colors.aubergine
     },
-    underlineStyleHighLighted: {
-        borderColor: "#03DAC6",
-    },
 })
 
 export default styles;
