@@ -10,24 +10,23 @@ from home.api.v1.serializers import (
     SignupAndLoginSerializer,
     SendEmailOTPSerializer,
     VerifyEmailOTPSerializer,
-    ForgotPasswordSendEmailOTPSerializer,
     ForgotPasswordVerifyEmailOTPSerializer,
     ChangePasswordSerializer,
     SendPhoneOTPSerializer,
     VerifyPhoneOTPSerializer,
-    ForgotPasswordSendPhoneOTPSerializer,
     ForgotPasswordVerifyPhoneOTPSerializer,
     SettingsProfileScreenSerializer,
     DeleteAccountSerializer,
-    WalletSerializer,
-    WalletQRCodeSerializer
 )
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
-from users.models import UserProfile, Wallet
-from rest_auth.views import LogoutView
+from users.models import UserProfile
+from rest_auth.views import LogoutView, PasswordResetConfirmView
 from rest_framework.views import APIView
+from django.utils.encoding import force_bytes
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.http import urlsafe_base64_encode
 
 User = get_user_model()
 
@@ -59,7 +58,7 @@ class ForgotPasswordSendEmailOTPViewSet(ViewSet):
     http_method_names = ["post"]
 
     def create(self, request):
-        serializer = ForgotPasswordSendEmailOTPSerializer(
+        serializer = SendEmailOTPSerializer(
             data=request.data, context={"request": request}
         )
         serializer.is_valid(raise_exception=True)
@@ -85,10 +84,10 @@ class ForgotPasswordVerifyEmailOTPViewSet(ViewSet):
             verify = EmailOTP.verify(
                 serializer.validated_data['email'], serializer.validated_data['otp'])
             if verify.get('status') == status.HTTP_202_ACCEPTED:
-                user.set_password(serializer.validated_data["password"])
-                user.save()
-                return Response({"message": "Password reset successfully"}, status=status.HTTP_200_OK)
+                print("hello")
+                return Response({"message": "OTP verified successfully", "uid": urlsafe_base64_encode(force_bytes(user.pk)), "status": "success", "token": default_token_generator.make_token(user)}, status=status.HTTP_200_OK)
             return Response({"message": "OTP is not Valid or Expired. Please try again"}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'message': 'User Doesn\'t exists'}, status=status.HTTP_404_NOT_FOUND)
 
 
 class ForgotPasswordSendPhoneOTPViewSet(ViewSet):
@@ -97,7 +96,7 @@ class ForgotPasswordSendPhoneOTPViewSet(ViewSet):
     http_method_names = ["post"]
 
     def create(self, request):
-        serializer = ForgotPasswordSendPhoneOTPSerializer(
+        serializer = SendPhoneOTPSerializer(
             data=request.data, context={"request": request}
         )
         serializer.is_valid(raise_exception=True)
@@ -127,11 +126,12 @@ class ForgotPasswordVerifyPhoneOTPViewSet(ViewSet):
             verify = PhoneOTP.verify(
                 phone, serializer.validated_data['otp'])
             if verify.get('status') == status.HTTP_202_ACCEPTED:
-                user_profile.user.set_password(
-                    serializer.validated_data["password"])
-                user_profile.user.save()
-                return Response({"message": "Password reset successfully"}, status=status.HTTP_200_OK)
+                return Response({"message": "OTP verified successfully", "uid": urlsafe_base64_encode(force_bytes(user_profile.user.id)), "status": "success", "token": default_token_generator.make_token(user_profile.user)}, status=status.HTTP_200_OK)
             return Response({"message": "OTP is not Valid or Expired. Please try again"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ForgotPasswordResetView(PasswordResetConfirmView):
+    pass
 
 
 class SignupAndLoginViewSet(ModelViewSet):
@@ -243,22 +243,6 @@ class SettingsProfileScreenViewset(APIView):
         return Response(serializer.data)
 
 
-class WalletQRCodeViewset(APIView):
-    """Wallet QR Code by ID currently logged in user requires Auth token and wallet ID"""
-    permission_classes = (IsAuthenticated,)
-    authentication_classes = (TokenAuthentication,)
-    http_method_names = ['get']
-
-    def get(self, request, pk):
-        try:
-            wallet = Wallet.objects.get(pk=pk, user=request.user)
-        except Wallet.DoesNotExist:
-            return Response({'error': 'Not found'}, status=status.HTTP_404_NOT_FOUND)
-
-        serializer = WalletQRCodeSerializer(wallet)
-        return Response(serializer.data)
-
-
 class LogoutViewset(LogoutView):
     """LogoutViewset for Logging out currently logged in user required Authorization header"""
     http_method_names = ['post']
@@ -282,13 +266,3 @@ class DeleteAccountViewset(ViewSet):
             return Response({'message': 'Account deleted successfully'}, status=status.HTTP_200_OK)
         except:
             return Response({'message': 'Server error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-
-class WalletViewset(ModelViewSet):
-    """Wallet viewset for CRUD in wallet associated with user account"""
-    permission_classes = (IsAuthenticated,)
-    authentication_classes = (TokenAuthentication,)
-    serializer_class = WalletSerializer
-
-    def get_queryset(self):
-        return Wallet.objects.filter(user=self.request.user)
