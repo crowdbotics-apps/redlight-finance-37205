@@ -3,6 +3,7 @@ import React,{FC} from 'react'
 import {Splash as SplashScreen} from "../screens/splash";
 import {Signup as SignupScreen} from '../screens/signup';
 import { Signin as SigninScreen } from "../screens/signin";
+import {CodeVerification as CodeVerificationScreen} from "../screens/codeVerification";
 
 const RootStack = createStackNavigator();
 const RootNavigator : FC = ()=>{
@@ -23,7 +24,12 @@ const RootNavigator : FC = ()=>{
             />
             <RootStack.Screen
                 name="SigninScreen"
-                component={SigninScreen}/>
+                component={SigninScreen}
+            />
+             <RootStack.Screen 
+                name="CodeVerificationScreen"
+                component={CodeVerificationScreen}
+            />
         </RootStack.Navigator>
     )
 }

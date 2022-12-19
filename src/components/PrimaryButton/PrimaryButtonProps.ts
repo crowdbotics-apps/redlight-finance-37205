@@ -1,5 +1,10 @@
+import { ViewStyle } from "react-native";
+
 export type PrimaryButtonProps = {
-    isLoading : Boolean,
+    isLoading : boolean |undefined,
     text : String
-    onPress: Function;
+    onPress: Function,
+    style  : ViewStyle,
+    btnStyle : ViewStyle,
+    disabled : boolean | undefined
 }

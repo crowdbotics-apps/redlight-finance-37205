@@ -12,14 +12,15 @@ const styles = StyleSheet.create({
         width : '100%'
     },
     wrapper : {
+        height : 40,
         flexDirection : 'row',
-        justifyContent : 'flex-start',
+        justifyContent : 'space-between',
         alignItems : 'center',
-        marginTop: '15%',
-        paddingHorizontal : 20,
+        marginTop: '14%',
+        marginHorizontal : 20,
     },
     touchable : {
-        marginHorizontal : 20
+
     },
     title : {
         fontFamily : Fonts.PoppinsBold,
@@ -28,7 +29,6 @@ const styles = StyleSheet.create({
         lineHeight : 27,
         color : Colors.white,
         textAlign :'center',
-        marginStart : 15
     }
 })
 

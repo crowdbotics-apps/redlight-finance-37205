@@ -4,6 +4,8 @@ import SplashBg from './SplashBg.png'
 import Laptop from './Laptop.png'
 import Maskgroup from './Maskgroup.png'
 import Rectangle from './Rectangle.png'
+import Verification from './Verification.png'
+import Successful from './Successful.png'
 
 const Images = {
     Background,
@@ -11,7 +13,9 @@ const Images = {
     SplashBg,
     Laptop, 
     Maskgroup,
-    Rectangle
+    Rectangle,
+    Verification,
+    Successful
 }
 
 export default Images

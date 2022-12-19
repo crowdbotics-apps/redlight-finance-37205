@@ -6,18 +6,24 @@ import Images from '../../assets/Images'
 import Icons from '../../assets/Icons'
 
 const Header : FC<HeaderProps>  = props =>{
-    const {onPress} = props;
+    const {onPress,isBackIconVisible=true} = props;
     return (
         <View style={styles.container}>
             <ImageBackground source={Images.Header} resizeMode="cover" style = {styles.image}>
                 <View style={styles.wrapper}>
-                    <TouchableOpacity 
+                    {isBackIconVisible ? <TouchableOpacity 
                         style={styles.touchable} 
                         onPress = {()=>onPress()}
                     >
                         <Icons.BackArrow/>
-                    </TouchableOpacity>
-                    <Text style={styles.title}>Pandoras Vault</Text>
+                    </TouchableOpacity> : <View/> }
+                    <Text style={[
+                        styles.title,
+                        {marginEnd : isBackIconVisible ? 30 : 0}]}
+                    >
+                        Pandoras Vault
+                    </Text>
+                    <View/>
                 </View>
             </ImageBackground>
         </View>
