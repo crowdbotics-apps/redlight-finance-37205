@@ -17,50 +17,37 @@ const styles = StyleSheet.create({
         color : Colors.Gray78,
         marginVertical : 20
     },
-    tabContainer : {
-        flexDirection : 'row',
-        justifyContent : 'space-between',
-        alignItems : 'center',
-        marginBottom : 30
-    },
-    tab : {
-        flex:1,
-        alignItems: "center",
-        backgroundColor: "#DDDDDD",
-        padding: 15,
-    },
-    tabText : {
-        fontFamily : Fonts.PoppinsSemibold,
-        fontWeight : '600',
-        fontSize : 14,
-        lineHeight : 21,
-        color : Colors.white,
+    circle : {
+        alignSelf : 'center'
     },
     body : {
         width  :'100%',
         paddingHorizontal : 30,
     },
-    footerView : {
-        flexDirection : 'row',
-        justifyContent : 'space-between',
-        alignItems : 'center'
+    text : {
+        fontFamily : Fonts.PoppinsRegular,
+        fontWeight : '400',
+        fontSize : 13,
+        lineHeight : 18,
+        color : Colors.lightRed,
+        textAlign : 'right'
     },
-    footerText  : { 
-        fontFamily  :Fonts.PoppinsBold,
-        fontWeight : '600',
+    agreementText : {
+        fontFamily : Fonts.PoppinsRegular,
+        fontWeight : '500',
         fontSize : 14,
         lineHeight : 21,
-        color : Colors.MediumDarkGray,
-        marginHorizontal  : 25
+        color : Colors.lightRed,
+        textDecorationLine : 'underline'
     },
-    hairline : {
-        flex: 1,
-        borderBottomColor : Colors.MediumDarkGray,
-        borderBottomWidth : 1,
+    checkboxTextStyle : {
+        fontFamily : Fonts.PoppinsBold,
+        fontWeight : '500',
+        fontSize : 14,
+        lineHeight : 21,
+        color : Colors.Gray78,
+        marginTop : 15
     },
-    circle : {
-        alignSelf : 'center'
-    }
 })
 
 export default styles;

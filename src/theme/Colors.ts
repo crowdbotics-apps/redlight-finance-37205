@@ -7,4 +7,6 @@ export const Colors = {
     RedBackground: "#BC0016",
     TabBackground: "#201D1E",
     TabButtonOne : "#2D282A",
+    lightRed : '#E22540',
+    aubergine : '#201D1E',
 }

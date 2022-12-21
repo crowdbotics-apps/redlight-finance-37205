@@ -1,8 +1,10 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import React,{FC} from 'react'
 import {Splash as SplashScreen} from "../screens/splash";
-import {Signup as SignupScreen} from '../screens/signup';
+import {Signup as SignupScreen} from '../screens/signup'
+import {CodeVerification as CodeVerificationScreen} from "../screens/codeVerification";
 import { Signin as SigninScreen } from "../screens/signin";
+
 
 const RootStack = createStackNavigator();
 const RootNavigator : FC = ()=>{
@@ -21,9 +23,14 @@ const RootNavigator : FC = ()=>{
                 name="SignupScreen"
                 component={SignupScreen}
             />
+             <RootStack.Screen 
+                name="CodeVerificationScreen"
+                component={CodeVerificationScreen}
+            />
             <RootStack.Screen
                 name="SigninScreen"
-                component={SigninScreen}/>
+                component={SigninScreen}
+            />
         </RootStack.Navigator>
     )
 }
