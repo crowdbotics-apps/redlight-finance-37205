@@ -162,7 +162,8 @@ const Signup = ()=>{
                 },
                 password: password,
                 username: userName,
-                mode : mode
+                mode : mode,
+                screen: "signup"
             }
 
             setIsLoading(true)

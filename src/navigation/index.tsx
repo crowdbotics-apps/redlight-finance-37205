@@ -5,6 +5,8 @@ import {Signup as SignupScreen} from '../screens/signup'
 import {CodeVerification as CodeVerificationScreen} from "../screens/codeVerification";
 import { Signin as SigninScreen } from "../screens/signin";
 
+import {ForgotPassword as ForgotPasswordScreen} from "../screens/forgotpassword";
+import { SetNewPassword as SetNewPasswordScreen } from "../screens/setnewpassword";
 
 const RootStack = createStackNavigator();
 const RootNavigator : FC = ()=>{
@@ -30,6 +32,14 @@ const RootNavigator : FC = ()=>{
             <RootStack.Screen
                 name="SigninScreen"
                 component={SigninScreen}
+            />
+            <RootStack.Screen
+                name = "ForgotPasswordScreen"
+                component={ForgotPasswordScreen}
+            />
+            <RootStack.Screen
+                name="SetNewPasswordScreen"
+                component={SetNewPasswordScreen}
             />
         </RootStack.Navigator>
     )

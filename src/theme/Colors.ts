@@ -9,4 +9,5 @@ export const Colors = {
     TabButtonOne : "#2D282A",
     lightRed : '#E22540',
     aubergine : '#201D1E',
+    phoneInputBackground : "#201D1E",
 }
