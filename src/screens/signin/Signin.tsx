@@ -8,17 +8,25 @@ import styles from '../signin/styles';
 import { login } from '../../services/auth';
 import { useNavigation } from '@react-navigation/native';
 import Icons from '../../assets/Icons'
+<<<<<<< HEAD
 import {setItem} from '../../util'
+=======
+import { bool } from 'prop-types';
+import WelcomePopup from '../../components/WelcomePopup/WelcomePopup';
+
+>>>>>>> 9d64905afc2cf7fe7085a503f3ef1c7fda6aad52
 
 const Signin = () => {
 
   const [username, setUsername] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [seePassword, setseePassword] = useState(true)
+  const [isModalVisible, setisModalVisible] = useState(false)
 
   const navigation = useNavigation();
 
   const loginHandler = () => {
+<<<<<<< HEAD
     if (validate()){
       console.log("Inside")
       const data = { username: username, password: password }
@@ -36,6 +44,12 @@ const Signin = () => {
             }]
         })
       }).catch(error => {
+=======
+    validate();
+    console.log("Inside")
+    const data = { username: username, password: password }
+    login(data).then((response) => { console.log('res', response, 'data', data) }).catch(error => {
+>>>>>>> 9d64905afc2cf7fe7085a503f3ef1c7fda6aad52
 
         console.log(error.response);
       })
@@ -43,15 +57,26 @@ const Signin = () => {
       setPassword("")
   }
   }
+<<<<<<< HEAD
   const validate  = () =>{
     if(username && password){
       return true
+=======
+  const validate = () => {
+    if (username === undefined || username === "" || password === undefined || password === "") {
+      Alert.alert("Please enter your valid Username and Password")
+
+>>>>>>> 9d64905afc2cf7fe7085a503f3ef1c7fda6aad52
     }
     else{
       Alert.alert("Please enter your valid Username and Password")  
       return false
     }
 
+  }
+  const changeModalVisbile = () => {
+
+    setisModalVisible(!isModalVisible)
   }
   return (
     <View>
@@ -62,13 +87,12 @@ const Signin = () => {
           <CustomInput
             label=""
             value={username}
-            onChangeText={setUsername} />
+            onChangeText={setUsername} containerStyle={undefined} isIconVisible={undefined} keyboardType={undefined} secureTextEntry={undefined} />
           <Text style={styles.upperTabText}>Password</Text>
           <CustomInput
             label=""
             value={password}
-            onChangeText={setPassword} isIconVisible={undefined} keyboardType={undefined} secureTextEntry={seePassword}
-             />
+            onChangeText={setPassword} isIconVisible={undefined} keyboardType={undefined} secureTextEntry={seePassword} containerStyle={undefined} />
           {/* <TouchableOpacity onPress={()=>{}}><Icons.EyeIcon/></TouchableOpacity> */}
           <View style={styles.tabs}>
             <Text style={styles.tabText}>Switch account</Text>
@@ -82,6 +106,9 @@ const Signin = () => {
             onPress={loginHandler}
     
           />
+          <TouchableOpacity style ={styles.upperTabText} onPress={changeModalVisbile}>
+            <Text>Open Modal</Text>
+          </TouchableOpacity>
           <View style={styles.tabss}>
             <Text style={styles.tabsText}>No Account?</Text>
             <TouchableOpacity onPress={() => navigation.navigate('SignupScreen')}>
@@ -90,6 +117,7 @@ const Signin = () => {
           </View>
         </ScrollView>
       </ImageBackground>
+      <WelcomePopup isModalVisible={isModalVisible}/>
     </View>
   );
 };
