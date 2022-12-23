@@ -5,6 +5,7 @@ from home.api.v1.viewsets import (
     SignupViewSet,
     LoginViewSet,
     SendEmailOTPViewSet,
+    UserProfileViewSet,
     VerifyEmailOTPViewSet,
     SignupAndLoginViewSet,
     ForgotPasswordSendEmailOTPViewSet,
@@ -40,6 +41,8 @@ router.register("send_phone_otp", SendPhoneOTPViewSet,
                 basename="send_phone_otp")
 router.register("verify_phone_otp", VerifyPhoneOTPViewSet,
                 basename="verify_phone_otp")
+router.register("user_profile", UserProfileViewSet,
+                basename="user_profile")
 urlpatterns = [
     path("", include(router.urls)),
     path("", include("wallet.urls")),

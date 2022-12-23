@@ -69,7 +69,13 @@ class SignupSerializer(serializers.ModelSerializer):
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
-        fields = ('middle_name', 'phone_number',)
+        fields = ('middle_name', 'phone_number', 'image')
+        extra_kwargs = {
+            'image': {
+                "required": False,
+            }
+        }
+
     
     def validate_phone_number(self, phone_number):
         if UserProfile.objects.filter(phone_number = phone_number).exists():
