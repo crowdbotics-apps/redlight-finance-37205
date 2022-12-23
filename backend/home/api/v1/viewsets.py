@@ -6,6 +6,7 @@ from ...utils import EmailOTP, PhoneOTP
 from django.contrib.auth import get_user_model
 from home.api.v1.serializers import (
     SignupSerializer,
+    UserProfileSerializer,
     UserSerializer,
     SignupAndLoginSerializer,
     SendEmailOTPSerializer,
@@ -266,3 +267,12 @@ class DeleteAccountViewset(ViewSet):
             return Response({'message': 'Account deleted successfully'}, status=status.HTTP_200_OK)
         except:
             return Response({'message': 'Server error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class UserProfileViewSet(ModelViewSet):
+    """This viewset is for updating user profile information"""
+    permission_classes = (IsAuthenticated,)
+    authentication_classes = (TokenAuthentication,)
+    serializer_class = UserProfileSerializer
+    queryset = UserProfile.objects.all()
+    http_method_names = ["get", "put"]
