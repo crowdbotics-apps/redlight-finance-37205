@@ -8,7 +8,7 @@ import styles from '../signin/styles';
 import { login } from '../../services/auth';
 import { useNavigation } from '@react-navigation/native';
 import Icons from '../../assets/Icons'
-
+import {setItem} from '../../util'
 
 const Signin = () => {
 
@@ -19,22 +19,39 @@ const Signin = () => {
   const navigation = useNavigation();
 
   const loginHandler = () => {
-    validate();
-    console.log("Inside")
-    const data = { username: username, password: password }
-    login(data).then((response) => { console.log('res' ,response,'data',data) }).catch(error => {
+    if (validate()){
+      console.log("Inside")
+      const data = { username: username, password: password }
+      login(data).then((res) => {
+        if(res?.status === 400){
+          console.log('hello');
+          Alert.alert(res.data?.non_field_errors[0])
+          return
+        }
+        setItem("token", res.token)
+        navigation.reset({
+          index:0,
+          routes:[{
+              name:'DashboardNavigaton'
+            }]
+        })
+      }).catch(error => {
 
-      console.log(error.response);
-
-    })
-    setUsername("")
-    setPassword("")
+        console.log(error.response);
+      })
+      setUsername("")
+      setPassword("")
+  }
   }
   const validate  = () =>{
-    if(username === undefined || username === "" || password === undefined || password === ""){
-      Alert.alert("Please enter your valid Username and Password")
-      
+    if(username && password){
+      return true
     }
+    else{
+      Alert.alert("Please enter your valid Username and Password")  
+      return false
+    }
+
   }
   return (
     <View>
@@ -63,7 +80,7 @@ const Signin = () => {
             isLoading={false}
             text="Sign In"
             onPress={loginHandler}
-
+    
           />
           <View style={styles.tabss}>
             <Text style={styles.tabsText}>No Account?</Text>

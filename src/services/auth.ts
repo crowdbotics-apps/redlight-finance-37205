@@ -36,7 +36,7 @@ const verifyPhoneOTP = async (data : Object) => {
     console.info(response);
     return response.data  
   } catch(error) {
-    return getResponseErrorData(error).data
+    return getResponseErrorData(error)
   }
 }
 
@@ -55,7 +55,8 @@ const login = async (data: any) => {
     const response = await api.post('login/', data)
     return response.data
   } catch (error) {
-    return getResponseErrorData(error).data
+    console.log('err',error);
+    return getResponseErrorData(error)
   }
 }
 

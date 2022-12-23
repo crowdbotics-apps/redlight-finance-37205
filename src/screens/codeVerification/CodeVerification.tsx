@@ -88,6 +88,10 @@ const CodeVerification = ({route})=>{
             }
             verifyEmailOTP(data).then(
                 response =>{
+                    if(response?.status === 400){
+                        Alert.alert(response.data.message)
+                        return;
+                    }
                     if(response.message === 'OTP Verification successful'){
                         setIsLoading(false)
                         setCode('')

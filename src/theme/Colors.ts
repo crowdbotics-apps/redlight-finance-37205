@@ -6,4 +6,5 @@ export const Colors = {
     RedBaron : '#BC0016',
     lightRed : '#E22540',
     aubergine : '#201D1E',
+    Nero  : '#181818',
 }
