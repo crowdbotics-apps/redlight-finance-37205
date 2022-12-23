@@ -8,13 +8,10 @@ import styles from '../signin/styles';
 import { login } from '../../services/auth';
 import { useNavigation } from '@react-navigation/native';
 import Icons from '../../assets/Icons'
-<<<<<<< HEAD
 import {setItem} from '../../util'
-=======
 import { bool } from 'prop-types';
 import WelcomePopup from '../../components/WelcomePopup/WelcomePopup';
 
->>>>>>> 9d64905afc2cf7fe7085a503f3ef1c7fda6aad52
 
 const Signin = () => {
 
@@ -26,7 +23,6 @@ const Signin = () => {
   const navigation = useNavigation();
 
   const loginHandler = () => {
-<<<<<<< HEAD
     if (validate()){
       console.log("Inside")
       const data = { username: username, password: password }
@@ -44,12 +40,6 @@ const Signin = () => {
             }]
         })
       }).catch(error => {
-=======
-    validate();
-    console.log("Inside")
-    const data = { username: username, password: password }
-    login(data).then((response) => { console.log('res', response, 'data', data) }).catch(error => {
->>>>>>> 9d64905afc2cf7fe7085a503f3ef1c7fda6aad52
 
         console.log(error.response);
       })
@@ -57,16 +47,9 @@ const Signin = () => {
       setPassword("")
   }
   }
-<<<<<<< HEAD
   const validate  = () =>{
     if(username && password){
       return true
-=======
-  const validate = () => {
-    if (username === undefined || username === "" || password === undefined || password === "") {
-      Alert.alert("Please enter your valid Username and Password")
-
->>>>>>> 9d64905afc2cf7fe7085a503f3ef1c7fda6aad52
     }
     else{
       Alert.alert("Please enter your valid Username and Password")  
