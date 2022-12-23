@@ -69,7 +69,7 @@ class SignupSerializer(serializers.ModelSerializer):
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
-        fields = ('middle_name', 'phone_number', 'image')
+        fields = ('id', 'middle_name', 'phone_number', 'image')
         extra_kwargs = {
             'image': {
                 "required": False,

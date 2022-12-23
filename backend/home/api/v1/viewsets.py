@@ -275,4 +275,4 @@ class UserProfileViewSet(ModelViewSet):
     authentication_classes = (TokenAuthentication,)
     serializer_class = UserProfileSerializer
     queryset = UserProfile.objects.all()
-    http_method_names = ["put"]
+    http_method_names = ["get", "put"]
