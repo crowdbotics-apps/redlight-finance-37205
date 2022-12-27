@@ -18,6 +18,7 @@ import moment from 'moment'
 import styles from './styles'
 import Images from '../../assets/Images'
 import Icons from '../../assets/Icons'
+import { Strings } from '../../util/Strings';
 import CustomHeader from '../../components/CustomHeader';
 import {getWalletQR } from '../../services/homeServices';
 
@@ -50,7 +51,7 @@ const QRCodeScreen : FC = ({route})=>{
                     subject: 'Share Link', //  for email
                   };
                   Share.open(shareImageBase64).then(res=>{
-                    console.log('QR shared succesfully!!');
+                    console.log(Strings.QR_SHARED_SUCCESSFULLY);
                   })
                   .catch(error => 
                     console.log(error)
@@ -73,13 +74,12 @@ const QRCodeScreen : FC = ({route})=>{
                 let filePath =  RNFS.CachesDirectoryPath+`/QR_${mili}.png`;
                 RNFS.writeFile(filePath, data, 'base64')
                 .then((success) => {
-                    console.log('code reached here');
                     return CameraRoll.save(filePath,)
                 })
                 .then(() => {
                     {Platform.OS === 'ios' ? 
-                        Alert.alert('QR saved successfully!!') : 
-                        ToastAndroid.show('QRCode saved to gallery', ToastAndroid.LONG);
+                        Alert.alert(Strings.QR_SAVED_SUCCESSFULLY) : 
+                        ToastAndroid.show(Strings.QR_SAVED_SUCCESSFULLY, ToastAndroid.LONG);
                     }
                     });
                 });
@@ -105,7 +105,7 @@ const QRCodeScreen : FC = ({route})=>{
             <ImageBackground source={Images.Rectangle} resizeMode="cover" style={styles.image}>
                 <StatusBar barStyle='light-content'/>
                 <CustomHeader 
-                    name="Quick View" 
+                    name={Strings.QUICK_VIEW}
                     Icon = {<Icons.CrossIcon/>}
                     isIconVisible={true} 
                     headerStyle = {{marginTop : Platform.OS === 'ios' ? '12%' : 30}}
@@ -128,14 +128,14 @@ const QRCodeScreen : FC = ({route})=>{
                     <TouchableOpacity style={styles.shareBtn} onPress={shareHandler}>
                         <View style={styles.btnView}>
                             <Icons.ShareIcon/>
-                            <Text style={styles.btnText}>Share my QR Code</Text>
+                            <Text style={styles.btnText}>{Strings.SHARE_MY_QR_CODE}</Text>
                         </View>
                     </TouchableOpacity>
 
                     <TouchableOpacity style={styles.downloadBtn} onPress={saveQrToDisk}>
                         <View style={styles.btnView}>
                             <Icons.DownloadIcon/>
-                            <Text style={styles.btnText}>Save to My Gallery</Text>
+                            <Text style={styles.btnText}>{Strings.SAVE_TO_MY_GALLERY}</Text>
                         </View>
                     </TouchableOpacity>
 
