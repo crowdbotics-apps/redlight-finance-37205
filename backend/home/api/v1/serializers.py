@@ -67,20 +67,26 @@ class SignupSerializer(serializers.ModelSerializer):
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
+    username = serializers.ReadOnlyField(source='user.username')
+    email = serializers.ReadOnlyField(source='user.email')
+    name = serializers.ReadOnlyField(source='user.name')
+
     class Meta:
         model = UserProfile
-        fields = ('id', 'middle_name', 'phone_number', 'image')
+        fields = ('id', 'middle_name', 'phone_number',
+                  'image', 'username', 'email', 'name')
         extra_kwargs = {
             'image': {
                 "required": False,
             }
         }
 
-    
     def validate_phone_number(self, phone_number):
-        if UserProfile.objects.filter(phone_number = phone_number).exists():
-            raise serializers.ValidationError(_(f'User with phone_number {phone_number} already exists'))
+        if UserProfile.objects.filter(phone_number=phone_number).exists():
+            raise serializers.ValidationError(
+                _(f'User with phone_number {phone_number} already exists'))
         return phone_number
+
 
 class SignupAndLoginSerializer(SignupSerializer):
     """Serializer for signup and login simultaneously"""
