@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Svg, { SvgFromXml, SvgXml } from "react-native-svg"
 import Home from '../screens/home';
 import Profile from '../screens/profile';
+import QRScanner from '../screens/QRScanner';
 import { Colors } from '../theme/Colors';
 import Icons from '../assets/Icons'
 
@@ -31,6 +32,16 @@ const DashboardTabNavigator : FC = () =>{
                 options={{
                     tabBarIcon: ({focused }) => (
                         focused ? <Icons.tabHomeSelected />  : <Icons.tabHome/>
+                    ),
+                }}
+            />
+             <Tab.Screen
+                name="QrScanner"
+                component={QRScanner}
+                options={{
+                    tabBarStyle : {display : 'none'},
+                    tabBarIcon: ({ focused }) => (
+                        focused ? <Icons.ScannerIcon/>: <Icons.ScannerIcon/>
                     ),
                 }}
             />

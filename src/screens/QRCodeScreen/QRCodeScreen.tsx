@@ -4,14 +4,12 @@ import {
     Text,
     StatusBar,
     ImageBackground, 
-    TouchableOpacity,
     Platform,
     Alert,
     PermissionsAndroid,
     ToastAndroid } from 'react-native'
 import CameraRoll from "@react-native-community/cameraroll";
 import { useNavigation } from '@react-navigation/native';
-import QRCode from 'react-native-qrcode-svg';
 import RNFS from "react-native-fs";
 import Share from 'react-native-share';
 import moment from 'moment'
@@ -19,6 +17,7 @@ import styles from './styles'
 import Images from '../../assets/Images'
 import Icons from '../../assets/Icons'
 import CustomHeader from '../../components/CustomHeader';
+import QrCode from '../../components/QrCode';
 import {getWalletQR } from '../../services/homeServices';
 
 const QRCodeScreen : FC = ({route})=>{
@@ -61,9 +60,19 @@ const QRCodeScreen : FC = ({route})=>{
 
     const saveQrToDisk = async() => {
 
-        if (Platform.OS === "android" &&
-         !(await hasAndroidPermission())) {
-             return;
+        if (Platform.OS === "android"){
+            const permission= PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE;
+           
+            const hasPermission = await PermissionsAndroid.check(permission);
+             if (!hasPermission) {
+               return false;
+             }
+             else{
+                 const status = await PermissionsAndroid.request(permission);
+                 if(status !== 'granted'){
+                   return false
+                 }
+             }
         }
         
         if(QRref){
@@ -73,7 +82,6 @@ const QRCodeScreen : FC = ({route})=>{
                 let filePath =  RNFS.CachesDirectoryPath+`/QR_${mili}.png`;
                 RNFS.writeFile(filePath, data, 'base64')
                 .then((success) => {
-                    console.log('code reached here');
                     return CameraRoll.save(filePath,)
                 })
                 .then(() => {
@@ -84,20 +92,6 @@ const QRCodeScreen : FC = ({route})=>{
                     });
                 });
         }
-    }
-
-    const hasAndroidPermission = async() => {
-        const permission=
-        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE;
-        
-          const hasPermission = 
-        await PermissionsAndroid.check(permission);
-          if (hasPermission) {
-            return true;
-          }
-        
-          const status = await PermissionsAndroid.request(permission);
-          return status === 'granted';
     }
     
     return (
@@ -112,34 +106,14 @@ const QRCodeScreen : FC = ({route})=>{
                     onPress={()=>navigation.goBack()}
                 />
                 
-                <View style={styles.QRContainer}>
-                    <Text style={styles.walletText}>{walletName}</Text>
-
-                    {QRString ? <View style={styles.QRView}>
-                        <QRCode
-                            size = {200}
-                            value= {QRString}
-                            getRef = {(c)=>setQRref(c)}
-                        />
-                    </View> : null
-                    }
-                    <Text style={styles.usernameText}>{username}</Text>
-
-                    <TouchableOpacity style={styles.shareBtn} onPress={shareHandler}>
-                        <View style={styles.btnView}>
-                            <Icons.ShareIcon/>
-                            <Text style={styles.btnText}>Share my QR Code</Text>
-                        </View>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={styles.downloadBtn} onPress={saveQrToDisk}>
-                        <View style={styles.btnView}>
-                            <Icons.DownloadIcon/>
-                            <Text style={styles.btnText}>Save to My Gallery</Text>
-                        </View>
-                    </TouchableOpacity>
-
-                </View>
+                <QrCode
+                    wallet = {walletName}
+                    user = {username}
+                    qrString = {QRString}
+                    setQRref = {setQRref}
+                    shareQR = {shareHandler}
+                    saveQR = {saveQrToDisk}
+                />
             </ImageBackground>
         </View>
     )
