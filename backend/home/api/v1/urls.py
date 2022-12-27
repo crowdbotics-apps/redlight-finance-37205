@@ -41,8 +41,6 @@ router.register("send_phone_otp", SendPhoneOTPViewSet,
                 basename="send_phone_otp")
 router.register("verify_phone_otp", VerifyPhoneOTPViewSet,
                 basename="verify_phone_otp")
-router.register("user_profile", UserProfileViewSet,
-                basename="user_profile")
 urlpatterns = [
     path("", include(router.urls)),
     path("", include("wallet.urls")),
@@ -55,4 +53,6 @@ urlpatterns = [
          DeleteAccountViewset.as_view({'delete': 'destroy'}), name="delete_account"),
     path("forgot_password/reset_password/", ForgotPasswordResetView.as_view(),
          name="forgot_password_reset_password"),
+    path("user_profile/<int:pk>/", UserProfileViewSet.as_view({'get':'retrieve', 'put':'update'}),
+         name="user_profile")
 ]

@@ -67,20 +67,26 @@ class SignupSerializer(serializers.ModelSerializer):
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
+    username = serializers.ReadOnlyField(source='user.username')
+    email = serializers.ReadOnlyField(source='user.email')
+    user_name = serializers.ReadOnlyField(source='user.name')
+
     class Meta:
         model = UserProfile
-        fields = ('id', 'middle_name', 'phone_number', 'image')
+        fields = ('id', 'middle_name', 'phone_number',
+                  'image', 'username', 'email', 'user_name')
         extra_kwargs = {
             'image': {
                 "required": False,
             }
         }
 
-    
     def validate_phone_number(self, phone_number):
-        if UserProfile.objects.filter(phone_number = phone_number).exists():
-            raise serializers.ValidationError(_(f'User with phone_number {phone_number} already exists'))
+        if UserProfile.objects.filter(phone_number=phone_number).exists():
+            raise serializers.ValidationError(
+                _(f'User with phone_number {phone_number} already exists'))
         return phone_number
+
 
 class SignupAndLoginSerializer(SignupSerializer):
     """Serializer for signup and login simultaneously"""
@@ -141,9 +147,11 @@ class SignupAndLoginSerializer(SignupSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
+    user_profile_id = serializers.ReadOnlyField(source='user_profile.id')
+
     class Meta:
         model = User
-        fields = ['id', 'email', 'name', 'username']
+        fields = ['id', 'email', 'name', 'username', 'user_profile_id']
 
 
 class SendEmailOTPSerializer(serializers.Serializer):
