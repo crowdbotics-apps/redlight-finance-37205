@@ -53,6 +53,6 @@ urlpatterns = [
          DeleteAccountViewset.as_view({'delete': 'destroy'}), name="delete_account"),
     path("forgot_password/reset_password/", ForgotPasswordResetView.as_view(),
          name="forgot_password_reset_password"),
-    path("user_profile/<int:pk>/", UserProfileViewSet.as_view({'get':'retrieve', 'put':'update'}),
-         name="user_profile")
+    path("user_profile/", UserProfileViewSet.as_view(
+        {'get': 'retrieve', 'patch': 'partial_update'}), name="user_profile")
 ]

@@ -69,12 +69,12 @@ class SignupSerializer(serializers.ModelSerializer):
 class UserProfileSerializer(serializers.ModelSerializer):
     username = serializers.ReadOnlyField(source='user.username')
     email = serializers.ReadOnlyField(source='user.email')
-    user_name = serializers.ReadOnlyField(source='user.name')
+    name = serializers.ReadOnlyField(source='user.name')
 
     class Meta:
         model = UserProfile
         fields = ('id', 'middle_name', 'phone_number',
-                  'image', 'username', 'email', 'user_name')
+                  'image', 'username', 'email', 'name')
         extra_kwargs = {
             'image': {
                 "required": False,
@@ -147,11 +147,9 @@ class SignupAndLoginSerializer(SignupSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-    user_profile_id = serializers.ReadOnlyField(source='user_profile.id')
-
     class Meta:
         model = User
-        fields = ['id', 'email', 'name', 'username', 'user_profile_id']
+        fields = ['id', 'email', 'name', 'username']
 
 
 class SendEmailOTPSerializer(serializers.Serializer):
