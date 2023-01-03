@@ -5,12 +5,13 @@ import Images from '../../assets/Images';
 import CustomInput from '../../components/CustomInput';
 import PrimaryButton from '../../components/PrimaryButton';
 import styles from '../signin/styles';
-import { login } from '../../services/auth';
+import { login, myProfile } from '../../services/auth';
 import { useNavigation } from '@react-navigation/native';
 import Icons from '../../assets/Icons'
 import { bool } from 'prop-types';
 import WelcomePopup from '../../components/WelcomePopup/WelcomePopup';
-import { isValidPassword, isValidUsername } from '../../util';
+import { isValidPassword, isValidUsername, removeItem, setItem } from '../../util';
+import { ChangePassword } from '../changePassword';
 
 
 const Signin = () => {
@@ -23,21 +24,29 @@ const Signin = () => {
   const navigation = useNavigation();
 
   const loginHandler = () => {
-    validate();
     const data = { username: username, password: password }
-    login(data).then((response) => { console.log('res', response, 'data', data) }).catch(error => {
-
+    if(!isValidUsername(username) || !isValidPassword(password)){
+      console.log(data)
+      Alert.alert("Please enter your correct credentials")
+      return
+    }
+    login(data).then((response) => { 
+      console.log(response)
+      if(response?.status === 400){
+        console.log("error occurred")
+        Alert.alert("please provide correct credentials")
+        return
+      }
+      console.log('res', response, 'data', data) 
+      setUsername("")
+      setPassword("")
+      setItem("token", response?.token)
+      navigation.navigate('HomeScreen')
+    })
+      .catch(error => {
       console.log(error.response);
 
     })
-    setUsername("")
-    setPassword("")
-  }
-  const validate = () => {
-    if (username === undefined || username === "" || password === undefined || password === ""|| !isValidUsername(username) || !isValidPassword(password)) {
-      Alert.alert("Please enter your valid Username and Password")
-
-    }
   }
   const changeModalVisbile = () => {
 
@@ -53,16 +62,19 @@ const Signin = () => {
             placeholder='Username'
             value={username}
             onChangeText={setUsername} 
-            containerStyle={""} 
             isleftIconVisible={true} 
-            keyboardType={undefined} 
-             secureTextEntry={undefined} />
+           />
           
           <CustomInput
             label="Password"
             placeholder='Password'
             value={password}
-            onChangeText={setPassword} isIconVisible={true} isRightIconVisible={true} isleftIconVisible={true} keyboardType={"default"} secureTextEntry={seePassword} containerStyle={undefined} />
+            onChangeText={setPassword} 
+            isRightIconVisible={true} 
+            isleftIconVisible={true} 
+            keyboardType={"default"} 
+            secureTextEntry={true} 
+           />
           <View style={styles.tabs}>
             <Text style={styles.tabText}>Switch account</Text>
             <TouchableOpacity onPress={() => navigation.navigate('ForgotPasswordScreen')}>

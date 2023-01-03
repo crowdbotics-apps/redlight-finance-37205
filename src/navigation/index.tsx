@@ -1,31 +1,34 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import React,{FC} from 'react'
-import {Splash as SplashScreen} from "../screens/splash";
-import {Signup as SignupScreen} from '../screens/signup'
-import {CodeVerification as CodeVerificationScreen} from "../screens/codeVerification";
+import React, { FC } from 'react'
+import { Splash as SplashScreen } from "../screens/splash";
+import { Signup as SignupScreen } from '../screens/signup'
+import { CodeVerification as CodeVerificationScreen } from "../screens/codeVerification";
 import { Signin as SigninScreen } from "../screens/signin";
 
-import {ForgotPassword as ForgotPasswordScreen} from "../screens/forgotpassword";
+import { ForgotPassword as ForgotPasswordScreen } from "../screens/forgotpassword";
 import { SetNewPassword as SetNewPasswordScreen } from "../screens/setnewpassword";
-
+import { ChangePassword as ChangePasswordScreen } from "../screens/changePassword";
+import { Myprofile as MyProfileScreen } from "../screens/myProfile";
+import { SettingScreen as SettingScreen } from "../screens/setting";
+import { HomeScreen as HomeScreen } from "../screens/home";
 const RootStack = createStackNavigator();
-const RootNavigator : FC = ()=>{
+const RootNavigator: FC = () => {
     return (
-        <RootStack.Navigator 
+        <RootStack.Navigator
             initialRouteName="SplashScreen"
             screenOptions={{
-                headerShown : false
+                headerShown: false
             }}
         >
-            <RootStack.Screen 
+            <RootStack.Screen
                 name="SplashScreen"
                 component={SplashScreen}
             />
-             <RootStack.Screen 
+            <RootStack.Screen
                 name="SignupScreen"
                 component={SignupScreen}
             />
-             <RootStack.Screen 
+            <RootStack.Screen
                 name="CodeVerificationScreen"
                 component={CodeVerificationScreen}
             />
@@ -34,12 +37,28 @@ const RootNavigator : FC = ()=>{
                 component={SigninScreen}
             />
             <RootStack.Screen
-                name = "ForgotPasswordScreen"
+                name="ForgotPasswordScreen"
                 component={ForgotPasswordScreen}
             />
             <RootStack.Screen
                 name="SetNewPasswordScreen"
                 component={SetNewPasswordScreen}
+            />
+            <RootStack.Screen
+                name="ChangePasswordScreen"
+                component={ChangePasswordScreen}
+            />
+            <RootStack.Screen
+                name="MyProfileScreen"
+                component={MyProfileScreen}
+            />
+            <RootStack.Screen
+                name="SettingScreen"
+                component={SettingScreen}
+            />
+            <RootStack.Screen
+                name="HomeScreen"
+                component={HomeScreen}
             />
         </RootStack.Navigator>
     )

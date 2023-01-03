@@ -33,8 +33,8 @@
     "react-native-elements": "^3.3.1",
     "react-native-fast-image": "^8.6.3",
     "react-native-gesture-handler": "^2.8.0",
-    "react-native-modal": "^13.0.1",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
+    "react-native-modal": "^13.0.1",
     "react-native-paper": "^5.0.1",
     "react-native-phone-number-input": "^2.1.0",
     "react-native-progress": "^5.0.0",
@@ -46,7 +46,7 @@
     "react-native-screens": "2.18.1",
     "react-native-splash-screen": "^3.3.0",
     "react-native-svg": "^13.6.0",
-    "react-native-vector-icons": "^8.1.0",
+    "react-native-vector-icons": "^9.2.0",
     "react-native-web": "^0.18.2",
     "react-redux": "^7.2.2",
     "redux": "^4.0.5"

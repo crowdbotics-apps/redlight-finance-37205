@@ -6,6 +6,7 @@ import Verification from './Verification.png'
 import Successful from './Successful.png'
 import Maskgroup from './Maskgroup.png'
 import Rectangle from './Rectangle.png'
+import UserImage from './UserImage.png'
 
 
 const Images = {
@@ -17,6 +18,7 @@ const Images = {
     Successful,
     Maskgroup,
     Rectangle,
+    UserImage
 }
 
 export default Images

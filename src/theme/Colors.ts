@@ -10,4 +10,6 @@ export const Colors = {
     lightRed : '#E22540',
     aubergine : '#201D1E',
     phoneInputBackground : "#201D1E",
+    borderBottom : "#4B4B4B",
+    shadowBlack : "#0000"
 }
