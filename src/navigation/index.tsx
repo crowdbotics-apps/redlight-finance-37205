@@ -4,6 +4,7 @@ import {Splash as SplashScreen} from "../screens/splash";
 import {Signup as SignupScreen} from '../screens/signup'
 import {CodeVerification as CodeVerificationScreen} from "../screens/codeVerification";
 import { Signin as SigninScreen } from "../screens/signin";
+import { CashIn } from "../screens/CashInScreen";
 
 
 const RootStack = createStackNavigator();
@@ -30,6 +31,10 @@ const RootNavigator : FC = ()=>{
             <RootStack.Screen
                 name="SigninScreen"
                 component={SigninScreen}
+            />
+              <RootStack.Screen
+                name="CashInScreen"
+                component={CashIn}
             />
         </RootStack.Navigator>
     )
