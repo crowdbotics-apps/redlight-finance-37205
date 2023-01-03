@@ -5,16 +5,16 @@ import { Colors } from '../../theme/Colors'
 import Circle  from '../../components/Circle'
 import Images from '../../assets/Images'
 import PrimaryButton from '../../components/PrimaryButton';
+import { Strings } from '../../util/Strings';
 
 const BottomSheetContainer : FC = ({onPress})=>{
     return (
         <View style={styles.container}>
             <Circle sourceImage={Images.Successful} CircleStyle={styles.circle}/>
-            <Text style={styles.text}>Your account is now active</Text>
+            <Text style={styles.text}>{Strings.YOUR_ACCOUNT_IS_NOW_ACTIVE}</Text>
             <Text style={styles.subText}
             > 
-               Congratulations, your account is now active, 
-               you can start using the application
+              {Strings.CONGRATS_YOUR_ACCOUNT_IS_NOW_ACTIVE}
             </Text>
             <PrimaryButton
                 isLoading={false}

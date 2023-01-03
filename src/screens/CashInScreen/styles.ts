@@ -16,10 +16,9 @@ const styles = StyleSheet.create({
     mainContainer : {
         flex:1,
         width  : '100%',
-        marginTop : '25%',
         borderTopLeftRadius : 30,
         borderTopRightRadius : 30,
-        backgroundColor : Colors.TabBackground
+        backgroundColor : Colors.aubergine
     },
     section : {
         paddingTop : 35,

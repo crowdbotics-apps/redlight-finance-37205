@@ -18,7 +18,7 @@ export default CashComponent
 
 const styles = StyleSheet.create({
     container : {
-        marginHorizontal : 10
+        marginHorizontal : 8
     },
     btn : {
         width  : 80,

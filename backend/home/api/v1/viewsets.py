@@ -1,11 +1,13 @@
 from rest_framework.authtoken.serializers import AuthTokenSerializer
-from rest_framework.viewsets import ModelViewSet, ViewSet
+from rest_framework.viewsets import ModelViewSet, ViewSet, GenericViewSet
+from rest_framework.mixins import RetrieveModelMixin, UpdateModelMixin
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from ...utils import EmailOTP, PhoneOTP
 from django.contrib.auth import get_user_model
 from home.api.v1.serializers import (
     SignupSerializer,
+    UserProfileSerializer,
     UserSerializer,
     SignupAndLoginSerializer,
     SendEmailOTPSerializer,
@@ -266,3 +268,14 @@ class DeleteAccountViewset(ViewSet):
             return Response({'message': 'Account deleted successfully'}, status=status.HTTP_200_OK)
         except:
             return Response({'message': 'Server error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class UserProfileViewSet(GenericViewSet, RetrieveModelMixin, UpdateModelMixin):
+    """This viewset is for updating user profile information"""
+    permission_classes = (IsAuthenticated,)
+    authentication_classes = (TokenAuthentication,)
+    serializer_class = UserProfileSerializer
+    http_method_names = ["get", "patch"]
+
+    def get_object(self):
+        return UserProfile.objects.get(user=self.request.user)
