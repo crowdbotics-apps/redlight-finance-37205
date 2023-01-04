@@ -16,6 +16,7 @@ import moment from 'moment'
 import styles from './styles'
 import Images from '../../assets/Images'
 import Icons from '../../assets/Icons'
+import { Strings } from '../../util/Strings';
 import CustomHeader from '../../components/CustomHeader';
 import QrCode from '../../components/QrCode';
 import {getWalletQR } from '../../services/homeServices';
@@ -49,7 +50,7 @@ const QRCodeScreen : FC = ({route})=>{
                     subject: 'Share Link', //  for email
                   };
                   Share.open(shareImageBase64).then(res=>{
-                    console.log('QR shared succesfully!!');
+                    console.log(Strings.QR_SHARED_SUCCESSFULLY);
                   })
                   .catch(error => 
                     console.log(error)
@@ -86,8 +87,8 @@ const QRCodeScreen : FC = ({route})=>{
                 })
                 .then(() => {
                     {Platform.OS === 'ios' ? 
-                        Alert.alert('QR saved successfully!!') : 
-                        ToastAndroid.show('QRCode saved to gallery', ToastAndroid.LONG);
+                        Alert.alert(Strings.QR_SAVED_SUCCESSFULLY) : 
+                        ToastAndroid.show(Strings.QR_SAVED_SUCCESSFULLY, ToastAndroid.LONG);
                     }
                     });
                 });
@@ -99,7 +100,7 @@ const QRCodeScreen : FC = ({route})=>{
             <ImageBackground source={Images.Rectangle} resizeMode="cover" style={styles.image}>
                 <StatusBar barStyle='light-content'/>
                 <CustomHeader 
-                    name="Quick View" 
+                    name={Strings.QUICK_VIEW}
                     Icon = {<Icons.CrossIcon/>}
                     isIconVisible={true} 
                     headerStyle = {{marginTop : Platform.OS === 'ios' ? '12%' : 30}}

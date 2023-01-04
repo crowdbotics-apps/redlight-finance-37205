@@ -5,6 +5,7 @@ import * as Progress from 'react-native-progress'
 import styles from './styles'
 import Images from '../../assets/Images'
 import { Colors } from '../../theme/Colors'
+import { Strings } from '../../util/Strings';
 
 const Splash : FC = () =>  {
     const [isLoading,setIsLoading] = useState<Boolean>(false);
@@ -27,7 +28,7 @@ const Splash : FC = () =>  {
         <ImageBackground source={Images.SplashBg} resizeMode="cover" style={styles.image}>
             <StatusBar barStyle='light-content'/>
             <View style={styles.mainView}>
-                <Text style={styles.mainText}>Pandoras Vault</Text>
+                <Text style={styles.mainText}>{Strings.PANDORAS_VAULT}</Text>
             </View>
 
             {isLoading && 
@@ -42,9 +43,7 @@ const Splash : FC = () =>  {
 
             <View style={styles.footerView}>
                 <Text style={styles.footerText}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    In pulvinar ac justo vel molestie. Vivamus in mollis dolor. 
-                    Mauris dapibus, justo sed consequat congue
+                   {Strings.LOREM_IPSUM}
                 </Text>
             </View>
         </ImageBackground>

@@ -4,6 +4,7 @@ import styles from './styles'
 import { HeaderProps } from './HeaderProps'
 import Images from '../../assets/Images'
 import Icons from '../../assets/Icons'
+import { Strings } from '../../util/Strings'
 
 const Header : FC<HeaderProps>  = props =>{
     const {onPress,isBackIconVisible=true} = props;
@@ -21,7 +22,7 @@ const Header : FC<HeaderProps>  = props =>{
                         styles.title,
                         {marginEnd : isBackIconVisible ? 30 : 0}]}
                     >
-                        Pandoras Vault
+                        {Strings.PANDORAS_VAULT}
                     </Text>
                     <View/>
                 </View>

@@ -11,6 +11,7 @@ import Icons from '../../assets/Icons'
 import {setItem} from '../../util'
 import { bool } from 'prop-types';
 import WelcomePopup from '../../components/WelcomePopup/WelcomePopup';
+import { Strings } from '../../util/Strings';
 
 
 const Signin = () => {
@@ -24,13 +25,11 @@ const Signin = () => {
 
   const loginHandler = () => {
     if (validate()){
-      console.log("Inside")
       const data = { username: username, password: password }
       login(data).then((res) => {
         if(res?.status === 400){
-          console.log('hello');
           Alert.alert(res.data?.non_field_errors[0])
-          return
+          return;
         }
         setItem("token", res.token)
         navigation.reset({
@@ -40,7 +39,6 @@ const Signin = () => {
             }]
         })
       }).catch(error => {
-
         console.log(error.response);
       })
       setUsername("")
@@ -52,7 +50,7 @@ const Signin = () => {
       return true
     }
     else{
-      Alert.alert("Please enter your valid Username and Password")  
+      Alert.alert(Strings.PLEASE_ENTER_YOUR_USERNAME_AND_PASSWORD)  
       return false
     }
 
@@ -66,26 +64,26 @@ const Signin = () => {
       <ImageBackground source={Images.Rectangle} resizeMode="cover" style={styles.image}>
         <Image source={Images.Maskgroup} />
         <ScrollView style={styles.body}>
-          <Text style={styles.upperTabText}>Username</Text>
+          <Text style={styles.upperTabText}>{Strings.USERNAME}</Text>
           <CustomInput
             label=""
             value={username}
             onChangeText={setUsername} containerStyle={undefined} isIconVisible={undefined} keyboardType={undefined} secureTextEntry={undefined} />
-          <Text style={styles.upperTabText}>Password</Text>
+          <Text style={styles.upperTabText}>{Strings.PASSWORD}</Text>
           <CustomInput
             label=""
             value={password}
             onChangeText={setPassword} isIconVisible={undefined} keyboardType={undefined} secureTextEntry={seePassword} containerStyle={undefined} />
           {/* <TouchableOpacity onPress={()=>{}}><Icons.EyeIcon/></TouchableOpacity> */}
           <View style={styles.tabs}>
-            <Text style={styles.tabText}>Switch account</Text>
+            <Text style={styles.tabText}>{Strings.SWITCH_ACCOUNT}</Text>
             <TouchableOpacity onPress={() => setseePassword(!seePassword)}>
-              <Text style={styles.tabText}>Forgot Password?</Text>
+              <Text style={styles.tabText}>{Strings.FORGOT_PASSOWRD}</Text>
             </TouchableOpacity>
           </View>
           <PrimaryButton
             isLoading={false}
-            text="Sign In"
+            text={Strings.SIGN_IN}
             onPress={loginHandler}
     
           />
@@ -93,9 +91,9 @@ const Signin = () => {
             <Text>Open Modal</Text>
           </TouchableOpacity>
           <View style={styles.tabss}>
-            <Text style={styles.tabsText}>No Account?</Text>
+            <Text style={styles.tabsText}>{Strings.NO_ACCOUNT}</Text>
             <TouchableOpacity onPress={() => navigation.navigate('SignupScreen')}>
-              <Text style={styles.tabText}> Sign Up</Text>
+              <Text style={styles.tabText}>{Strings.SIGN_UP}</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>

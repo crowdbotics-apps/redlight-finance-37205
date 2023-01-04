@@ -22,7 +22,7 @@ const DashboardTabNavigator : FC = () =>{
                 tabBarInactiveTintColor: Colors.RedBaron,
                 tabBarStyle : {
                     height : Platform.OS === 'ios' ? '10%' : '10%',
-                    backgroundColor  : Colors.Nero,
+                    backgroundColor  : Colors.lightBlack,
                 }
             }}
         >
