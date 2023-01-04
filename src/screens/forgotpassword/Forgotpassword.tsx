@@ -110,8 +110,8 @@ const ForgotPassword = () => {
                             withDarkTheme={true}
                             onChangeText={setPhoneNumber}
                             onChangeFormattedText={() => setCountryCode('+' + phoneInput.current?.getCallingCode()?.toString())}
-                            containerStyle={{ borderRadius: 10, marginTop: "5%", width: "99%", backgroundColor: Colors.phoneInputBackground, }}
-                            textContainerStyle={{ backgroundColor: Colors.phoneInputBackground, borderRadius: 10, }}
+                            containerStyle={{ borderRadius: 10, marginTop: "5%", width: "99%", backgroundColor: Colors.aubergine, }}
+                            textContainerStyle={{ backgroundColor: Colors.aubergine, borderRadius: 10, }}
                             codeTextStyle={{ color: Colors.Gray78, fontFamily: Fonts.PoppinsRegular, fontSize: 14, fontWeight: "400", lineHeight: 21 }} textInputStyle={{ color: Colors.Gray78, fontFamily: Fonts.PoppinsRegular, fontSize: 14, fontWeight: "400", lineHeight: 21 }} /> :
                             <CustomInput
                                 value={email}

@@ -1,16 +1,17 @@
+import React,{FC} from 'react'
 import { createStackNavigator } from "@react-navigation/stack";
-import React, { FC } from 'react'
-import { Splash as SplashScreen } from "../screens/splash";
-import { Signup as SignupScreen } from '../screens/signup'
-import { CodeVerification as CodeVerificationScreen } from "../screens/codeVerification";
+import {Splash as SplashScreen} from "../screens/splash";
+import {Signup as SignupScreen} from '../screens/signup'
+import {CodeVerification as CodeVerificationScreen} from "../screens/codeVerification";
 import { Signin as SigninScreen } from "../screens/signin";
-
 import { ForgotPassword as ForgotPasswordScreen } from "../screens/forgotpassword";
 import { SetNewPassword as SetNewPasswordScreen } from "../screens/setnewpassword";
 import { ChangePassword as ChangePasswordScreen } from "../screens/changePassword";
 import { Myprofile as MyProfileScreen } from "../screens/myProfile";
 import { SettingScreen as SettingScreen } from "../screens/setting";
-import { HomeScreen as HomeScreen } from "../screens/home";
+import Home from "../screens/home"
+import DashboardNavigator from "./DashboardNavigator";
+
 const RootStack = createStackNavigator();
 const RootNavigator: FC = () => {
     return (
@@ -58,7 +59,11 @@ const RootNavigator: FC = () => {
             />
             <RootStack.Screen
                 name="HomeScreen"
-                component={HomeScreen}
+                component={Home}
+            />
+            <RootStack.Screen
+                name="DashboardNavigaton"
+                component={DashboardNavigator}
             />
         </RootStack.Navigator>
     )

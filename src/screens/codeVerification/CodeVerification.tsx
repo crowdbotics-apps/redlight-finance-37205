@@ -12,6 +12,7 @@ import PrimaryButton from '../../components/PrimaryButton'
 import BottomSheetContainer from './BottomsheetContainer';
 import { Colors } from '../../theme/Colors'
 import { sendEmailOTP, sendPhoneOTP, verifyEmailOTP, verifyPhoneOTP, signup, forgotPasswordVerifyEmailOtp, forgotPasswordVerifyPhonelOtp } from '../../services/auth'
+import { Strings } from '../../util/Strings';
 
 const CodeVerification = ({ route }) => {
     const { mode } = route.params
@@ -31,52 +32,57 @@ const CodeVerification = ({ route }) => {
         }
     }
 
-    const resendHandler = () => {
-        setIsDisable(true)
-        if (mode === 1) {
-            const { email } = route.params
-            const data = {
-                email: email
-            }
-            sendEmailOTP(data).then(
-                response => {
-                    if (response.message === 'Email Send Successfully') {
-                        setIsDisable(false)
-                        Alert.alert('OTP sent successfully!!', " ",
-                            [
-                                { text: "OK", onPress: () => console.log("OK Pressed") }
-                            ]
-                        )
-                    }
-                })
-                .catch(error => {
-                    setIsDisable(false)
-                    console.log(error.response);
-                })
-        }
-        else {
-            const { country_code, phone_number } = route.params.user_profile
-            const data = {
-                phone_number: phone_number,
-                country_code: country_code
-            }
-            sendPhoneOTP(data).then(
-                response => {
-                    if (response.message === 'OTP Send Successfully') {
-                        setIsDisable(false)
-                        Alert.alert('OTP sent successfully!!', " ",
-                            [
-                                { text: "OK", onPress: () => console.log("OK Pressed") }
-                            ]
-                        )
-                    }
-                })
-                .catch(error => {
-                    setIsDisable(false)
-                    console.log(error.response);
-                })
-        }
-    }
+    // const resendHandler = () => {
+    //     setIsDisable(true)
+    //     if (mode === 1) {
+    //         const { email } = route.params
+    //         const data = {
+    //             email: email
+    //         }
+    //         sendEmailOTP(data).then(
+    //             response => {
+    //                 if (response.message === 'Email Send Successfully') {
+    //                     setIsDisable(false)
+    //                     Alert.alert('OTP sent successfully!!', " ",
+    //             response =>{
+    //                 if(response.message === Strings.EMAIL_SEND_SUCCESSFULLY){
+    //                   setIsDisable(false)
+    //                    Alert.alert(Strings.OTP_SENT_SUCCESSFULLY," ",
+    //                         [
+    //                             { text: "OK", onPress: () => console.log("OK Pressed") }
+    //                         ]
+    //                     )
+    //                 }
+    //             })
+    //             .catch(error => {
+    //                 setIsDisable(false)
+    //                 console.log(error.response);
+    //             })
+    //     }
+    //     else {
+    //         const { country_code, phone_number } = route.params.user_profile
+    //         const data = {
+    //             phone_number: phone_number,
+    //             country_code: country_code
+    //         }
+    //         sendPhoneOTP(data).then(
+    //             response =>{
+    //                 if(response.message === Strings.OTP_SENT_SUCCESSFULLY){
+    //                     setIsDisable(false)
+    //                     Alert.alert(Strings.OTP_SENT_SUCCESSFULLY," ",
+    //                         [
+    //                             { text: "OK", onPress: () => console.log("OK Pressed") }
+    //                         ]
+    //                     )
+    //                 }
+    //             })
+    //             .catch(error => {
+    //                 setIsDisable(false)
+    //                 console.log(error.response);
+    //             })
+    //     }
+    // }
+
 
     const verifyHandler = () => {
         setIsLoading(true)
@@ -87,8 +93,12 @@ const CodeVerification = ({ route }) => {
                 otp: code
             }
             verifyEmailOTP(data).then(
-                response => {
-                    if (response.message === 'OTP Verification successful') {
+                response =>{
+                    if(response?.status === 400){
+                        Alert.alert(response.data.message)
+                        return;
+                    }
+                    if(response.message === Strings.OTP_VERIFICATION_SUCCESSFUL){
                         setIsLoading(false)
                         setCode('')
                         const user = { ...route.params }
@@ -115,8 +125,8 @@ const CodeVerification = ({ route }) => {
                 otp: code
             }
             verifyPhoneOTP(data).then(
-                response => {
-                    if (response.message === 'OTP Verification Successful') {
+                response =>{
+                    if(response.message === Strings.OTP_VERIFICATION_SUCCESSFUL){
                         setIsLoading(false)
                         setCode('')
                         const user = { ...route.params }
@@ -195,12 +205,12 @@ const CodeVerification = ({ route }) => {
                 >
                     <Circle sourceImage={Images.Verification} CircleStyle={styles.circle} />
 
-                    <Text style={styles.headingText}>Code verification</Text>
+                    <Text style={styles.headingText}>{Strings.CODE_VERIFICATION}</Text>
 
                     <Text
                         style={styles.subText}
                     >
-                        We sent you an {mode === 1 ? 'Email' : 'OTP .'} Please enter the 6 - digit code below
+                     {mode === 1 ? Strings.WE_SENT_YOU_AN_EMAIL : Strings.PLEASE_ENTER_6_DIGIT_CODE_TO_YOUR_PHONE}
                     </Text>
 
                     <OTPInputView
@@ -214,9 +224,9 @@ const CodeVerification = ({ route }) => {
                     />
 
                     <View style={styles.resendContainer}>
-                        <Text style={styles.text}>Didn’t receive your code?</Text>
-                        <TouchableOpacity
-                            onPress={resendHandler}
+                        <Text style={styles.text}>{Strings.DIDNT_RECEIVE_YOUR_CODE}</Text>
+                        <TouchableOpacity 
+                            // onPress={resendHandler}
                             disabled={isDisable}
                         >
                             <Text style={[

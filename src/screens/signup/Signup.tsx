@@ -12,6 +12,7 @@ import PrimaryButton from '../../components/PrimaryButton'
 import {sendEmailOTP,sendPhoneOTP} from '../../services/auth'
 import { isValidEmail,isValidPassword ,isValidUsername,isValidMobile,isValidName} from '../../util';
 import { Colors } from '../../theme/Colors'
+import { Strings } from '../../util/Strings';
 
 const Signup = ()=>{
     const[email,setEmail] = useState<string>('')
@@ -42,34 +43,34 @@ const Signup = ()=>{
                 if(email)
                     return true
                 else
-                    setError("Email can't be empty!!")
+                    setError(Strings.EMAIL_CANT_BE_EMPTY)
                     return false
             }
             else{
                 if(mobileNumber)
                     return true
                 else
-                    setError("Mobile number can't be empty!!")
+                    setError(Strings.MOBILE_CANT_BE_EMPTY)
                     return false
             }
         }
         else if(firstName === ''){
-            setError("First name can't be empty!!")
+            setError(Strings.FIRST_NAME_CANT_BE_EMPTY)
             return false
         }
         else if(lastName === ''){
-            setError("Last name can't be empty!!")
+            setError(Strings.LAST_NAME_CANT_BE_EMPTY)
             return false
         }
         else if(userName === ''){
-            setError("Username can't be empty!!")
+            setError(Strings.USERNAME_CANT_BE_EMPTY)
             return false
         }
         else if(password === ''){
-            setError("Password can't be empty!!")
+            setError(Strings.PASSWORD_CANT_BE_EMPTY)
             return false
         }
-        setError('Input field is empty!!');
+        setError(Strings.INPUT_FIELD_IS_EMPTY);
         return false
     }
 
@@ -79,14 +80,14 @@ const Signup = ()=>{
                 if(isValidName(middleName)){
                     return true
                 }else{
-                    setError('First,Middle and Last name must contain alphabets only!!')
+                    setError(Strings.NAME_MUST_CONTAIN_ALPHABETS_ONLY)
                     return false;
                 }
             }
             return true
         }
         else{
-            setError('First,Middle and Last name must contain alphabets only!!')
+            setError(Strings.NAME_MUST_CONTAIN_ALPHABETS_ONLY)
             return false;
         }
     }
@@ -96,7 +97,7 @@ const Signup = ()=>{
             return true
         }
         else{
-            setError('Password and confirm password are not same!!');
+            setError(Strings.PASSWORD_AND_CONFIRM_PASSWORD_ARE_NOT_SAME);
             return false
         }
     }
@@ -106,7 +107,7 @@ const Signup = ()=>{
             return true
         }
         else{
-            setError('Username can only contain alphabets,numbers and underscores.');
+            setError(Strings.USERNAME_MUST_CONATIN_APLHABETS_NUMBERS_AND_UNDERSCORES);
             return false
         }
     }
@@ -116,7 +117,7 @@ const Signup = ()=>{
             return true
         }
         else{
-            setError('Password should be 8 characters long.It must contain uppercase,lowercase,special characters and numbers.')
+            setError(Strings.PASSWORD_SHOULD_BE_8_CHARACTERS_LONG)
             return false
         }
     }
@@ -126,7 +127,7 @@ const Signup = ()=>{
             return true
         }
         else{
-            setError('Email address is not valid!!')
+            setError(Strings.EMAIL_ADDRESS_IS_NOT_VALID)
             return false
         }
     }
@@ -136,7 +137,7 @@ const Signup = ()=>{
             return true;
         }
         else{
-            setError('Mobile number must be of 10 digits.It must be preceded with country code. (e.g. "+91" for India)')
+            setError(Strings.MOBILE_MUST_BE_OF_10_DIGITS)
             return false
         }
     }
@@ -174,7 +175,7 @@ const Signup = ()=>{
                 }
                 sendEmailOTP(data).then(
                     response =>{ 
-                        if(response.message === 'Email Send Successfully'){
+                        if(response.message === Strings.EMAIL_SEND_SUCCESSFULLY){
                             setIsLoading(false)
                             setFirstName('')
                             setMiddleName('')
@@ -200,7 +201,7 @@ const Signup = ()=>{
                 }
                 sendPhoneOTP(data).then(
                     response =>{
-                        if(response.message === 'OTP Send Successfully'){
+                        if(response.message === Strings.OTP_SENT_SUCCESSFULLY){
                             setIsLoading(false)
                             setFirstName('')
                             setMiddleName('')
@@ -239,35 +240,35 @@ const Signup = ()=>{
                     enableAutomaticScroll = {true}
                 >
                     <Circle sourceImage={Images.Laptop} CircleStyle={styles.circle}/>
-                    <Text style={styles.headingText}>Register new account</Text>
+                    <Text style={styles.headingText}>{Strings.REGISTER_NEW_ACCOUNT}</Text>
  
                     <CustomInput
-                        label = "First name"
+                        label = {Strings.FIRST_NAME}
                         value={firstName}
                         onChangeText = {setFirstName}
                         placeholder = "Firstname"
                     />
                     <CustomInput
-                        label = "Middle name"
+                        label = {Strings.MIDDLE_NAME}
                         value={middleName}
                         onChangeText = {setMiddleName}
                         placeholder = "Middlename"
                     />
                     <CustomInput
-                        label = "Last name"
+                        label = {Strings.LAST_NAME}
                         value={lastName}
                         onChangeText = {setLastName}
                         placeholder = "Lastname"
                     />
                     { mode === 1 ? <CustomInput
-                        label = "Email"
+                        label = {Strings.EMAIL}
                         value={email}
                         onChangeText = {setEmail}
                         placeholder = "Email"
                         containerStyle={{marginBottom : 8}}
                     /> : 
                     <CustomInput
-                        label = "Mobile phone"
+                        label = {Strings.MOBILE_PHONE}
                         value={mobileNumber}
                         onChangeText = {setMobileNumber}
                         placeholder = "Mobile number"
@@ -276,31 +277,31 @@ const Signup = ()=>{
                     />
                     }
                     <TouchableOpacity onPress = {modeChangeHandler}>
-                        <Text style={styles.text}>Use {mode === 1 ? 'mobile number' : 'email'} instead?</Text>
+                        <Text style={styles.text}>{mode === 1 ? Strings.USE_MOBILE_NUMBER_INSTEAD : Strings.USE_EMAIL_INSTEAD}</Text>
                     </TouchableOpacity>
 
                      <CustomInput
-                        label = "User name"
+                        label = {Strings.USER_NAME}
                         value={userName}
                         onChangeText = {setUserName}
                         placeholder = "Username"
                     />
                     <CustomInput
-                        label = "Password"
+                        label = {Strings.PASSWORD}
                         value={password}
                         onChangeText = {setPassword}
                         isIconVisible = {true}
                         secureTextEntry = {true}
-                        placeholder = "Password"
+                        placeholder = {Strings.PASSWORD}
                         isRightIconVisible={true}
                     />
                     <CustomInput
-                        label = "Confirm password"
+                        label = {Strings.CONFIRM_PASSWORD}
                         value={confirmPassword}
                         onChangeText = {setConfirmPassword}
                         isIconVisible = {true}
                         secureTextEntry = {true}
-                        placeholder = "Confirm Password"
+                        placeholder = {Strings.CONFIRM_PASSWORD}
                         isRightIconVisible={true}
                     />
 
@@ -308,7 +309,7 @@ const Signup = ()=>{
                         <Text 
                             style={styles.agreementText}
                         >
-                            End User License and Agreements
+                            {Strings.END_USER_LINCENSE_AND_AGREEMENTS}
                         </Text>
                     </TouchableOpacity>
 
@@ -318,14 +319,14 @@ const Signup = ()=>{
                         isChecked={isCheckboxChecked}
                         checkedCheckBoxColor = {Colors.RedBaron}
                         uncheckedCheckBoxColor = {Colors.Gray78}
-                        rightText="I agree to the Terms and Conditions and Privacy Policy"
+                        rightText={Strings.I_AGREE_TO_TERMS_AND_PRIVACY_POLICY}
                         rightTextStyle = {styles.checkboxTextStyle}
                     />
 
                     <PrimaryButton
                         isLoading={isLoading}
                         disabled = {!isCheckboxChecked}
-                        text = "Sign up"
+                        text = {Strings.SIGN_UP}
                         onPress = {signupHandler}
                         style={{marginVertical : 20}}
                         btnStyle = {{}}

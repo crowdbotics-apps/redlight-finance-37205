@@ -4,49 +4,44 @@ import api, { getResponseErrorData } from './api'
 const signup = async (data: Object) => {
   try {
     const response = await api.post('signup_login/', data)
-    console.info(response)
     return response.data
   } catch (error) {
     return getResponseErrorData(error).data
   }
 }
 
-const sendPhoneOTP = async (data: Object) => {
-  try {
-    const response = await api.post('send_phone_otp/', data)
-    console.info(response);
-    return response.data
-  } catch (error) {
+const sendPhoneOTP = async (data : Object) => {
+  try{
+    const response = await api.post('send_phone_otp/',data)
+    return response.data  
+  } catch(error) {
     return getResponseErrorData(error).data
   }
 }
 
-const sendEmailOTP = async (data: Object) => {
-  try {
-    const response = await api.post('send_email_otp/', data)
-    console.info(response);
-    return response.data
-  } catch (error) {
+const sendEmailOTP = async (data : Object) => {
+  try{
+    const response = await api.post('send_email_otp/',data)
+    return response.data  
+  } catch(error) {
     return getResponseErrorData(error).data
   }
 }
 
-const verifyPhoneOTP = async (data: Object) => {
-  try {
-    const response = await api.post('verify_phone_otp/', data)
-    console.info(response);
-    return response.data
-  } catch (error) {
-    return getResponseErrorData(error).data
+const verifyPhoneOTP = async (data : Object) => {
+  try{
+    const response = await api.post('verify_phone_otp/',data)
+    return response.data  
+  } catch(error) {
+    return getResponseErrorData(error)
   }
 }
 
-const verifyEmailOTP = async (data: Object) => {
-  try {
-    const response = await api.post('verify_email_otp/', data)
-    console.info(response);
-    return response.data
-  } catch (error) {
+const verifyEmailOTP = async (data : Object) => {
+  try{
+    const response = await api.post('verify_email_otp/',data)
+    return response.data  
+  } catch(error) {
     return getResponseErrorData(error).data
   }
 }

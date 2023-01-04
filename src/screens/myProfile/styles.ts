@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
         width: "99%",
         height: "90%",
         marginTop: "15%",
-        backgroundColor: Colors.phoneInputBackground,
+        backgroundColor: Colors.aubergine,
         borderRadius: 10
     }
 

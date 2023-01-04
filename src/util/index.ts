@@ -14,7 +14,7 @@ export const setItem = async (key, value) => {
 
 export const isValidName = (name : string) =>{
     const NameRegex = /^[A-Za-z]+$/
-    if(name.match(NameRegex)){
+    if(name.match(NameRegex) && name.length > 2){
         return true
     }
     else{
@@ -50,6 +50,7 @@ export const isValidEmail = (email : string) =>{
     }
 }
 
+// need to add country code
 export const isValidMobile = (mobile :string ) => {
     if(mobile.substring(3,).length === 10 && /^\d+$/.test(mobile.substring(1,)) && mobile.charAt(0) === '+'){
         return true;

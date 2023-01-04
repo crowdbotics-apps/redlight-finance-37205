@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
         width: "99%",
         height: "90%",
         marginTop: "15%",
-        backgroundColor: Colors.phoneInputBackground,
+        backgroundColor: Colors.aubergine,
         borderRadius: 10
     },
     Heading: {
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         margin: "5%",
         justifyContent: "space-between",
-        borderBottomColor: Colors.borderBottom,
+        borderBottomColor: Colors.MediumDarkGray,
         borderBottomWidth: 1,
         padding: "3%"
     },

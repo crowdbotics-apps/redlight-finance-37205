@@ -1,10 +1,12 @@
-import { useNavigation } from "@react-navigation/native";
-import React from "react";
-import { Text, TouchableOpacity, View } from "react-native";
-import { myProfile } from "../../services/auth";
+import React,{FC,useState,useEffect} from 'react'
+import {View,Text,TouchableOpacity} from 'react-native'
+import { useNavigation } from '@react-navigation/native'
+import styles from './styles'
+import { getAllWallets } from '../../services/homeServices'
+import { myProfile } from '../../services/auth'
 
-const HomeScreen = () => {
-
+const Home : FC = ()=>{
+    const [allWallets,setAllWallets] = useState([])
     const navigation = useNavigation()
     const profileScreen = () => {
         myProfile().then((response) => {
@@ -13,9 +15,27 @@ const HomeScreen = () => {
             console.log(error.response)
         })
     }
+
+    useEffect(()=>{
+        getAllWallets().then(response=>{
+            setAllWallets(response)
+        })
+        .catch(error=>{
+            console.log('error',error);     
+        })
+    },[])
+
     return (
-        <View style={{ marginTop: "20%" }}>
-            <Text>Home Screen</Text>
+        <View style={styles.container}>
+            <Text> Home screen is coming soon</Text>
+            <TouchableOpacity 
+                style={styles.btn} 
+                onPress={()=>navigation.navigate('QRCode',{
+                    walletId : allWallets[0].id
+                })}
+            >
+                <Text>Move to QR code screen</Text>
+            </TouchableOpacity>
             <TouchableOpacity onPress={profileScreen}>
                 <Text>MyProfileScreen</Text>
             </TouchableOpacity>
@@ -23,4 +43,4 @@ const HomeScreen = () => {
     )
 }
 
-export default HomeScreen
+export default Home

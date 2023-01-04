@@ -36,6 +36,7 @@ const MyProfile = ({ route }: any) => {
             if (response.status == 200) {
                 removeItem("token")
                 Alert.alert("Logged out!")
+                setIsPopupVisible(false)
                 navigation.navigate('SigninScreen')
             }
         })

@@ -52,7 +52,7 @@ const ChangePassword = () => {
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Text>GoBack</Text>
                 </TouchableOpacity>
-                <View style={{ width: "98%", height: "90%", marginTop: "10%", backgroundColor: Colors.phoneInputBackground, borderRadius: 10 }}>
+                <View style={{ width: "98%", height: "90%", marginTop: "10%", backgroundColor: Colors.aubergine, borderRadius: 10 }}>
                     <View style={styles.children}>
                         <View style={styles.elevation}>
                             <CustomInput

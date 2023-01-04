@@ -5,11 +5,6 @@ const styles = StyleSheet.create({
         flex:1,
         justifyContent : 'center',
         alignItems : 'center'
-    },
-    btn : {
-        alignItems: "center",
-        backgroundColor: "#DDDDDD",
-        padding: 10
     }
 })
 

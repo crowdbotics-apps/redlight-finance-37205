@@ -8,10 +8,11 @@ import styles from '../signin/styles';
 import { login, myProfile } from '../../services/auth';
 import { useNavigation } from '@react-navigation/native';
 import Icons from '../../assets/Icons'
+import {setItem} from '../../util'
 import { bool } from 'prop-types';
 import WelcomePopup from '../../components/WelcomePopup/WelcomePopup';
-import { isValidPassword, isValidUsername, removeItem, setItem } from '../../util';
 import { ChangePassword } from '../changePassword';
+import { Strings } from '../../util/Strings';
 
 
 const Signin = () => {
@@ -24,29 +25,36 @@ const Signin = () => {
   const navigation = useNavigation();
 
   const loginHandler = () => {
-    const data = { username: username, password: password }
-    if(!isValidUsername(username) || !isValidPassword(password)){
-      console.log(data)
-      Alert.alert("Please enter your correct credentials")
-      return
-    }
-    login(data).then((response) => { 
-      console.log(response)
-      if(response?.status === 400){
-        console.log("error occurred")
-        Alert.alert("please provide correct credentials")
-        return
-      }
-      console.log('res', response, 'data', data) 
+    if (validate()){
+      const data = { username: username, password: password }
+      login(data).then((res) => {
+        if(res?.status === 400){
+          Alert.alert(res.data?.non_field_errors[0])
+          return;
+        }
+        setItem("token", res.token)
+        navigation.reset({
+          index:0,
+          routes:[{
+              name:'DashboardNavigaton'
+            }]
+        })
+      }).catch(error => {
+        console.log(error.response);
+      })
       setUsername("")
       setPassword("")
-      setItem("token", response?.token)
-      navigation.navigate('HomeScreen')
-    })
-      .catch(error => {
-      console.log(error.response);
+  }
+  }
+  const validate  = () =>{
+    if(username && password){
+      return true
+    }
+    else{
+      Alert.alert(Strings.PLEASE_ENTER_YOUR_USERNAME_AND_PASSWORD)  
+      return false
+    }
 
-    })
   }
   const changeModalVisbile = () => {
 
@@ -61,10 +69,7 @@ const Signin = () => {
             label="Username"
             placeholder='Username'
             value={username}
-            onChangeText={setUsername} 
-            isleftIconVisible={true} 
-           />
-          
+            onChangeText={setUsername} containerStyle={undefined} isIconVisible={undefined} keyboardType={undefined} secureTextEntry={undefined} />
           <CustomInput
             label="Password"
             placeholder='Password'
@@ -86,9 +91,9 @@ const Signin = () => {
             text="Sign In"
             onPress={loginHandler} disabled={undefined} style={{marginTop: "12%"}} btnStyle={undefined}/>
           <View style={styles.tabss}>
-            <Text style={styles.tabsText}>No Account?</Text>
+            <Text style={styles.tabsText}>{Strings.NO_ACCOUNT}</Text>
             <TouchableOpacity onPress={() => navigation.navigate('SignupScreen')}>
-              <Text style={styles.tabText}> Sign Up</Text>
+              <Text style={styles.tabText}>{Strings.SIGN_UP}</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
