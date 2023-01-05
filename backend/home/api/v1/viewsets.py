@@ -89,7 +89,6 @@ class ForgotPasswordVerifyEmailOTPViewSet(ViewSet):
             verify = EmailOTP.verify(
                 serializer.validated_data['email'], serializer.validated_data['otp'])
             if verify.get('status') == status.HTTP_202_ACCEPTED:
-                print("hello")
                 return Response({"message": "OTP verified successfully", "uid": urlsafe_base64_encode(force_bytes(user.pk)), "status": "success", "token": default_token_generator.make_token(user)}, status=status.HTTP_200_OK)
             return Response({"message": "OTP is not Valid or Expired. Please try again"}, status=status.HTTP_400_BAD_REQUEST)
         return Response({'message': 'User Doesn\'t exists'}, status=status.HTTP_404_NOT_FOUND)

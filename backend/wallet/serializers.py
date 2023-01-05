@@ -215,7 +215,6 @@ class MoveCreditSerializer(serializers.Serializer):
             receiver_wallet = Wallet.objects.get(
                 pk=receive_wallet_id, wallet_type=FIAT, user=user)
         except ObjectDoesNotExist:
-            print("Hello Receive")
             raise serializers.ValidationError('Invalid wallet parameters')
         sender_wallet.wallet_balance -= transaction_amount
         receiver_wallet.wallet_balance += transaction_amount
