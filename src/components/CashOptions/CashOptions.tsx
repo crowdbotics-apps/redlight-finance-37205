@@ -1,12 +1,17 @@
-import React,{FC} from 'react'
-import {View,Text,TouchableOpacity,StyleSheet} from 'react-native'
+import React,{FC,} from 'react'
+import {View,Text,TouchableOpacity,StyleSheet,GestureResponderEvent} from 'react-native'
 import { Fonts } from '../../assets/fonts'
 import Icons from '../../assets/Icons'
 import { Colors } from '../../theme/Colors'
 
-const CashOptions : FC = () =>{
+type CashOptionsProps = {
+    onPress  : ((event: GestureResponderEvent) => void) | undefined
+}
+
+const CashOptions : FC<CashOptionsProps> = props =>{
+    const {onPress} = props
     return (
-        <TouchableOpacity style={styles.btn}>
+        <TouchableOpacity style={styles.btn} onPress = {onPress}>
             <View style={styles.image}></View>
             <View style={styles.mainContainer}>
                 <View>

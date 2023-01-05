@@ -1,5 +1,5 @@
 import React from 'react'
-import {View,Text,ImageBackground,Platform,FlatList} from 'react-native'
+import {View,Text,ImageBackground,Platform,FlatList,StatusBar} from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import CustomHeader from '../../components/CustomHeader'
 import CashOptions from '../../components/CashOptions'
@@ -15,6 +15,7 @@ const ViewAllWallet = ()=>{
     return (
         <View style={{marginTop : -10}}>
         <ImageBackground source={Images.Background} resizeMode="cover" style={styles.image}>
+            <StatusBar barStyle='light-content'/>
             <CustomHeader 
                 name={Strings.CASH_IN}
                 Icon = {<Icons.LeftArrow/>}
@@ -34,7 +35,11 @@ const ViewAllWallet = ()=>{
                     </Text>
                     <FlatList
                         data={DATA}
-                        renderItem = {(item)=><CashOptions/>}
+                        renderItem = {(item)=>
+                            <CashOptions 
+                                onPress = {()=>navigation.navigate('BankingDepositScreen')}
+                            />
+                        }
                         style= {styles.list}
                         bounces = {false}
                         showsVerticalScrollIndicator = {false}

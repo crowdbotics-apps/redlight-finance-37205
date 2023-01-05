@@ -5,6 +5,9 @@ import { CashIn as CashInScreen} from '../screens/CashInScreen';
 import ViewAllOnlineBanking from '../screens/ViewAllOnlineBanking';
 import ViewAllWallet from '../screens/ViewAllWallet';
 import ViewAllOverTheCounter from '../screens/ViewAllOverTheCounter';
+import BankingDepositScreen from '../screens/BankingDepositScreen';
+import DepositConfirmationScreen from '../screens/DepositConfirmationScreen';
+import OverTheCounterDepositScreen from '../screens/OverTheCounterDepositScreen';
 import QRCodeScreen from '../screens/QRCodeScreen';
 
 const DashboardStack = createStackNavigator()
@@ -39,6 +42,18 @@ const DashboardNavigator : FC = () => {
                <DashboardStack.Screen
                 name="ViewAllOverTheCounter"
                 component={ViewAllOverTheCounter}
+            />
+               <DashboardStack.Screen
+                name="BankingDepositScreen"
+                component={BankingDepositScreen}
+            />
+               <DashboardStack.Screen
+                name="DepositConfirmationScreen"
+                component={DepositConfirmationScreen}
+            />
+               <DashboardStack.Screen
+                name="OverTheCounterDeposit"
+                component={OverTheCounterDepositScreen}
             />
         </DashboardStack.Navigator>
     )

@@ -1,5 +1,5 @@
 import React,{FC} from 'react'
-import {View,Text,ImageBackground, TouchableOpacity,FlatList,Platform} from 'react-native'
+import {View,Text,ImageBackground, TouchableOpacity,FlatList,Platform,StatusBar} from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import CashComponent from '../../components/CashComponent'
 import CustomHeader from '../../components/CustomHeader'
@@ -15,6 +15,7 @@ const CashIn : FC = () =>{
     return (
         <View style={{marginTop : -10}}>
             <ImageBackground source={Images.Background} resizeMode="cover" style={styles.image}>
+                <StatusBar barStyle='light-content'/>
                 <CustomHeader 
                     name={Strings.CASH_IN}
                     Icon = {<Icons.LeftArrow/>}

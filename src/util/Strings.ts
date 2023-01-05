@@ -66,5 +66,14 @@ export const Strings = {
     ONER_THE_COUNTER : "Over the Counter",
     CASH_IN_WITH_EASE : "Cash in with ease.",
     E_WALLETS : 'E-wallets',
-
+    CURRENT_BALANCE : "Current Balance",
+    PROCESSING_TIME : "Processing Time",
+    CASH_IN_AMOUNT : "Cash in Amount",
+    FEES  : "Fees",
+    TOTAL : "Total",
+    AMOUNT : "Amount",
+    ORDER_NUMBER : "Order Number",
+    DEPOSIT_AMOUNT : "Deposit Amount",
+    PAYMENT_DEADLINE  : "Payment Deadline",
+    PAY_WITH_DRAGON_PAY  : "Pay With Dragon Pay",
 }
