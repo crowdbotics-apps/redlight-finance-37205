@@ -174,10 +174,17 @@ class TransactionSerializer(serializers.ModelSerializer):
     sender_name = serializers.ReadOnlyField(source='sender.name')
     receiver_name = serializers.ReadOnlyField(source='receiver.name')
     wallet_type = serializers.ReadOnlyField(source='wallet.wallet_type')
+    received = serializers.SerializerMethodField()
 
     class Meta:
         model = Transaction
         exclude = ('sender', 'receiver',)
+    
+    def get_received(self, obj):
+        user = self.context['request'].user
+        if obj.receiver == user:
+            return True
+        return False
 
 
 class MoveCreditSerializer(serializers.Serializer):
