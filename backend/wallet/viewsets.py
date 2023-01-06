@@ -3,12 +3,13 @@ from .serializers import (
     WalletQRCodeSerializer,
     SendCreditSerializer,
     TransactionSerializer,
-    MoveCreditSerializer
+    MoveCreditSerializer,
+    ExternalDepositTransactionSerializer
 )
 from rest_framework.viewsets import ModelViewSet, ViewSet
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.authentication import TokenAuthentication
 from users.models import Wallet, Transaction
 from rest_framework.views import APIView
@@ -90,7 +91,8 @@ class SendCreditViewSet(ViewSet):
             data=self.request.data, context={"request": request})
         serializer.is_valid(raise_exception=True)
         transaction = serializer.save()
-        transaction_serializer = TransactionSerializer(transaction)
+        transaction_serializer = TransactionSerializer(
+            transaction, context={"request": request})
         return Response({'status': 'success', 'transaction': transaction_serializer.data, 'message': 'Transaction Successful'}, status=status.HTTP_200_OK)
 
 
@@ -114,6 +116,20 @@ class MoveCreditViewSet(ViewSet):
     def create(self, request, *args, **kwargs):
         serializer = self.serializer_class(
             data=self.request.data, context={"request": request})
+        serializer.is_valid(raise_exception=True)
+        transaction = serializer.save()
+        transaction_serializer = TransactionSerializer(transaction)
+        return Response({'status': 'success', 'transaction': transaction_serializer.data, 'message': 'Transaction Successful'}, status=status.HTTP_200_OK)
+
+
+class ExternalDepositTransactionViewSet(ViewSet):
+    permission_classes = (AllowAny,)
+    http_method_names = ['post']
+    serializer_class = ExternalDepositTransactionSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.serializer_class(
+            data=request.data,)
         serializer.is_valid(raise_exception=True)
         transaction = serializer.save()
         transaction_serializer = TransactionSerializer(transaction)

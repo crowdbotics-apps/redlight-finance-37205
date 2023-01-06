@@ -5,7 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.db.models import Model
 import uuid
 from home.storage_backends import MediaStorage
-from home.constants import WALLET_TYPE_CHOICES, CRYPTO_TYPE_CHOICES, TRANSACTION_TYPE, FIAT
+from home.constants import WALLET_TYPE_CHOICES, CRYPTO_TYPE_CHOICES, TRANSACTION_TYPE, FIAT, BITCOIN, BLOCKCHAIN
 
 
 class User(AbstractUser):
@@ -64,11 +64,11 @@ class Wallet(BaseModels):
     # uuid = models.UUIDField(default=uuid.uuid4, editable=False)
     private_key = models.CharField(max_length=255, blank=True, null=True)
     wallet_balance = models.DecimalField(
-        max_digits=19, decimal_places=10, default=0)
+        max_digits=30, decimal_places=20, default=0)
     currency = models.CharField(max_length=5, default='USD')
-    public_address = models.CharField(max_length=255, blank=True, null=True)
+    public_address = models.CharField(max_length=70, blank=True, null=True)
     blockchain_balance = models.DecimalField(
-        max_digits=19, decimal_places=10, default=0)
+        max_digits=30, decimal_places=20, default=0)
     wallet_type = models.PositiveSmallIntegerField(
         choices=WALLET_TYPE_CHOICES, default=FIAT)
     crypto_type = models.PositiveSmallIntegerField(
@@ -77,6 +77,27 @@ class Wallet(BaseModels):
 
     def __str__(self) -> str:
         return self.wallet_name
+
+    @classmethod
+    def add(cls, user, private_key, public_address):
+        """Class Method for creating multiple wallets using bulk_create"""
+
+        wallet_data = []
+        for crypto_type, crypto_type_name in CRYPTO_TYPE_CHOICES:
+            address = public_address.get('ethereum')
+            if crypto_type == BITCOIN:
+                address = public_address.get('bitcoin')
+            wallet_data.append({
+                "user": user,
+                "wallet_name": crypto_type_name,
+                "private_key": private_key,
+                "public_address": address,
+                "crypto_type": crypto_type,
+                "wallet_type": BLOCKCHAIN,
+            })
+        wallet_objects_list = [cls(**data) for data in wallet_data]
+        wallet_obj = cls.objects.bulk_create(wallet_objects_list)
+        return wallet_obj
 
 
 class Transaction(BaseModels):
@@ -88,9 +109,10 @@ class Transaction(BaseModels):
     transaction_type = models.PositiveSmallIntegerField(
         TRANSACTION_TYPE, null=True, blank=True)
     is_external_transaction = models.BooleanField(default=False)
-    transaction_amount = models.DecimalField(max_digits=19, decimal_places=10)
-    remaining_balance = models.DecimalField(max_digits=19, decimal_places=10)
+    transaction_amount = models.DecimalField(max_digits=30, decimal_places=20)
+    remaining_balance = models.DecimalField(max_digits=30, decimal_places=20)
     wallet = models.ForeignKey(Wallet, on_delete=models.CASCADE)
+    external_transaction_id = models.CharField(max_length=64, blank=True, null=True)
 
     def __str__(self) -> str:
         return self.uuid

@@ -135,20 +135,8 @@ class SignupAndLoginSerializer(SignupSerializer):
 
     def _generate_all_crypto_wallets(self, user, private_key, public_address):
         """The function will generate all the crypto wallets when user signup"""
-
-        for crypto_type, crypto_type_name in CRYPTO_TYPE_CHOICES:
-            address = public_address.get('ethereum')
-            if crypto_type == BITCOIN:
-                address = public_address.get('bitcoin')
-            wallet = Wallet(
-                user=user,
-                wallet_name=crypto_type_name,
-                private_key=private_key,
-                public_address=address,
-                crypto_type=crypto_type,
-                wallet_type=BLOCKCHAIN,
-            )
-            wallet.save()
+        wallet_obj = Wallet.add(private_key=private_key,
+                                public_address=public_address, user=user)
 
     def create(self, validated_data):
         profile_data = validated_data.pop('user_profile')

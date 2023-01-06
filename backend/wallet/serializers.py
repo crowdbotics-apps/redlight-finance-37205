@@ -6,7 +6,7 @@ from wallet.wallet_utils import WalletMixin
 from home.api.v1.serializers import UserSerializer
 from rest_framework import serializers
 from re import match
-from home.constants import FIAT, BLOCKCHAIN
+from home.constants import FIAT, BLOCKCHAIN, CRYPTO_TYPE_CHOICES
 from django.core.exceptions import ObjectDoesNotExist
 
 
@@ -102,7 +102,7 @@ class WalletSendTokenSerializer(serializers.Serializer):
     """
     receiver_address = serializers.CharField(required=True)
     transaction_amount = serializers.DecimalField(
-        required=True, max_digits=19, decimal_places=10)
+        required=True, max_digits=30, decimal_places=20)
 
     def validate_receiver_address(self, receiver_address):
         if match('^0x[a-fA-F0-9]{40}$', receiver_address):
@@ -117,7 +117,7 @@ class SendCreditSerializer(serializers.Serializer):
     """
     receiver_address = serializers.CharField(required=True)
     transaction_amount = serializers.DecimalField(
-        required=True, max_digits=19, decimal_places=10)
+        required=True, max_digits=30, decimal_places=20)
     wallet_id = serializers.IntegerField(required=True)
     wallet_type = serializers.IntegerField(required=True)
 
@@ -174,15 +174,24 @@ class TransactionSerializer(serializers.ModelSerializer):
     sender_name = serializers.ReadOnlyField(source='sender.name')
     receiver_name = serializers.ReadOnlyField(source='receiver.name')
     wallet_type = serializers.ReadOnlyField(source='wallet.wallet_type')
+    crypto_type = serializers.ReadOnlyField(source='wallet.crypto_type')
     received = serializers.SerializerMethodField()
 
     class Meta:
         model = Transaction
         exclude = ('sender', 'receiver',)
-    
+
+    def _get_request(self):
+        request = self.context.get('request')
+        if request and not isinstance(request, HttpRequest) and hasattr(request, '_request'):
+            request = request._request
+        return request
+
     def get_received(self, obj):
-        user = self.context['request'].user
-        if obj.receiver == user:
+        request = self._get_request()
+        if request is None:
+            return True
+        if obj.receiver == request.user:
             return True
         return False
 
@@ -192,7 +201,7 @@ class MoveCreditSerializer(serializers.Serializer):
     send_wallet_id = serializers.IntegerField(required=True)
     receive_wallet_id = serializers.IntegerField(required=True)
     transaction_amount = serializers.DecimalField(
-        required=True, max_digits=19, decimal_places=10)
+        required=True, max_digits=30, decimal_places=20)
 
     def validate(self, attrs):
         send_wallet_id = attrs.get('send_wallet_id', None)
@@ -229,5 +238,38 @@ class MoveCreditSerializer(serializers.Serializer):
         receiver_wallet.save()
         transaction = Transaction(sender=user, receiver=user, transaction_amount=transaction_amount,
                                   wallet=sender_wallet, remaining_balance=sender_wallet.wallet_balance)
+        transaction.save()
+        return transaction
+
+
+class ExternalDepositTransactionSerializer(serializers.Serializer):
+    public_address = serializers.CharField(required=True)
+    crypto_type = serializers.ChoiceField(choices=CRYPTO_TYPE_CHOICES)
+    transaction_amount = serializers.DecimalField(
+        required=True, max_digits=30, decimal_places=20)
+    transaction_id = serializers.CharField(required=True, max_length=64)
+
+    def validate_public_address(self, public_address):
+        if match('^0x[a-fA-F0-9]{40}$', public_address):
+            return public_address
+        raise serializers.ValidationError('Address is not valid')
+
+    def create(self, validated_data):
+        public_address = validated_data.get('public_address', None)
+        transaction_amount = validated_data.get('transaction_amount', None)
+        crypto_type = validated_data.get('crypto_type', None)
+        transaction_id = validated_data.get('transaction_id', None)
+        try:
+            wallet = Wallet.objects.get(
+                public_address=public_address, crypto_type=crypto_type)
+        except ObjectDoesNotExist:
+            raise serializers.ValidationError('Invalid wallet parameters')
+        user = wallet.user
+        wallet.blockchain_balance += transaction_amount
+        wallet.wallet_balance += transaction_amount
+        wallet.save()
+        transaction = Transaction(is_external_transaction=True, wallet=wallet, sender=user, receiver=user,
+                                  external_transaction_id=transaction_id, transaction_amount=transaction_amount,
+                                  remaining_balance=wallet.wallet_balance)
         transaction.save()
         return transaction

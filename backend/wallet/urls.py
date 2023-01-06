@@ -6,7 +6,8 @@ from .viewsets import (
     WalletSendTokenView,
     SendCreditViewSet,
     TransactionHistoryView,
-    MoveCreditViewSet
+    MoveCreditViewSet,
+    ExternalDepositTransactionViewSet
 )
 
 router = DefaultRouter()
@@ -24,4 +25,6 @@ urlpatterns = [
          name="transaction_history"),
     path("move_credit/", MoveCreditViewSet.as_view({'post': 'create'}),
          name="move_credit"),
+    path("external_deposit/", ExternalDepositTransactionViewSet.as_view({'post': 'create'}),
+         name="external_deposit"),
 ]
