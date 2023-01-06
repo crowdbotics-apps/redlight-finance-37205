@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
         width: 142,
         height: 47,
         borderRadius: 20,
-        backgroundColor: Colors.TabButtonOne,
+        backgroundColor: Colors.PineTree,
     },
     ButtonTwo: {
         width: 142,

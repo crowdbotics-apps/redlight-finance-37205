@@ -11,6 +11,7 @@ import Circle  from '../../components/Circle'
 import PrimaryButton from '../../components/PrimaryButton'
 import BottomSheetContainer from './BottomsheetContainer';
 import { Colors } from '../../theme/Colors'
+import { Strings } from '../../util/Strings';
 import { sendEmailOTP,sendPhoneOTP,verifyEmailOTP,verifyPhoneOTP,signup } from '../../services/auth'
 
 const CodeVerification = ({route})=>{
@@ -40,9 +41,9 @@ const CodeVerification = ({route})=>{
             }
             sendEmailOTP(data).then(
                 response =>{
-                    if(response.message === 'Email Send Successfully'){
+                    if(response.message === Strings.EMAIL_SEND_SUCCESSFULLY){
                       setIsDisable(false)
-                       Alert.alert('OTP sent successfully!!'," ",
+                       Alert.alert(Strings.OTP_SENT_SUCCESSFULLY," ",
                             [
                                 { text: "OK", onPress: () => console.log("OK Pressed") } 
                             ]
@@ -62,9 +63,9 @@ const CodeVerification = ({route})=>{
             }
             sendPhoneOTP(data).then(
                 response =>{
-                    if(response.message === 'OTP Send Successfully'){
+                    if(response.message === Strings.OTP_SENT_SUCCESSFULLY){
                         setIsDisable(false)
-                        Alert.alert('OTP sent successfully!!'," ",
+                        Alert.alert(Strings.OTP_SENT_SUCCESSFULLY," ",
                             [
                                 { text: "OK", onPress: () => console.log("OK Pressed") } 
                             ]
@@ -88,7 +89,11 @@ const CodeVerification = ({route})=>{
             }
             verifyEmailOTP(data).then(
                 response =>{
-                    if(response.message === 'OTP Verification successful'){
+                    if(response?.status === 400){
+                        Alert.alert(response.data.message)
+                        return;
+                    }
+                    if(response.message === Strings.OTP_VERIFICATION_SUCCESSFUL){
                         setIsLoading(false)
                         setCode('')
                         const user = {...route.params}
@@ -115,7 +120,7 @@ const CodeVerification = ({route})=>{
             }
             verifyPhoneOTP(data).then(
                 response =>{
-                    if(response.message === 'OTP Verification Successful'){
+                    if(response.message === Strings.OTP_VERIFICATION_SUCCESSFUL){
                         setIsLoading(false)
                         setCode('')
                         const user = {...route.params}
@@ -149,12 +154,12 @@ const CodeVerification = ({route})=>{
                 >
                     <Circle sourceImage={Images.Verification} CircleStyle={styles.circle}/>
 
-                    <Text style={styles.headingText}>Code verification</Text>
+                    <Text style={styles.headingText}>{Strings.CODE_VERIFICATION}</Text>
 
                     <Text 
                         style={styles.subText}
                     >
-                       We sent you an {mode === 1 ? 'Email' : 'OTP .'} Please enter the 6 - digit code below
+                     {mode === 1 ? Strings.WE_SENT_YOU_AN_EMAIL : Strings.PLEASE_ENTER_6_DIGIT_CODE_TO_YOUR_PHONE}
                     </Text>
 
                     <OTPInputView
@@ -168,7 +173,7 @@ const CodeVerification = ({route})=>{
                     />
 
                     <View style={styles.resendContainer}>
-                        <Text style={styles.text}>Didn’t receive your code?</Text>
+                        <Text style={styles.text}>{Strings.DIDNT_RECEIVE_YOUR_CODE}</Text>
                         <TouchableOpacity 
                             onPress={resendHandler}
                             disabled = {isDisable}
