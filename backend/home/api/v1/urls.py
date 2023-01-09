@@ -18,7 +18,8 @@ from home.api.v1.viewsets import (
     SettingsProfileScreenViewset,
     LogoutViewset,
     DeleteAccountViewset,
-    ForgotPasswordResetView
+    ForgotPasswordResetView,
+    UserDetailView
 )
 
 router = DefaultRouter()
@@ -54,5 +55,7 @@ urlpatterns = [
     path("forgot_password/reset_password/", ForgotPasswordResetView.as_view(),
          name="forgot_password_reset_password"),
     path("user_profile/", UserProfileViewSet.as_view(
-        {'get': 'retrieve', 'patch': 'partial_update'}), name="user_profile")
+        {'get': 'retrieve', 'patch': 'partial_update'}), name="user_profile"),
+    path("user_detail/",
+         UserDetailView.as_view({'get': 'retrieve'}), name="user_detail")
 ]

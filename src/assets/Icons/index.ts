@@ -11,6 +11,8 @@ import DownloadIcon from "./DownloadIcon"
 import CrossIcon from "./CrossIcon"
 import LeftArrow from "./LeftArrow"
 import RightArrow from "./RightArrow"
+import ScannerIcon from "./ScannerIcon"
+import UploadIcon from  './UploadIcon'
 
 const Icons = {
     BackArrow,
@@ -25,7 +27,9 @@ const Icons = {
     DownloadIcon,
     CrossIcon,
     LeftArrow,
-    RightArrow
+    RightArrow,
+    ScannerIcon,
+    UploadIcon,
 }
 
 export default Icons

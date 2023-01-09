@@ -1,4 +1,5 @@
 package com.redlight_finance_37205;
+import com.gevorg.reactlibrary.RNQrGeneratorPackage;
 import android.os.Bundle; 
 import org.devio.rn.splashscreen.SplashScreen;
 import com.facebook.react.ReactActivity;
