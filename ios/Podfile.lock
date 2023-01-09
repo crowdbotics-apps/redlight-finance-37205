@@ -306,6 +306,8 @@ PODS:
     - React-Core
   - RNGestureHandler (2.8.0):
     - React-Core
+  - RNReanimated (1.13.4):
+    - React-Core
   - RNImageCropPicker (0.38.0):
     - React-Core
     - React-RCTImage
@@ -328,7 +330,7 @@ PODS:
     - React-Core
   - RNSVG (13.6.0):
     - React-Core
-  - RNVectorIcons (8.1.0):
+  - RNVectorIcons (9.2.0):
     - React-Core
   - SDWebImage (5.11.1):
     - SDWebImage/Core (= 5.11.1)
@@ -502,7 +504,7 @@ SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
   FBLazyVector: fa8275d5086566e22a26ddc385ab5772e7f9b1bd
-  FBReactNativeSpec: 20a9457a95eae708eb909fd93ff0cfa053e606b5
+  FBReactNativeSpec: 8ab1e0daa98d6f96c3a62fd06ee2f279349b56a9
   glog: 73c2498ac6884b13ede40eda8228cb1eee9d9d62
   libwebp: f62cb61d0a484ba548448a4bd52aabf150ff6eef
   Permission-Camera: bf6791b17c7f614b6826019fcfdcc286d3a107f6
@@ -539,6 +541,7 @@ SPEC CHECKSUMS:
   RNFastImage: 5c9c9fed9c076e521b3f509fe79e790418a544e8
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
   RNGestureHandler: 62232ba8f562f7dea5ba1b3383494eb5bf97a4d3
+  RNReanimated: c1b56d030d1616239861534d9adb531f8cffab68
   RNImageCropPicker: ffbba608264885c241cbf3a8f78eb7aeeb978241
   RNPermissions: dcdb7b99796bbeda6975a6e79ad519c41b251b1c
   RNQrGenerator: 0aa6c40e3f2e15a9cbaec9480b7028c339f89b66
@@ -546,7 +549,7 @@ SPEC CHECKSUMS:
   RNScreens: f7ad633b2e0190b77b6a7aab7f914fad6f198d8d
   RNShare: d93e00e906e6174657f6370b480437e4702bc86e
   RNSVG: 3a79c0c4992213e4f06c08e62730c5e7b9e4dc17
-  RNVectorIcons: 31cebfcf94e8cf8686eb5303ae0357da64d7a5a4
+  RNVectorIcons: fcc2f6cb32f5735b586e66d14103a74ce6ad61f8
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SDWebImageWebPCoder: 908b83b6adda48effe7667cd2b7f78c897e5111d
   TOCropViewController: edfd4f25713d56905ad1e0b9f5be3fbe0f59c863

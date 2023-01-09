@@ -4,7 +4,9 @@ import { Fonts } from '../../assets/fonts';
 
 const styles = StyleSheet.create({
     container : {
-        marginBottom : 20 
+        marginBottom : 20,
+        shadowColor: '#52006A',  
+    elevation: 20,  
     },
     labelView : {
         marginBottom : 6

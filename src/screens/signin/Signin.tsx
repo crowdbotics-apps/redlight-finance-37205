@@ -5,12 +5,13 @@ import Images from '../../assets/Images';
 import CustomInput from '../../components/CustomInput';
 import PrimaryButton from '../../components/PrimaryButton';
 import styles from '../signin/styles';
-import { login } from '../../services/auth';
+import { login, myProfile } from '../../services/auth';
 import { useNavigation } from '@react-navigation/native';
 import Icons from '../../assets/Icons'
 import {setItem} from '../../util'
 import { bool } from 'prop-types';
 import WelcomePopup from '../../components/WelcomePopup/WelcomePopup';
+import { ChangePassword } from '../changePassword';
 import { Strings } from '../../util/Strings';
 
 
@@ -64,32 +65,31 @@ const Signin = () => {
       <ImageBackground source={Images.Rectangle} resizeMode="cover" style={styles.image}>
         <Image source={Images.Maskgroup} />
         <ScrollView style={styles.body}>
-          <Text style={styles.upperTabText}>{Strings.USERNAME}</Text>
           <CustomInput
-            label=""
+            label="Username"
+            placeholder='Username'
             value={username}
             onChangeText={setUsername} containerStyle={undefined} isIconVisible={undefined} keyboardType={undefined} secureTextEntry={undefined} />
-          <Text style={styles.upperTabText}>{Strings.PASSWORD}</Text>
           <CustomInput
-            label=""
+            label="Password"
+            placeholder='Password'
             value={password}
-            onChangeText={setPassword} isIconVisible={undefined} keyboardType={undefined} secureTextEntry={seePassword} containerStyle={undefined} />
-          {/* <TouchableOpacity onPress={()=>{}}><Icons.EyeIcon/></TouchableOpacity> */}
+            onChangeText={setPassword} 
+            isRightIconVisible={true} 
+            isleftIconVisible={true} 
+            keyboardType={"default"} 
+            secureTextEntry={true} 
+           />
           <View style={styles.tabs}>
-            <Text style={styles.tabText}>{Strings.SWITCH_ACCOUNT}</Text>
-            <TouchableOpacity onPress={() => setseePassword(!seePassword)}>
-              <Text style={styles.tabText}>{Strings.FORGOT_PASSOWRD}</Text>
+            <Text style={styles.tabText}>Switch account</Text>
+            <TouchableOpacity onPress={() => navigation.navigate('ForgotPasswordScreen')}>
+              <Text style={styles.tabText}>Forgot Password?</Text>
             </TouchableOpacity>
           </View>
           <PrimaryButton
             isLoading={false}
-            text={Strings.SIGN_IN}
-            onPress={loginHandler}
-    
-          />
-          <TouchableOpacity style ={styles.upperTabText} onPress={changeModalVisbile}>
-            <Text>Open Modal</Text>
-          </TouchableOpacity>
+            text="Sign In"
+            onPress={loginHandler} disabled={undefined} style={{marginTop: "12%"}} btnStyle={undefined}/>
           <View style={styles.tabss}>
             <Text style={styles.tabsText}>{Strings.NO_ACCOUNT}</Text>
             <TouchableOpacity onPress={() => navigation.navigate('SignupScreen')}>
@@ -98,7 +98,6 @@ const Signin = () => {
           </View>
         </ScrollView>
       </ImageBackground>
-      <WelcomePopup isModalVisible={isModalVisible}/>
     </View>
   );
 };
