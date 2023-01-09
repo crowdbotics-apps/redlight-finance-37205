@@ -43,9 +43,9 @@ const QRScanner : FC = () => {
             console.log('fw',filteredWallet);
             
             getWalletQR(filteredWallet.id).then(response=>{       
-                setWalletName(response.subwallet_name)
+                setWalletName(response.wallet_name)
                 setUsername(response.user.username)
-                setQRString(response.wallet_address.ethereum)
+                setQRString(response.public_address)
             })
             .catch(error=>{
                 console.log(error.response); 

@@ -31,10 +31,11 @@ const QRCodeScreen : FC = ({route})=>{
     const navigation = useNavigation()
 
     useEffect(()=>{
-        getWalletQR(walletId).then(response=>{       
-            setWalletName(response.subwallet_name)
+        getWalletQR(walletId).then(response=>{     
+            console.log('res',response)
+            setWalletName(response.wallet_name)
             setUsername(response.user.username)
-            setQRString(response.wallet_address.ethereum)
+            setQRString(response.public_address)
         })
         .catch(error=>{
             console.log(error.response); 
