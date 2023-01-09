@@ -9,6 +9,8 @@ import tabHome from './tabHome'
 import ShareIcon from "./ShareIcon"
 import DownloadIcon from "./DownloadIcon"
 import CrossIcon from "./CrossIcon"
+import LeftArrow from "./LeftArrow"
+import RightArrow from "./RightArrow"
 import ScannerIcon from "./ScannerIcon"
 import UploadIcon from  './UploadIcon'
 
@@ -24,6 +26,8 @@ const Icons = {
     ShareIcon,
     DownloadIcon,
     CrossIcon,
+    LeftArrow,
+    RightArrow,
     ScannerIcon,
     UploadIcon,
 }

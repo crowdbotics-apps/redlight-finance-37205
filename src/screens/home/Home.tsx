@@ -28,6 +28,12 @@ const Home : FC = ()=>{
             >
                 <Text>Move to QR code screen</Text>
             </TouchableOpacity>
+            <TouchableOpacity 
+                style={[styles.btn,{marginTop : 10}]} 
+                onPress={()=>navigation.navigate('CashInScreen')}
+            >
+                <Text>Move to Cashin screen</Text>
+            </TouchableOpacity>
         </View>
     )
 }

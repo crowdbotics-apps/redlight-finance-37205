@@ -59,3 +59,5 @@ export const isValidMobile = (mobile :string ) => {
         return false
     }
 }
+
+export const DATA = ['100','200','300','1000','3000','5000']
