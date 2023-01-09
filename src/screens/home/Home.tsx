@@ -39,6 +39,12 @@ const Home : FC = ()=>{
             <TouchableOpacity onPress={profileScreen}>
                 <Text>MyProfileScreen</Text>
             </TouchableOpacity>
+            <TouchableOpacity 
+                style={[styles.btn,{marginTop : 10}]} 
+                onPress={()=>navigation.navigate('CashInScreen')}
+            >
+                <Text>Move to Cashin screen</Text>
+            </TouchableOpacity>
         </View>
     )
 }

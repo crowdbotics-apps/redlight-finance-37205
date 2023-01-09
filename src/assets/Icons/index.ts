@@ -8,7 +8,6 @@ import Settings from "./Settings"
 import Clock from "./Clock"
 import Headset from "./Headset"
 import SignOut from "./Signout"
-import RightArrow from "./RightArrow"
 import ImageVector from "./ImageVector"
 import Cross from "./Cross"
 import tabHomeSelected from "./tabHomeSelected"
@@ -18,6 +17,10 @@ import tabHome from './tabHome'
 import ShareIcon from "./ShareIcon"
 import DownloadIcon from "./DownloadIcon"
 import CrossIcon from "./CrossIcon"
+import LeftArrow from "./LeftArrow"
+import RightArrow from "./RightArrow"
+import ScannerIcon from "./ScannerIcon"
+import UploadIcon from  './UploadIcon'
 
 const Icons = {
     BackArrow,
@@ -39,7 +42,10 @@ const Icons = {
     tabProfile,
     ShareIcon,
     DownloadIcon,
-    CrossIcon
+    CrossIcon,
+    LeftArrow,
+    ScannerIcon,
+    UploadIcon,
 }
 
 export default Icons
