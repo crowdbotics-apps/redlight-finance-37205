@@ -6873,6 +6873,11 @@ react-native-dotenv@^2.5.3:
   dependencies:
     dotenv "^10.0.0"
 
+react-native-element-dropdown@^2.5.3:
+  version "2.5.3"
+  resolved "https://registry.yarnpkg.com/react-native-element-dropdown/-/react-native-element-dropdown-2.5.3.tgz#a8d22912d1c201fc3c08c22fbf3e31ecb166a299"
+  integrity sha512-Os4UtvGlqccV3lsiP5Qy4RPzqqyx7E6lYcn2/IRQZHwBA4NAQA2dul/BrQSwy3bhicCqmWtir7T1GeFmOZPPrQ==
+
 react-native-elements@^3.3.1:
   version "3.4.2"
   resolved "https://registry.npmjs.org/react-native-elements/-/react-native-elements-3.4.2.tgz"

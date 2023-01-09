@@ -33,6 +33,7 @@
     "react-native": "^0.64.4",
     "react-native-check-box": "^2.1.7",
     "react-native-dotenv": "^2.5.3",
+    "react-native-element-dropdown": "^2.5.3",
     "react-native-elements": "^3.3.1",
     "react-native-fast-image": "^8.6.3",
     "react-native-fs": "^2.20.0",

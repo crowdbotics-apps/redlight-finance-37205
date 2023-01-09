@@ -34,6 +34,12 @@ const Home : FC = ()=>{
             >
                 <Text>Move to Cashin screen</Text>
             </TouchableOpacity>
+            <TouchableOpacity 
+                style={[styles.btn,{marginTop : 10}]} 
+                onPress={()=>navigation.navigate('CashOutScreen')}
+            >
+                <Text>Move to Cashout screen</Text>
+            </TouchableOpacity>
         </View>
     )
 }
