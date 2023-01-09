@@ -9,6 +9,8 @@ import tabHome from './tabHome'
 import ShareIcon from "./ShareIcon"
 import DownloadIcon from "./DownloadIcon"
 import CrossIcon from "./CrossIcon"
+import ScannerIcon from "./ScannerIcon"
+import UploadIcon from  './UploadIcon'
 
 const Icons = {
     BackArrow,
@@ -21,7 +23,9 @@ const Icons = {
     tabProfile,
     ShareIcon,
     DownloadIcon,
-    CrossIcon
+    CrossIcon,
+    ScannerIcon,
+    UploadIcon,
 }
 
 export default Icons
