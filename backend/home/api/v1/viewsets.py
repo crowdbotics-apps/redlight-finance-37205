@@ -19,6 +19,7 @@ from home.api.v1.serializers import (
     ForgotPasswordVerifyPhoneOTPSerializer,
     SettingsProfileScreenSerializer,
     DeleteAccountSerializer,
+    UserDetailSerializer
 )
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
@@ -29,6 +30,8 @@ from rest_framework.views import APIView
 from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_encode
+from django.shortcuts import get_object_or_404
+from django.http import Http404
 
 User = get_user_model()
 
@@ -86,7 +89,6 @@ class ForgotPasswordVerifyEmailOTPViewSet(ViewSet):
             verify = EmailOTP.verify(
                 serializer.validated_data['email'], serializer.validated_data['otp'])
             if verify.get('status') == status.HTTP_202_ACCEPTED:
-                print("hello")
                 return Response({"message": "OTP verified successfully", "uid": urlsafe_base64_encode(force_bytes(user.pk)), "status": "success", "token": default_token_generator.make_token(user)}, status=status.HTTP_200_OK)
             return Response({"message": "OTP is not Valid or Expired. Please try again"}, status=status.HTTP_400_BAD_REQUEST)
         return Response({'message': 'User Doesn\'t exists'}, status=status.HTTP_404_NOT_FOUND)
@@ -279,3 +281,33 @@ class UserProfileViewSet(GenericViewSet, RetrieveModelMixin, UpdateModelMixin):
 
     def get_object(self):
         return UserProfile.objects.get(user=self.request.user)
+
+
+class UserDetailView(GenericViewSet, RetrieveModelMixin):
+    """
+    This viewset is for retrieving user details based on query parameters
+        @params: email 
+        @params: phone_number
+        @params: public_address
+    """
+    permission_classes = (IsAuthenticated,)
+    authentication_classes = (TokenAuthentication,)
+    serializer_class = UserDetailSerializer
+    http_method_names = ["get",]
+
+    def get_object(self):
+        public_address = self.request.query_params.get('public_address', None)
+        email = self.request.query_params.get('email', None)
+        phone_number = self.request.query_params.get('phone_number', None)
+        if public_address:
+            obj = User.objects.filter(
+                user_wallet__public_address=public_address).first()
+            if obj is None:
+                raise Http404()
+            return obj
+        if phone_number:
+            queryset = User.objects.filter(
+                user_profile__phone_number=phone_number)
+        if email:
+            queryset = User.objects.filter(email=email)
+        return get_object_or_404(queryset)

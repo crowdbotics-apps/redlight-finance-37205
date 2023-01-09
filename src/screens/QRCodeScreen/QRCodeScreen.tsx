@@ -4,14 +4,12 @@ import {
     Text,
     StatusBar,
     ImageBackground, 
-    TouchableOpacity,
     Platform,
     Alert,
     PermissionsAndroid,
     ToastAndroid } from 'react-native'
 import CameraRoll from "@react-native-community/cameraroll";
 import { useNavigation } from '@react-navigation/native';
-import QRCode from 'react-native-qrcode-svg';
 import RNFS from "react-native-fs";
 import Share from 'react-native-share';
 import moment from 'moment'
@@ -20,6 +18,7 @@ import Images from '../../assets/Images'
 import Icons from '../../assets/Icons'
 import { Strings } from '../../util/Strings';
 import CustomHeader from '../../components/CustomHeader';
+import QrCode from '../../components/QrCode';
 import {getWalletQR } from '../../services/homeServices';
 
 const QRCodeScreen : FC = ({route})=>{
@@ -62,9 +61,19 @@ const QRCodeScreen : FC = ({route})=>{
 
     const saveQrToDisk = async() => {
 
-        if (Platform.OS === "android" &&
-         !(await hasAndroidPermission())) {
-             return;
+        if (Platform.OS === "android"){
+            const permission= PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE;
+           
+            const hasPermission = await PermissionsAndroid.check(permission);
+             if (!hasPermission) {
+               return false;
+             }
+             else{
+                 const status = await PermissionsAndroid.request(permission);
+                 if(status !== 'granted'){
+                   return false
+                 }
+             }
         }
         
         if(QRref){
@@ -85,20 +94,6 @@ const QRCodeScreen : FC = ({route})=>{
                 });
         }
     }
-
-    const hasAndroidPermission = async() => {
-        const permission=
-        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE;
-        
-          const hasPermission = 
-        await PermissionsAndroid.check(permission);
-          if (hasPermission) {
-            return true;
-          }
-        
-          const status = await PermissionsAndroid.request(permission);
-          return status === 'granted';
-    }
     
     return (
         <View>
@@ -112,34 +107,14 @@ const QRCodeScreen : FC = ({route})=>{
                     onPress={()=>navigation.goBack()}
                 />
                 
-                <View style={styles.QRContainer}>
-                    <Text style={styles.walletText}>{walletName}</Text>
-
-                    {QRString ? <View style={styles.QRView}>
-                        <QRCode
-                            size = {200}
-                            value= {QRString}
-                            getRef = {(c)=>setQRref(c)}
-                        />
-                    </View> : null
-                    }
-                    <Text style={styles.usernameText}>{username}</Text>
-
-                    <TouchableOpacity style={styles.shareBtn} onPress={shareHandler}>
-                        <View style={styles.btnView}>
-                            <Icons.ShareIcon/>
-                            <Text style={styles.btnText}>{Strings.SHARE_MY_QR_CODE}</Text>
-                        </View>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={styles.downloadBtn} onPress={saveQrToDisk}>
-                        <View style={styles.btnView}>
-                            <Icons.DownloadIcon/>
-                            <Text style={styles.btnText}>{Strings.SAVE_TO_MY_GALLERY}</Text>
-                        </View>
-                    </TouchableOpacity>
-
-                </View>
+                <QrCode
+                    wallet = {walletName}
+                    user = {username}
+                    qrString = {QRString}
+                    setQRref = {setQRref}
+                    shareQR = {shareHandler}
+                    saveQR = {saveQrToDisk}
+                />
             </ImageBackground>
         </View>
     )

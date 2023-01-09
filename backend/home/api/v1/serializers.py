@@ -10,6 +10,7 @@ from rest_framework import serializers
 from rest_auth.serializers import PasswordResetSerializer
 from users.models import UserProfile, Wallet
 from wallet.wallet_utils import WalletMixin
+from home.constants import CRYPTO_TYPE_CHOICES, BITCOIN, BLOCKCHAIN, FIAT
 
 User = get_user_model()
 
@@ -88,6 +89,15 @@ class UserProfileSerializer(serializers.ModelSerializer):
         return phone_number
 
 
+class UserDetailSerializer(serializers.ModelSerializer):
+    phone_number = serializers.ReadOnlyField(
+        source='user_profile.phone_number')
+
+    class Meta:
+        model = User
+        fields = ('id', 'name', 'username', 'email', 'phone_number',)
+
+
 class SignupAndLoginSerializer(SignupSerializer):
     """Serializer for signup and login simultaneously"""
     user_profile = UserProfileSerializer(required=False)
@@ -123,6 +133,11 @@ class SignupAndLoginSerializer(SignupSerializer):
             }
         }
 
+    def _generate_all_crypto_wallets(self, user, private_key, public_address):
+        """The function will generate all the crypto wallets when user signup"""
+        wallet_obj = Wallet.add(private_key=private_key,
+                                public_address=public_address, user=user)
+
     def create(self, validated_data):
         profile_data = validated_data.pop('user_profile')
         user = User.objects.create(**validated_data)
@@ -132,11 +147,20 @@ class SignupAndLoginSerializer(SignupSerializer):
         user_profile = UserProfile.objects.create(user=user, **profile_data)
         user.user_profile.is_verified = True
         private_key = WalletMixin.get_wallet_private_key()
-        wallet = Wallet(user=user, subwallet_name="Redlight Wallet",
-                        amount=0, is_default=True, private_key=private_key)
+        public_address = WalletMixin.get_wallet_address(private_key)
+        self._generate_all_crypto_wallets(
+            user=user, private_key=private_key, public_address=public_address)
+        wallet = Wallet(
+            user=user,
+            wallet_name=f"Redlight Wallet",
+            private_key=private_key,
+            public_address=public_address.get('ethereum'),
+            wallet_type=FIAT,
+            is_default=True
+        )
+        wallet.save()
         user.save()
         user_profile.save()
-        wallet.save()
         return user
 
     def validate(self, data):
