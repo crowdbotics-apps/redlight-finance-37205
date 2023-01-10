@@ -6,6 +6,7 @@ import styles from './styles'
 import Images from '../../assets/Images'
 import { Colors } from '../../theme/Colors'
 import { Strings } from '../../util/Strings';
+import { getItem } from '../../util';
 
 const Splash : FC = () =>  {
     const [isLoading,setIsLoading] = useState<Boolean>(false);
@@ -15,7 +16,14 @@ const Splash : FC = () =>  {
         setIsLoading(true)
         const timer = setTimeout(()=>{
             setIsLoading(false)
-            navigation.navigate('SigninScreen')
+            getItem('token').then(token => {
+              if (token) {
+                navigation.navigate('DashboardNavigaton')          
+              }
+              else{
+                navigation.navigate('SigninScreen')
+              }
+            })
         },3000)
 
         return ()=>{

@@ -9,7 +9,7 @@ import {
     Alert,
     PermissionsAndroid,
     ToastAndroid} from 'react-native';
-import CameraRoll from "@react-native-community/cameraroll";
+import { CameraRoll } from "@react-native-camera-roll/camera-roll";
 import ImagePicker from 'react-native-image-crop-picker';
 import RNQRGenerator from 'rn-qr-generator'
 import RNFS from 'react-native-fs'
