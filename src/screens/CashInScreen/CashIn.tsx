@@ -12,6 +12,9 @@ const DATA = [1,2,3,4,5,6]
 
 const CashIn : FC = () =>{
     const navigation = useNavigation()
+    const matchmoveHandler = () =>{
+        navigation.navigate('BankingDepositScreen')
+    }
     return (
         <View style={{marginTop : -10}}>
             <ImageBackground source={Images.Background} resizeMode="cover" style={styles.image}>
@@ -40,7 +43,7 @@ const CashIn : FC = () =>{
                         </Text>
                         <FlatList
                             data = {DATA}
-                            renderItem = {(item)=><CashComponent/>}
+                            renderItem = {(item)=><CashComponent onPress={matchmoveHandler}/>}
                             showsHorizontalScrollIndicator = {false}
                             horizontal = {true}
                             style = {styles.list}
@@ -60,7 +63,7 @@ const CashIn : FC = () =>{
                         <Text style={styles.sectionSubheading}>{Strings.VIRTUAL_IS_THE_NEW_NORMAL}</Text>
                         <FlatList
                             data = {DATA}
-                            renderItem = {(item)=><CashComponent/>}
+                            renderItem = {(item)=><CashComponent onPress={matchmoveHandler}/>}
                             showsHorizontalScrollIndicator = {false}
                             horizontal = {true}
                             style = {styles.list}
@@ -80,7 +83,7 @@ const CashIn : FC = () =>{
                         <Text style={styles.sectionSubheading}>{Strings.CASH_IN_WITH_EASE}</Text>
                         <FlatList
                             data = {DATA}
-                            renderItem = {(item)=><CashComponent/>}
+                            renderItem = {(item)=><CashComponent onPress={matchmoveHandler}/>}
                             showsHorizontalScrollIndicator = {false}
                             horizontal = {true}
                             style = {styles.list}

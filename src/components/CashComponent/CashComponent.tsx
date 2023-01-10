@@ -1,16 +1,24 @@
 import React,{FC} from 'react'
-import {View,Text,TouchableOpacity,StyleSheet} from 'react-native'
+import {View,Text,TouchableOpacity,StyleSheet,GestureResponderEvent} from 'react-native'
 import { Fonts } from '../../assets/fonts'
 import { Colors } from '../../theme/Colors'
 
-const CashComponent : FC = () =>{
+type CashComponentProps  = {
+    onPress :  ((event: GestureResponderEvent) => void) | undefined
+}
+
+const CashComponent : FC<CashComponentProps> = props =>{
+    const {onPress} = props
     return (
-     <View style={styles.container}>
-        <TouchableOpacity style={styles.btn}>
-                <Text style={styles.btnText}>Match move</Text>
-        </TouchableOpacity>
+     <TouchableOpacity 
+        style={styles.container}
+        onPress = {onPress}
+    >
+        <View style={styles.img}>
+            <Text style={styles.imgText}>Match move</Text>
+        </View>
         <Text style={styles.text}>Match move</Text>
-      </View>
+      </TouchableOpacity>
     )
 }
 
@@ -20,7 +28,7 @@ const styles = StyleSheet.create({
     container : {
         marginHorizontal : 8
     },
-    btn : {
+    img : {
         width  : 80,
         alignItems: "center",
         backgroundColor: Colors.white,
@@ -29,7 +37,7 @@ const styles = StyleSheet.create({
         borderColor : Colors.Gray78,
         borderRadius : 10
     },
-    btnText : {
+    imgText : {
         textAlign  : 'center'
     },
     text : {

@@ -2,7 +2,7 @@ import React,{useRef} from 'react'
 import {View,Text,ImageBackground,Platform,FlatList,StatusBar} from 'react-native'
 import RBSheet from 'react-native-raw-bottom-sheet';
 import { useNavigation } from '@react-navigation/native'
-import CashOutPopupScreen from './CashOutPopupScreen';
+import CashOutPopupScreen from '../../components/CashoutPopupScreen';
 import CustomHeader from '../../components/CustomHeader'
 import CashOptions from '../../components/CashOptions'
 import { Colors } from '../../theme/Colors';
