@@ -80,4 +80,7 @@ export const Strings = {
     DEPOSIT_AMOUNT : "Deposit Amount",
     PAYMENT_DEADLINE  : "Payment Deadline",
     PAY_WITH_DRAGON_PAY  : "Pay With Dragon Pay",
+    TOKEN_PROFILE : "Token Profile",
+    SEND : "Send",
+    MOVE :  "Move",
 }

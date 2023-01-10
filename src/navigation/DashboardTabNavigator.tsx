@@ -1,10 +1,11 @@
 import React,{FC} from 'react'
 import { Platform } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Svg, { SvgFromXml, SvgXml } from "react-native-svg"
 import Home from '../screens/home';
 import Profile from '../screens/profile';
 import QRScanner from '../screens/QRScanner';
+import MyProfile from '../screens/myProfile/MyProfile';
+import TokenPortfolio from '../screens/TokenPortfolio';
 import { Colors } from '../theme/Colors';
 import Icons from '../assets/Icons'
 
@@ -36,6 +37,15 @@ const DashboardTabNavigator : FC = () =>{
                 }}
             />
              <Tab.Screen
+                name="Token"
+                component={TokenPortfolio}
+                options={{
+                    tabBarIcon: ({ focused }) => (
+                        focused ? <Icons.BitcoinTokenSelected />  : <Icons.BitcoinToken/>
+                    ),
+                }}
+            />
+             <Tab.Screen
                 name="QrScanner"
                 component={QRScanner}
                 options={{
@@ -47,7 +57,7 @@ const DashboardTabNavigator : FC = () =>{
             />
             <Tab.Screen
                 name="profile"
-                component={Profile}
+                component={MyProfile}
                 options={{
                     tabBarIcon: ({ focused }) => (
                         focused ? <Icons.tabProfileSelected />  : <Icons.tabProfile/>
