@@ -2,6 +2,14 @@ import BackArrow from "./BackArrow"
 import EyeIcon from './EyeIcon'
 import LockIcon from './LockIcon'
 import UserIcon from './UserIcon'
+import Wallet from "./Wallet"
+import BitcoinToken from "./BitcoinToken"
+import Settings from "./Settings"
+import Clock from "./Clock"
+import Headset from "./Headset"
+import SignOut from "./Signout"
+import ImageVector from "./ImageVector"
+import Cross from "./Cross"
 import tabHomeSelected from "./tabHomeSelected"
 import tabProfileSelected from "./tabProfileSelected"
 import tabProfile from "./tabProfile"
@@ -19,6 +27,15 @@ const Icons = {
     EyeIcon,
     LockIcon,
     UserIcon,
+    Wallet,
+    BitcoinToken,
+    Settings,
+    Clock,
+    Headset,
+    SignOut,
+    RightArrow,
+    ImageVector,
+    Cross,
     tabHomeSelected,
     tabHome,
     tabProfileSelected,
@@ -27,7 +44,6 @@ const Icons = {
     DownloadIcon,
     CrossIcon,
     LeftArrow,
-    RightArrow,
     ScannerIcon,
     UploadIcon,
 }

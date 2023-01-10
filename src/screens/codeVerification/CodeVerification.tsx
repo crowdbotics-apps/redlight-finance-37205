@@ -1,91 +1,96 @@
-import React,{useState,useRef} from 'react'
-import {View,Text,ImageBackground,TouchableOpacity,Alert, Platform} from 'react-native'
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import React, { useState, useRef } from 'react'
+import { View, Text, ImageBackground, TouchableOpacity, Alert, Platform } from 'react-native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import OTPInputView from '@twotalltotems/react-native-otp-input'
 import { useNavigation } from '@react-navigation/native'
 import RBSheet from 'react-native-raw-bottom-sheet';
 import styles from './styles'
 import Images from '../../assets/Images'
 import Header from '../../components/Header'
-import Circle  from '../../components/Circle'
+import Circle from '../../components/Circle'
 import PrimaryButton from '../../components/PrimaryButton'
 import BottomSheetContainer from './BottomsheetContainer';
 import { Colors } from '../../theme/Colors'
+import { sendEmailOTP, sendPhoneOTP, verifyEmailOTP, verifyPhoneOTP, signup, forgotPasswordVerifyEmailOtp, forgotPasswordVerifyPhonelOtp } from '../../services/auth'
 import { Strings } from '../../util/Strings';
-import { sendEmailOTP,sendPhoneOTP,verifyEmailOTP,verifyPhoneOTP,signup } from '../../services/auth'
 
-const CodeVerification = ({route})=>{
-    const {mode} = route.params   
-    const [isLoading,setIsLoading] = useState<boolean>(false)
-    const [isDisable,setIsDisable] = useState<boolean>(false)
-    const [code,setCode] = useState<string>('')
+const CodeVerification = ({ route }) => {
+    const { mode } = route.params
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [isDisable, setIsDisable] = useState<boolean>(false)
+    const [code, setCode] = useState<string>('')
 
     const refRBSheet = useRef();
     const navigation = useNavigation();
-    
-    const isDisabled = ()=>{
-        if(code.length === 6){
+
+    const isDisabled = () => {
+        if (code.length === 6) {
             return false
         }
-        else{
+        else {
             return true
         }
     }
 
-    const resendHandler = ()=>{
-        setIsDisable(true)
-        if(mode === 1){
-            const {email} = route.params
-            const data = {
-                email : email
-            }
-            sendEmailOTP(data).then(
-                response =>{
-                    if(response.message === Strings.EMAIL_SEND_SUCCESSFULLY){
-                      setIsDisable(false)
-                       Alert.alert(Strings.OTP_SENT_SUCCESSFULLY," ",
-                            [
-                                { text: "OK", onPress: () => console.log("OK Pressed") } 
-                            ]
-                       )
-                    }
-            })
-            .catch(error=>{
-                setIsDisable(false)
-                console.log(error.response); 
-            })
-        }
-        else{
-            const {phone_number} = route.params.user_profile
-            const data = {
-                phone_number: phone_number.substring(3,),
-                country_code: phone_number.substring(0,3)
-            }
-            sendPhoneOTP(data).then(
-                response =>{
-                    if(response.message === Strings.OTP_SENT_SUCCESSFULLY){
-                        setIsDisable(false)
-                        Alert.alert(Strings.OTP_SENT_SUCCESSFULLY," ",
-                            [
-                                { text: "OK", onPress: () => console.log("OK Pressed") } 
-                            ]
-                       )
-                    }
-            })
-            .catch(error=>{
-                setIsDisable(false)
-                console.log(error.response); 
-            })
-        }
-    }
+    // const resendHandler = () => {
+    //     setIsDisable(true)
+    //     if (mode === 1) {
+    //         const { email } = route.params
+    //         const data = {
+    //             email: email
+    //         }
+    //         sendEmailOTP(data).then(
+    //             response => {
+    //                 if (response.message === 'Email Send Successfully') {
+    //                     setIsDisable(false)
+    //                     Alert.alert('OTP sent successfully!!', " ",
+    //             response =>{
+    //                 if(response.message === Strings.EMAIL_SEND_SUCCESSFULLY){
+    //                   setIsDisable(false)
+    //                    Alert.alert(Strings.OTP_SENT_SUCCESSFULLY," ",
+    //                         [
+    //                             { text: "OK", onPress: () => console.log("OK Pressed") }
+    //                         ]
+    //                     )
+    //                 }
+    //             })
+    //             .catch(error => {
+    //                 setIsDisable(false)
+    //                 console.log(error.response);
+    //             })
+    //     }
+    //     else {
+    //         const { country_code, phone_number } = route.params.user_profile
+    //         const data = {
+    //             phone_number: phone_number,
+    //             country_code: country_code
+    //         }
+    //         sendPhoneOTP(data).then(
+    //             response =>{
+    //                 if(response.message === Strings.OTP_SENT_SUCCESSFULLY){
+    //                     setIsDisable(false)
+    //                     Alert.alert(Strings.OTP_SENT_SUCCESSFULLY," ",
+    //                         [
+    //                             { text: "OK", onPress: () => console.log("OK Pressed") }
+    //                         ]
+    //                     )
+    //                 }
+    //             })
+    //             .catch(error => {
+    //                 setIsDisable(false)
+    //                 console.log(error.response);
+    //             })
+    //     }
+    // }
 
-    const verifyHandler = ()=>{
+
+    const verifyHandler = () => {
         setIsLoading(true)
-        if(mode === 1){
-            const {email} = route.params
+        if (mode === 1) {
+            const { email } = route.params.user_profile
             const data = {
-                email : email,
-                otp : code
+                email: email,
+                otp: code
             }
             verifyEmailOTP(data).then(
                 response =>{
@@ -96,77 +101,123 @@ const CodeVerification = ({route})=>{
                     if(response.message === Strings.OTP_VERIFICATION_SUCCESSFUL){
                         setIsLoading(false)
                         setCode('')
-                        const user = {...route.params}
+                        const user = { ...route.params }
                         delete user.mode
-                        signup(user).then(response=>{
+                        signup(user).then(response => {
                             refRBSheet.current.open()
                         })
-                        .catch(error=>{
-                            console.log(error.response); 
-                        })   
+                            .catch(error => {
+                                console.log(error.response);
+                            })
                     }
-            })
-            .catch(error=>{
-                setIsLoading(false)
-                console.log(error.response); 
-            })
+                })
+                .catch(error => {
+                    setIsLoading(false)
+                    console.log(error.response);
+                })
         }
-        else{
-            const {phone_number} = route.params.user_profile
+        else {
+            console.log(route.params)
+            const { country_code, phone_number } = route.params.user_profile
             const data = {
-                phone_number: phone_number.substring(3,),
-                country_code: phone_number.substring(0,3),
-                otp : code
+                phone_number: phone_number,
+                country_code: country_code,
+                otp: code
             }
             verifyPhoneOTP(data).then(
                 response =>{
                     if(response.message === Strings.OTP_VERIFICATION_SUCCESSFUL){
                         setIsLoading(false)
                         setCode('')
-                        const user = {...route.params}
+                        const user = { ...route.params }
                         delete user.mode
-                        signup(user).then(response=>{
+                        signup(user).then(response => {
                             refRBSheet.current.open()
                         })
-                        .catch(error=>{
-                            console.log(error.response); 
-                        })   
+                            .catch(error => {
+                                console.log(error.response);
+                            })
                     }
-            })
-            .catch(error=>{
-                setIsLoading(false)
-                console.log(error.response); 
-            })
+                })
+                .catch(error => {
+                    setIsLoading(false)
+                    console.log(error.response);
+                })
         }
     }
-    
-    return(
-        <View style={{marginTop : -10}}>
+
+    const verifyForgotPasswordHandler = () => {
+        console.log(route.params)
+        if (mode === 1) {
+            const { email } = route.params
+            const data = {
+                email: email,
+                otp: code
+            }
+            forgotPasswordVerifyEmailOtp(data).then(
+                response => {
+                    if(response?.status === 400){
+                        Alert.alert(response.data?.message)
+                        return
+                    } 
+                        console.log('res', response, 'data', data)
+                        setIsLoading(false)
+                        setCode("")
+                        navigation.navigate('SetNewPasswordScreen', response)
+                })
+                .catch(error => {
+                    console.log(error.response);
+                });
+        }
+        else {
+            const { country_code, phone_number } = route.params
+            const data = {
+                country_code: country_code,
+                phone_number: phone_number,
+                otp: code
+            }
+            forgotPasswordVerifyPhonelOtp(data).then(
+                response => {
+                    if (response?.status === 'success') {
+                        console.log('res', response, 'data', data)
+                        setIsLoading(false)
+                        setCode("")
+                        navigation.navigate('SetNewPasswordScreen', response)
+                    }
+                }
+            ).catch(error => {
+                console.log(error.response);
+            });
+        }
+    }
+
+    return (
+        <View style={{ marginTop: -10 }}>
             <ImageBackground source={Images.Background} resizeMode="cover" style={styles.image}>
-                <Header onPress={()=>navigation.goBack()} isBackIconVisible={true}/>
-                
-                <KeyboardAwareScrollView 
+                <Header onPress={() => navigation.goBack()} isBackIconVisible={true} />
+
+                <KeyboardAwareScrollView
                     style={styles.body}
-                    contentContainerStyle={{paddingBottom : 10}}
-                    extraScrollHeight = {100}
-                    bounces = {false}
-                    enableAutomaticScroll = {true}
+                    contentContainerStyle={{ paddingBottom: 10 }}
+                    extraScrollHeight={100}
+                    bounces={false}
+                    enableAutomaticScroll={true}
                 >
-                    <Circle sourceImage={Images.Verification} CircleStyle={styles.circle}/>
+                    <Circle sourceImage={Images.Verification} CircleStyle={styles.circle} />
 
                     <Text style={styles.headingText}>{Strings.CODE_VERIFICATION}</Text>
 
-                    <Text 
+                    <Text
                         style={styles.subText}
                     >
                      {mode === 1 ? Strings.WE_SENT_YOU_AN_EMAIL : Strings.PLEASE_ENTER_6_DIGIT_CODE_TO_YOUR_PHONE}
                     </Text>
 
                     <OTPInputView
-                        style={{width: '100%', height: 150}}
+                        style={{ width: '100%', height: 150 }}
                         pinCount={6}
-                        code={code} 
-                        onCodeChanged = {newCode => setCode(newCode)}
+                        code={code}
+                        onCodeChanged={newCode => setCode(newCode)}
                         autoFocusOnLoad
                         codeInputFieldStyle={styles.textInput}
                         codeInputHighlightStyle={styles.underlineStyleHighLighted}
@@ -175,12 +226,12 @@ const CodeVerification = ({route})=>{
                     <View style={styles.resendContainer}>
                         <Text style={styles.text}>{Strings.DIDNT_RECEIVE_YOUR_CODE}</Text>
                         <TouchableOpacity 
-                            onPress={resendHandler}
-                            disabled = {isDisable}
+                            // onPress={resendHandler}
+                            disabled={isDisable}
                         >
                             <Text style={[
                                 styles.text,
-                                {color : isDisable ? Colors.white : Colors.lightRed}]
+                                { color: isDisable ? Colors.white : Colors.lightRed }]
                             }>
                                 Resend {mode === 1 ? 'Email' : 'OTP'}
                             </Text>
@@ -189,11 +240,19 @@ const CodeVerification = ({route})=>{
 
                     <PrimaryButton
                         isLoading={isLoading}
-                        disabled = {isDisabled()}
-                        text = "Verify"
-                        onPress = {verifyHandler}
-                        style={{marginTop : Platform.OS === 'ios' ? '30%' : '25%'}}
-                        btnStyle = {{}}
+                        disabled={isDisabled()}
+                        text="Verify"
+                        onPress={() => {
+                            if (route.params.screen === "signup") {
+                                verifyHandler()
+                            }
+                            else {
+                                console.log(route.params)
+                                verifyForgotPasswordHandler()
+                            }
+                        }}
+                        style={{ marginTop: Platform.OS === 'ios' ? '30%' : '25%' }}
+                        btnStyle={{}}
                     />
 
                 </KeyboardAwareScrollView>
@@ -202,20 +261,20 @@ const CodeVerification = ({route})=>{
                 ref={refRBSheet}
                 closeOnDragDown={false}
                 closeOnPressMask={false}
-                height = {450}
+                height={450}
                 customStyles={{
-                wrapper: {
-                //    backgroundColor  : "transparent"     
-                },
-                container : {
-                    backgroundColor : Colors.aubergine,
-                    borderTopLeftRadius : 20,
-                    borderTopRightRadius : 20,
-                    paddingHorizontal : 30
-                }
+                    wrapper: {
+                        //    backgroundColor  : "transparent"     
+                    },
+                    container: {
+                        backgroundColor: Colors.aubergine,
+                        borderTopLeftRadius: 20,
+                        borderTopRightRadius: 20,
+                        paddingHorizontal: 30
+                    }
                 }}
-              >
-               <BottomSheetContainer onPress={()=>{refRBSheet.current.close()}}/>
+            >
+                <BottomSheetContainer onPress={() => { refRBSheet.current.close() }} />
             </RBSheet>
         </View>
     )
