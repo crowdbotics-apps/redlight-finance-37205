@@ -8,6 +8,7 @@ import QRCode from 'react-native-qrcode-svg';
 import { QrCodeProps } from './QrCodeProps';
 import Icons from '../../assets/Icons'
 import styles from './styles'
+import { Strings } from '../../util/Strings';
 
 const QrCode : FC<QrCodeProps> = props =>{
     const {wallet,user,qrString,setQRref,shareQR,saveQR} = props
@@ -29,14 +30,14 @@ const QrCode : FC<QrCodeProps> = props =>{
             <TouchableOpacity style={styles.shareBtn} onPress={shareQR}>
                 <View style={styles.btnView}>
                     <Icons.ShareIcon/>
-                    <Text style={styles.btnText}>Share my QR Code</Text>
+                    <Text style={styles.btnText}>{Strings.SHARE_MY_QR_CODE}</Text>
                 </View>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.downloadBtn} onPress={saveQR}>
                 <View style={styles.btnView}>
                     <Icons.DownloadIcon/>
-                        <Text style={styles.btnText}>Save to My Gallery</Text>
+                        <Text style={styles.btnText}>{Strings.SAVE_TO_MY_GALLERY}</Text>
                 </View>
             </TouchableOpacity>
 

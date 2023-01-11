@@ -8,7 +8,14 @@ import ViewAllOverTheCounter from '../screens/ViewAllOverTheCounter';
 import BankingDepositScreen from '../screens/BankingDepositScreen';
 import DepositConfirmationScreen from '../screens/DepositConfirmationScreen';
 import OverTheCounterDepositScreen from '../screens/OverTheCounterDepositScreen';
+import ViewAllOnlineBankingWithdrawal from '../screens/ViewAllOnlineBankingWithdrawal';
+import ViewAllWalletWithdrawal from '../screens/ViewAllWalletWithdrawal';
+import CashOutDetailsScreen from '../screens/CashOutDetailsScreen';
+import CashOut from '../screens/CashOutScreen';
 import QRCodeScreen from '../screens/QRCodeScreen';
+import { SetNewPassword as SetNewPasswordScreen } from "../screens/setnewpassword";
+import { ChangePassword as ChangePasswordScreen } from "../screens/changePassword";
+import { SettingScreen as SettingScreen } from "../screens/setting";
 
 const DashboardStack = createStackNavigator()
 
@@ -54,6 +61,34 @@ const DashboardNavigator : FC = () => {
                <DashboardStack.Screen
                 name="OverTheCounterDeposit"
                 component={OverTheCounterDepositScreen}
+            />
+              <DashboardStack.Screen
+                name="CashOutScreen"
+                component={CashOut}
+            />
+               <DashboardStack.Screen
+                name="ViewAllOnlineBankingWithdrawalScreen"
+                component={ViewAllOnlineBankingWithdrawal}
+            />
+               <DashboardStack.Screen
+                name="ViewAllWalletWithdrawalScreen"
+                component={ViewAllWalletWithdrawal}
+            />
+               <DashboardStack.Screen
+                name="CashOutDetailsScreen"
+                component={CashOutDetailsScreen}
+            />
+               <DashboardStack.Screen
+                name="SetNewPasswordScreen"
+                component={SetNewPasswordScreen}
+            />
+               <DashboardStack.Screen
+                name="ChangePasswordScreen"
+                component={ChangePasswordScreen}
+            />
+               <DashboardStack.Screen
+                name="SettingScreen"
+                component={SettingScreen}
             />
         </DashboardStack.Navigator>
     )

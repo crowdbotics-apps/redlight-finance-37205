@@ -1,9 +1,9 @@
 import React,{FC} from 'react'
 import { Platform } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Svg, { SvgFromXml, SvgXml } from "react-native-svg"
 import Home from '../screens/home';
 import Profile from '../screens/profile';
+import MyProfile from '../screens/myProfile/MyProfile';
 import QRScanner from '../screens/QRScanner';
 import { Colors } from '../theme/Colors';
 import Icons from '../assets/Icons'
@@ -47,7 +47,7 @@ const DashboardTabNavigator : FC = () =>{
             />
             <Tab.Screen
                 name="profile"
-                component={Profile}
+                component={MyProfile}
                 options={{
                     tabBarIcon: ({ focused }) => (
                         focused ? <Icons.tabProfileSelected />  : <Icons.tabProfile/>

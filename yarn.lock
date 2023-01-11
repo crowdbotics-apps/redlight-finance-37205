@@ -1077,10 +1077,10 @@
   dependencies:
     merge-options "^3.0.4"
 
-"@react-native-community/cameraroll@^4.1.2":
-  version "4.1.2"
-  resolved "https://registry.yarnpkg.com/@react-native-community/cameraroll/-/cameraroll-4.1.2.tgz#489c6bb6137571540d93c543d5fcf8c652b548ec"
-  integrity sha512-jkdhMByMKD2CZ/5MPeBieYn8vkCfC4MOTouPpBpps3I8N6HUYJk+1JnDdktVYl2WINnqXpQptDA2YptVyifYAg==
+"@react-native-camera-roll/camera-roll@^5.2.1":
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/@react-native-camera-roll/camera-roll/-/camera-roll-5.2.1.tgz#3cffbe2a368e47f14578bda2b244790a7119f662"
+  integrity sha512-axWwlLj/3E5PIjXcN2y2XZzK/hYTx73kDlQJpHpcurejmQR9sU22w3cs+YltaNkZGl3y7Eu/LbiPEkGIwNVQow==
 
 "@react-native-community/cli-debugger-ui@^5.0.1":
   version "5.0.1"
@@ -6998,6 +6998,11 @@ react-native-dotenv@^2.5.3:
   integrity sha512-yGVEYjhXTpHFEpeaJS6qdnI1TyFFHj3E2k9X3HgkIsOh7c86t+JkBRfHP7zeOOyquE5ewN7+OcLEARgkFhDuRA==
   dependencies:
     dotenv "^10.0.0"
+
+react-native-element-dropdown@^2.5.3:
+  version "2.5.3"
+  resolved "https://registry.yarnpkg.com/react-native-element-dropdown/-/react-native-element-dropdown-2.5.3.tgz#a8d22912d1c201fc3c08c22fbf3e31ecb166a299"
+  integrity sha512-Os4UtvGlqccV3lsiP5Qy4RPzqqyx7E6lYcn2/IRQZHwBA4NAQA2dul/BrQSwy3bhicCqmWtir7T1GeFmOZPPrQ==
 
 react-native-elements@^3.3.1:
   version "3.4.3"

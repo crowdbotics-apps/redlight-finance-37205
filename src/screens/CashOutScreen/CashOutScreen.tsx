@@ -1,26 +1,45 @@
-import React,{FC} from 'react'
+import React,{FC,useRef} from 'react'
 import {View,Text,ImageBackground, TouchableOpacity,FlatList,Platform,StatusBar} from 'react-native'
+import RBSheet from 'react-native-raw-bottom-sheet';
 import { useNavigation } from '@react-navigation/native'
+import CashOutPopupScreen from '../../components/CashoutPopupScreen';
 import CashComponent from '../../components/CashComponent'
 import CustomHeader from '../../components/CustomHeader'
 import Images from '../../assets/Images'
 import { Strings } from '../../util/Strings'
 import styles from './styles'
 import Icons from '../../assets/Icons'
+import { Colors } from '../../theme/Colors';
 
 const DATA = [1,2,3,4,5,6]
 
-const CashIn : FC = () =>{
+const CashOut : FC = () =>{
     const navigation = useNavigation()
-    const matchmoveHandler = () =>{
-        navigation.navigate('BankingDepositScreen')
+    const refRBSheet = useRef();
+
+    const openBottomsheetHandler = ()=>{
+        refRBSheet.current.open()
     }
+
+    const closeBottomsheetHandler = () =>{
+        refRBSheet.current.close()
+    }
+
+    const cashoutviaHandler = () =>{
+        refRBSheet.current.close()
+        navigation.navigate('CashOutDetailsScreen')
+    }
+
+    const matchmoveHandler = () => {
+        openBottomsheetHandler()
+    }
+
     return (
         <View style={{marginTop : -10}}>
             <ImageBackground source={Images.Background} resizeMode="cover" style={styles.image}>
                 <StatusBar barStyle='light-content'/>
                 <CustomHeader 
-                    name={Strings.CASH_IN}
+                    name={Strings.CASH_OUT}
                     Icon = {<Icons.LeftArrow/>}
                     isIconVisible={true} 
                     headerStyle = {{marginTop : Platform.OS === 'ios' ? '12%' : 25}}
@@ -31,7 +50,7 @@ const CashIn : FC = () =>{
                         <View style={styles.sectionHeading}>
                             <Text style={styles.sectionHeadingText}>{Strings.ONLINE_BANKING}</Text>
                             <TouchableOpacity 
-                                onPress={()=>navigation.navigate('ViewAllOnlineBanking')}
+                                onPress={()=>navigation.navigate('ViewAllOnlineBankingWithdrawalScreen')}
                             >
                                 <Text style={styles.sectionheadingBtnText}>{Strings.VIEW_ALL}</Text>
                             </TouchableOpacity>
@@ -39,7 +58,7 @@ const CashIn : FC = () =>{
                         <Text 
                             style={styles.sectionSubheading}
                         >
-                            {Strings.MAKE_YOUR_TRANSACTIONS_QUICK_AND_EASY}
+                            {Strings.HASSLE_FREE_ONLINE_ANYTIME}
                         </Text>
                         <FlatList
                             data = {DATA}
@@ -55,15 +74,15 @@ const CashIn : FC = () =>{
                         <View style={styles.sectionHeading}>
                             <Text style={styles.sectionHeadingText}>{Strings.E_WALLETS}</Text>
                             <TouchableOpacity
-                                 onPress={()=>navigation.navigate('ViewAllWallet')}
+                                 onPress={()=>navigation.navigate('ViewAllWalletWithdrawalScreen')}
                             >
                                 <Text style={styles.sectionheadingBtnText}>{Strings.VIEW_ALL}</Text>
                             </TouchableOpacity>
                         </View>
-                        <Text style={styles.sectionSubheading}>{Strings.VIRTUAL_IS_THE_NEW_NORMAL}</Text>
+                        <Text style={styles.sectionSubheading}>{Strings.HASSLE_FREE_ONLINE_ANYTIME}</Text>
                         <FlatList
                             data = {DATA}
-                            renderItem = {(item)=><CashComponent onPress={matchmoveHandler}/>}
+                            renderItem = {(item)=><CashComponent />}
                             showsHorizontalScrollIndicator = {false}
                             horizontal = {true}
                             style = {styles.list}
@@ -73,17 +92,17 @@ const CashIn : FC = () =>{
 
                     <View style={styles.section}>
                         <View style={styles.sectionHeading}>
-                            <Text style={styles.sectionHeadingText}>{Strings.ONER_THE_COUNTER}</Text>
+                            <Text style={styles.sectionHeadingText}>{Strings.REMITTANCE}</Text>
                             <TouchableOpacity
                                  onPress={()=>navigation.navigate('ViewAllOverTheCounter')}
                             >
                                 <Text style={styles.sectionheadingBtnText}>{Strings.VIEW_ALL}</Text>
                             </TouchableOpacity>
                         </View>
-                        <Text style={styles.sectionSubheading}>{Strings.CASH_IN_WITH_EASE}</Text>
+                        <Text style={styles.sectionSubheading}>{Strings.PANDORAS_VAULT_MERCHANT}</Text>
                         <FlatList
                             data = {DATA}
-                            renderItem = {(item)=><CashComponent onPress={matchmoveHandler}/>}
+                            renderItem = {(item)=><CashComponent/>}
                             showsHorizontalScrollIndicator = {false}
                             horizontal = {true}
                             style = {styles.list}
@@ -92,8 +111,31 @@ const CashIn : FC = () =>{
                     </View>
                 </View>
             </ImageBackground>
+            <RBSheet
+                ref={refRBSheet}
+                closeOnDragDown={false}
+                closeOnPressMask={false}
+                height = {500}
+                customStyles={{
+                wrapper: {
+                //    backgroundColor  : "transparent"     
+                },
+                container : {
+                    backgroundColor : Colors.aubergine,
+                    borderTopLeftRadius : 20,
+                    borderTopRightRadius : 20,
+                    paddingHorizontal : 20,
+                    paddingBottom : 30
+                }
+                }}
+              >
+               <CashOutPopupScreen 
+                    onPress={closeBottomsheetHandler} 
+                    cashoutviaHandler={cashoutviaHandler}
+                />
+            </RBSheet>
         </View>
     )
 }
 
-export default CashIn
+export default CashOut
