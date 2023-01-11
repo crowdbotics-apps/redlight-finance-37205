@@ -21,6 +21,9 @@ import LeftArrow from "./LeftArrow"
 import RightArrow from "./RightArrow"
 import ScannerIcon from "./ScannerIcon"
 import UploadIcon from  './UploadIcon'
+import BitcoinTokenSelected from "./BitcoinTokenSelected"
+import SendIcon from "./SendIcon"
+import MoveIcon from "./MoveIcon"
 
 const Icons = {
     BackArrow,
@@ -46,6 +49,9 @@ const Icons = {
     LeftArrow,
     ScannerIcon,
     UploadIcon,
+    BitcoinTokenSelected,
+    SendIcon,
+    MoveIcon
 }
 
 export default Icons
