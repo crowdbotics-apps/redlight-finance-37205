@@ -89,5 +89,7 @@ export const Strings = {
     CASH_OUT : "Cash Out",
     CASH_OUT_VIA : "Cash Out via",
     METHOD : "Method",
-    SELECT_FROM : "Select from"
+    SELECT_FROM : "Select from",
+    OVERVIEW_BALANCE : "Overview Balance",
+    
 }
