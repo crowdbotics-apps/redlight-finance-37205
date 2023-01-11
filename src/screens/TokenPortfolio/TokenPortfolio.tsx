@@ -41,7 +41,10 @@ const TokenPortfolio = () =>{
         })
     },[])
 
-    console.log('allwallets',allwallets)
+    const sendCreditHandler = () =>{
+        navigation.navigate('SendCredit')
+    }
+    
     return (
         <View style={{marginTop : -10}}>
             <ImageBackground source={Images.Background} resizeMode="cover" style={styles.image}>
@@ -63,7 +66,10 @@ const TokenPortfolio = () =>{
                             <Text style={styles.footerText}>As of December 04, 2022</Text>
                         </View>
                         <View style={styles.btnView}>
-                            <TouchableOpacity style={styles.btn}>
+                            <TouchableOpacity 
+                                style={styles.btn}
+                                onPress = {sendCreditHandler}
+                            >
                                 <Icons.SendIcon/>
                                 <Text style={styles.btnText}>{Strings.SEND}</Text>
                             </TouchableOpacity>

@@ -91,5 +91,6 @@ export const Strings = {
     METHOD : "Method",
     SELECT_FROM : "Select from",
     OVERVIEW_BALANCE : "Overview Balance",
-    
+    SEND_CREDITS  : "Send Credits",
+    ENTER_AMOUNT : "Enter amount",
 }
