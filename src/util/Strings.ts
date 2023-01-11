@@ -83,4 +83,11 @@ export const Strings = {
     TOKEN_PROFILE : "Token Profile",
     SEND : "Send",
     MOVE :  "Move",
+    HASSLE_FREE_ONLINE_ANYTIME : "Hassle-free online anytime.",
+    REMITTANCE :  "Remittance",
+    PANDORAS_VAULT_MERCHANT : "Pandoras Vault Merchant",
+    CASH_OUT : "Cash Out",
+    CASH_OUT_VIA : "Cash Out via",
+    METHOD : "Method",
+    SELECT_FROM : "Select from"
 }

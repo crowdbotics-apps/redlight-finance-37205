@@ -2,7 +2,6 @@ import React,{FC} from 'react'
 import { Platform } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from '../screens/home';
-import Profile from '../screens/profile';
 import QRScanner from '../screens/QRScanner';
 import MyProfile from '../screens/myProfile/MyProfile';
 import TokenPortfolio from '../screens/TokenPortfolio';
