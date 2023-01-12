@@ -93,4 +93,6 @@ export const Strings = {
     OVERVIEW_BALANCE : "Overview Balance",
     SEND_CREDITS  : "Send Credits",
     ENTER_AMOUNT : "Enter amount",
+    SEND_CREDITS_VIA : "Send credits via",
+    RECIPIENTS_NAME : "Recipient’s Name",
 }

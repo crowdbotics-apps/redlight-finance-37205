@@ -24,6 +24,7 @@ import UploadIcon from  './UploadIcon'
 import BitcoinTokenSelected from "./BitcoinTokenSelected"
 import SendIcon from "./SendIcon"
 import MoveIcon from "./MoveIcon"
+import DownArrow from './DownArrow.svg'
 
 const Icons = {
     BackArrow,
@@ -51,7 +52,7 @@ const Icons = {
     UploadIcon,
     BitcoinTokenSelected,
     SendIcon,
-    MoveIcon
+    MoveIcon,DownArrow
 }
 
 export default Icons

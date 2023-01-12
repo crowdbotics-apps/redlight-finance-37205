@@ -6,7 +6,8 @@ import {
     ImageBackground,
     StatusBar,
     Platform,
-    TextInput} from 'react-native'
+    TextInput,
+    TouchableOpacity} from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { Dropdown } from 'react-native-element-dropdown';
 import { Strings } from '../../util/Strings'
@@ -15,13 +16,24 @@ import { Colors } from '../../theme/Colors'
 import Icons from '../../assets/Icons'
 import { Fonts } from '../../assets/fonts';
 import CustomHeader from '../../components/CustomHeader'
+import PrimaryButton from '../../components/PrimaryButton';
+import { SvgXml } from 'react-native-svg';
 
 const SendCredit : FC = ()=>{
     const navigation = useNavigation()
     const [amount,setAmount] = useState(0.00)
+    const [name,setName] = useState()
 
-    const textInputChangeHandler = (newAmount:any) =>{
+    const amountChangeHandler = (newAmount:any) =>{
         setAmount(newAmount)
+    }
+
+    const nameChangeHandler = (newName) =>{
+        setName()
+    }
+
+    const sendHandler = () =>{
+
     }
     return (
         <View style={{marginTop : -10}}>
@@ -37,47 +49,56 @@ const SendCredit : FC = ()=>{
                 <View style={styles.mainContainer}>
                     <View style={{marginTop : 10}}>
                         <Text style={styles.text}>{Strings.SELECT_FROM}</Text>
-                        <Dropdown
-                            style={styles.input}
-                            placeholderStyle={styles.placeholderStyle}
-                            // selectedTextStyle={styles.selectedTextStyle}
-                            // inputSearchStyle={styles.inputSearchStyle}
-                            // iconStyle={styles.iconStyle}
-                            // data={data}
-                            search
-                            maxHeight={300}
-                            labelField="label"
-                            valueField="value"
-                            placeholder={Strings.SELECT_FROM}
-                            // searchPlaceholder="Search..."
-                            // value={value}
-                            // onFocus={() => setIsFocus(true)}
-                            // onBlur={() => setIsFocus(false)}
-                            // onChange={item => {
-                            //     setValue(item.value);
-                            //     setIsFocus(false);
-                            // }}
-                            // renderLeftIcon={() => (
-                            //     <AntDesign
-                            //     style={styles.icon}
-                            //     color={isFocus ? 'blue' : 'black'}
-                            //     name="Safety"
-                            //     size={20}
-                            //     />
-                            // )}   
-                        />
+                        <TouchableOpacity style={[styles.input,styles.btn]}>
+                           <Text style={styles.placeholderText}>First Wallet</Text>  
+                           <SvgXml
+                                xml={Icons.DownArrow}
+                                width={10}
+                                height={10}
+                            />
+                        </TouchableOpacity>
                     </View>
+                    <Text style={styles.balanceText}>Balance:  235.00</Text>
                     <View style={{marginTop : 20}}>
                         <Text style={styles.text}>{Strings.AMOUNT}</Text>
                         <TextInput
                             style={styles.input}
-                            onChangeText={textInputChangeHandler}
+                            onChangeText={amountChangeHandler}
                             value={amount}
                             placeholder={Strings.ENTER_AMOUNT}
-                            placeholderTextColor={Colors.MediumDarkGray}
+                            placeholderTextColor={Colors.Gray78}
                             keyboardType="numeric"
                         />
                     </View>
+                    <View style={styles.sendCreditView}>
+                        <Text style={styles.text}>{Strings.SEND_CREDITS_VIA}</Text>
+                        <View style={styles.creditViaContainer}>
+                            <View style={styles.item}>
+
+                            </View>
+                            <View style={styles.item}>
+
+                            </View>
+                            <View style={styles.item}>
+
+                            </View>
+                        </View>
+                        <View style={{marginTop : 30}}>
+                            <Text style={styles.text}>{Strings.RECIPIENTS_NAME}</Text>
+                            <TextInput
+                                style={styles.input}
+                                onChangeText={nameChangeHandler}
+                                value={name}
+                                placeholder={Strings.RECIPIENTS_NAME}
+                                placeholderTextColor={Colors.Gray78}
+                            />
+                    </View>
+                   </View>
+                   <View>
+                    {/* <PrimaryButton
+                            
+                    /> */}
+                </View>
                 </View>
             </ImageBackground>
         </View>
@@ -108,13 +129,15 @@ const styles = StyleSheet.create({
         backgroundColor : Colors.aubergine,
         color  : Colors.white,
         elevation : 5,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 1 },
+        shadowColor: '#000000',
+        shadowOffset: { width: 2, height: 2 },
         shadowOpacity: 0.8,
-        shadowRadius: 1,
+        shadowRadius: 5,
     },
-    placeholderStyle : {
-        color : Colors.MediumDarkGray
+    btn : {
+        flexDirection : 'row',
+        justifyContent : 'space-between',
+        alignItems : 'center'
     },
     text : {
         fontFamily : Fonts.PoppinsSemibold,
@@ -123,4 +146,35 @@ const styles = StyleSheet.create({
         lineHeight : 22,
         color : Colors.white,
     },
+    placeholderText : {
+        fontFamily : Fonts.PoppinsRegular,
+        fontWeight : '400',
+        fontSize : 14,
+        lineHeight : 21,
+        color : Colors.white,
+    },
+    balanceText : {
+        fontFamily : Fonts.PoppinsSemibold,
+        fontWeight : '500',
+        fontSize : 12,
+        lineHeight : 18,
+        color : Colors.Gray78,
+        marginTop : 3
+    },
+    sendCreditView : {
+        marginTop : 30,
+        flex:1,
+    },
+    creditViaContainer : {
+        flexDirection : 'row',
+        justifyContent : 'space-between',
+        alignItems : 'center',
+        marginTop : 20
+    },
+    item : {
+        width : '30%',
+        height : 80,
+        borderRadius : 10,
+        backgroundColor : Colors.PineTree
+    }
 })
