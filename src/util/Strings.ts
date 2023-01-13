@@ -95,4 +95,10 @@ export const Strings = {
     ENTER_AMOUNT : "Enter amount",
     SEND_CREDITS_VIA : "Send credits via",
     RECIPIENTS_NAME : "Recipient’s Name",
+    MOBILE : "Mobile",
+    QR_CODE: "QR Code",
+    SELECT_WALLET : "Select Wallet",
+    MOVE_CREDITS : "Move Credits",
+    MOVE_TO : "Move to",
+    YOU_CANT_MOVE_CREDITS_IN_SAME_WALLET : "You cannot move credits in the same wallet.",
 }

@@ -1,4 +1,4 @@
-import React,{FC,useState,useRef,useEffect} from 'react'
+import React,{FC,useState,useRef} from 'react'
 import {
     View,
     Text, 
@@ -18,18 +18,12 @@ import styles from './styles'
 import CustomHeader from '../../components/CustomHeader'
 import PrimaryButton from '../../components/PrimaryButton';
 import TokenWalletPopup from '../../components/TokenWalletPopup';
-import {getAllWallets } from '../../services/homeServices';
 
-const SendCredit : FC = ()=>{
+const MoveCredit : FC = ()=>{
     const navigation = useNavigation()
     const refRBSheet = useRef();
     const [wallet,setWallet] = useState('23')
     const [amount,setAmount] = useState(0.00)
-    const [name,setName] = useState()
-
-    useEffect(()=>{
-
-    },[])
 
     const openBottomsheetHandler = ()=>{
         refRBSheet.current.open()
@@ -43,11 +37,7 @@ const SendCredit : FC = ()=>{
         setAmount(newAmount)
     }
 
-    const nameChangeHandler = (newName) =>{
-        setName()
-    }
-
-    const sendHandler = () =>{
+    const moveHandler = () =>{
 
     }
     return (
@@ -55,7 +45,7 @@ const SendCredit : FC = ()=>{
             <ImageBackground source={Images.Background} resizeMode="cover" style={styles.image}>
                 <StatusBar barStyle='light-content'/>
                 <CustomHeader 
-                    name={Strings.SEND_CREDITS}
+                    name={Strings.MOVE_CREDITS}
                     Icon = {<Icons.LeftArrow/>}
                     isIconVisible={true} 
                     onPress={()=>navigation.goBack()}
@@ -88,52 +78,40 @@ const SendCredit : FC = ()=>{
                             keyboardType="numeric"
                         />
                     </View>
-                    <View style={styles.sendCreditView}>
-                        <Text style={styles.text}>{Strings.SEND_CREDITS_VIA}</Text>
-                        <View style={styles.creditViaContainer}>
-                            <TouchableOpacity style={styles.item}>
-                                <SvgXml
-                                    xml={Icons.MobileIcon}
-                                    width={50}
-                                    height={50}
-                                />
-                                <Text style={styles.itemText}>{Strings.MOBILE}</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.item}>
-                                <SvgXml
-                                    xml={Icons.EmailIcon}
-                                    width={50}
-                                    height={50}
-                                />
-                                <Text style={styles.itemText}>{Strings.EMAIL}</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.item}>
-                                <SvgXml
-                                    xml={Icons.QrIcon}
-                                    width={50}
-                                    height={50}
-                                />
-                                <Text style={styles.itemText}>{Strings.QR_CODE}</Text>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={{marginTop : 30,}}>
-                            <Text style={styles.text}>{Strings.RECIPIENTS_NAME}</Text>
-                            <TextInput
-                                style={styles.input}
-                                onChangeText={nameChangeHandler}
-                                value={name}
-                                placeholder={Strings.RECIPIENTS_NAME}
-                                placeholderTextColor={Colors.Gray78}
+                    <View style={{marginTop : 40}}>
+                        <Text style={styles.text}>{Strings.MOVE_TO}</Text>
+                        <TouchableOpacity 
+                            style={[styles.input,styles.btn]}
+                            onPress = {openBottomsheetHandler}
+                        >
+                           <Text style={styles.placeholderText}>First Wallet</Text>  
+                           <SvgXml
+                                xml={Icons.DownArrow}
+                                width={10}
+                                height={10}
                             />
-                        </View>
-                    </View>   
-                        <PrimaryButton
-                            // isLoading={isLoading}
-                            disabled = {!(wallet && amount)}
-                            text = {Strings.SEND}
-                            onPress = {sendHandler}
-                            style={{position:'absolute',bottom : 20,width : '100%',alignSelf : 'center'}}
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.errorView}>
+                        <SvgXml
+                            xml={Icons.InfoIcon}
+                            width={20}
+                            height={20}
                         />
+                        <Text 
+                            style={styles.errorText}
+                        >
+                            {Strings.YOU_CANT_MOVE_CREDITS_IN_SAME_WALLET}
+                        </Text>
+                    </View>
+                    <PrimaryButton
+                        // isLoading={isLoading}
+                        // disabled = {!(wallet && amount)}
+                        text = {Strings.MOVE}
+                        onPress = {moveHandler}
+                        style={{position:'absolute',bottom : 20,width : '100%',alignSelf : 'center'}}
+                    /> 
+                       
                 </View>
             </ImageBackground>
             <RBSheet
@@ -163,4 +141,4 @@ const SendCredit : FC = ()=>{
     )
 }
 
-export default SendCredit
+export default MoveCredit

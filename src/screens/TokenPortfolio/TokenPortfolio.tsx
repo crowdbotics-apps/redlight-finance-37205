@@ -44,6 +44,10 @@ const TokenPortfolio = () =>{
     const sendCreditHandler = () =>{
         navigation.navigate('SendCredit')
     }
+
+    const moveCreditHandler = () =>{
+        navigation.navigate('MoveCredit')
+    }
     
     return (
         <View style={{marginTop : -10}}>
@@ -73,7 +77,10 @@ const TokenPortfolio = () =>{
                                 <Icons.SendIcon/>
                                 <Text style={styles.btnText}>{Strings.SEND}</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.btn}>
+                            <TouchableOpacity 
+                                style={styles.btn}
+                                onPress={moveCreditHandler}
+                            >
                                 <Icons.MoveIcon/>
                                 <Text style={styles.btnText}>{Strings.MOVE}</Text>
                             </TouchableOpacity>

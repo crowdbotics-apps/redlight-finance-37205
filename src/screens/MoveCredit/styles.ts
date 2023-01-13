@@ -87,6 +87,23 @@ const styles = StyleSheet.create({
         bottom : 20,
         width : '100%',
         alignSelf : 'center',
+    },
+    errorView : {
+        flexDirection : 'row',
+        justifyContent : 'center',
+        alignItems : 'center',
+        marginTop  :50,
+        padding : 20,
+        borderRadius : 10,
+        backgroundColor : '#890B1C'
+    },
+    errorText : {
+        fontFamily : Fonts.PoppinsSemibold,
+        fontWeight : '400',
+        fontSize : 12,
+        lineHeight : 18,
+        color : Colors.white,
+        marginStart : 10
     }
 });
 
