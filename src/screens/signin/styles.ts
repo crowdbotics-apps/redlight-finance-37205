@@ -8,9 +8,16 @@ const styles = StyleSheet.create({
         height : '100%',
         alignItems : 'center'
     },
+    img : {
+        width : '100%',
+        height : 400,
+    },
+    container : {
+        paddingHorizontal : 30,
+        marginTop : 30
+    },
     body : {
         width  :'100%',
-        paddingHorizontal : 30,
     },
     tabs :{
         display: 'flex',

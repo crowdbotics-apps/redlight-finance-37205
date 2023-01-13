@@ -31,7 +31,7 @@ const CustomInput :FC<CustomInputProps> = props =>{
                 <Text style={styles.label}>{label}</Text>
             </View>
             <View style={[styles.searchView]}>
-                {isleftIconVisible && leftIcon && <View>
+                {isleftIconVisible && leftIcon && <View style={styles.leftView}>
                     {leftIcon}
                 </View>}
                 <View style={styles.textInputContainer}>
@@ -43,7 +43,11 @@ const CustomInput :FC<CustomInputProps> = props =>{
                         style = {[
                             styles.input,
                             inputStyle,
-                            { borderRadius : !isRightIconVisible ? 10 : 0}
+                            { borderRadius : !isRightIconVisible ? 10 : 0},
+                            {
+                                borderTopLeftRadius : (leftIcon && isleftIconVisible) ? 0 : 10,
+                                borderBottomLeftRadius : (leftIcon && isleftIconVisible) ? 0 :10
+                            }
                         ]}
                         selectionColor = {Colors.white}
                         keyboardType = {keyboardType}

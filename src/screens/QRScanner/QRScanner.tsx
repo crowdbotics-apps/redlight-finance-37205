@@ -9,7 +9,7 @@ import {
     Alert,
     PermissionsAndroid,
     ToastAndroid} from 'react-native';
-import CameraRoll from "@react-native-community/cameraroll";
+import { CameraRoll } from "@react-native-camera-roll/camera-roll";
 import ImagePicker from 'react-native-image-crop-picker';
 import RNQRGenerator from 'rn-qr-generator'
 import RNFS from 'react-native-fs'
@@ -43,9 +43,9 @@ const QRScanner : FC = () => {
             console.log('fw',filteredWallet);
             
             getWalletQR(filteredWallet.id).then(response=>{       
-                setWalletName(response.subwallet_name)
+                setWalletName(response.wallet_name)
                 setUsername(response.user.username)
-                setQRString(response.wallet_address.ethereum)
+                setQRString(response.public_address)
             })
             .catch(error=>{
                 console.log(error.response); 

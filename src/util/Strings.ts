@@ -80,5 +80,12 @@ export const Strings = {
     DEPOSIT_AMOUNT : "Deposit Amount",
     PAYMENT_DEADLINE  : "Payment Deadline",
     PAY_WITH_DRAGON_PAY  : "Pay With Dragon Pay",
-    DELETE_WALLET : "Are You Sure You want to delete this wallet ?"
+    DELETE_WALLET : "Are You Sure You want to delete this wallet ?",
+    HASSLE_FREE_ONLINE_ANYTIME : "Hassle-free online anytime.",
+    REMITTANCE :  "Remittance",
+    PANDORAS_VAULT_MERCHANT : "Pandoras Vault Merchant",
+    CASH_OUT : "Cash Out",
+    CASH_OUT_VIA : "Cash Out via",
+    METHOD : "Method",
+    SELECT_FROM : "Select from"
 }

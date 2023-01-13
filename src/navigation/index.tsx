@@ -5,10 +5,6 @@ import {Signup as SignupScreen} from '../screens/signup'
 import {CodeVerification as CodeVerificationScreen} from "../screens/codeVerification";
 import { Signin as SigninScreen } from "../screens/signin";
 import { ForgotPassword as ForgotPasswordScreen } from "../screens/forgotpassword";
-import { SetNewPassword as SetNewPasswordScreen } from "../screens/setnewpassword";
-import { ChangePassword as ChangePasswordScreen } from "../screens/changePassword";
-import { Myprofile as MyProfileScreen } from "../screens/myProfile";
-import { SettingScreen as SettingScreen } from "../screens/setting";
 import Home from "../screens/home"
 import { Walletscreen as WalletScreen } from '../screens/WalletScreen';
 
@@ -44,26 +40,6 @@ const RootNavigator: FC = () => {
             <RootStack.Screen
                 name="ForgotPasswordScreen"
                 component={ForgotPasswordScreen}
-            />
-            <RootStack.Screen
-                name="SetNewPasswordScreen"
-                component={SetNewPasswordScreen}
-            />
-            <RootStack.Screen
-                name="ChangePasswordScreen"
-                component={ChangePasswordScreen}
-            />
-            <RootStack.Screen
-                name="MyProfileScreen"
-                component={MyProfileScreen}
-            />
-            <RootStack.Screen
-                name="SettingScreen"
-                component={SettingScreen}
-            />
-            <RootStack.Screen
-                name="HomeScreen"
-                component={Home}
             />
             <RootStack.Screen
                 name="DashboardNavigaton"

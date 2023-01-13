@@ -8,7 +8,7 @@ import {
     Alert,
     PermissionsAndroid,
     ToastAndroid } from 'react-native'
-import CameraRoll from "@react-native-community/cameraroll";
+import { CameraRoll } from "@react-native-camera-roll/camera-roll";
 import { useNavigation } from '@react-navigation/native';
 import RNFS from "react-native-fs";
 import Share from 'react-native-share';

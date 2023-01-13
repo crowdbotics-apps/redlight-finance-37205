@@ -229,7 +229,7 @@ const Signup = ()=>{
     }
     
     return(
-        <View style={{marginTop : -10}}>
+        <View style={{}}>
             <ImageBackground source={Images.Background} resizeMode="cover" style={styles.image}>
                 <Header onPress={()=>navigation.goBack()} isBackIconVisible={true}/>
                 

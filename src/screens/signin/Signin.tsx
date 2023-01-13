@@ -13,6 +13,8 @@ import { bool } from 'prop-types';
 import WelcomePopup from '../../components/WelcomePopup/WelcomePopup';
 import { ChangePassword } from '../changePassword';
 import { Strings } from '../../util/Strings';
+import FastImage from 'react-native-fast-image';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 
 const Signin = () => {
@@ -63,40 +65,52 @@ const Signin = () => {
   return (
     <View>
       <ImageBackground source={Images.Rectangle} resizeMode="cover" style={styles.image}>
-        <Image source={Images.Maskgroup} />
-        <ScrollView style={styles.body}>
-          <CustomInput
-            label="Username"
-            placeholder='Username'
-            value={username}
-            onChangeText={setUsername} containerStyle={undefined} isIconVisible={undefined} keyboardType={undefined} secureTextEntry={undefined} />
-          <CustomInput
-            label="Password"
-            placeholder='Password'
-            value={password}
-            onChangeText={setPassword} 
-            isRightIconVisible={true} 
-            isleftIconVisible={true} 
-            keyboardType={"default"} 
-            secureTextEntry={true} 
-           />
-          <View style={styles.tabs}>
-            <Text style={styles.tabText}>Switch account</Text>
-            <TouchableOpacity onPress={() => navigation.navigate('ForgotPasswordScreen')}>
-              <Text style={styles.tabText}>Forgot Password?</Text>
-            </TouchableOpacity>
+        <KeyboardAwareScrollView 
+          showsVerticalScrollIndicator ={false}
+          style={styles.body} 
+          bounces={false}
+        >
+          <FastImage 
+            source={Images.Maskgroup} 
+            style={styles.img} 
+            resizeMode={FastImage.resizeMode.cover}
+          />
+          <View style={styles.container}>
+            <CustomInput
+              label="Username"
+              placeholder='Username'
+              value={username}
+              onChangeText={setUsername} 
+              isleftIconVisible={true} 
+              leftIcon = {<Icons.UserIcon/>}
+            />
+            <CustomInput
+              label="Password"
+              placeholder='Password'
+              value={password}
+              onChangeText={setPassword} 
+              isRightIconVisible={true} 
+              isleftIconVisible={true} 
+              leftIcon = {<Icons.LockIcon/>}
+            />
+            <View style={styles.tabs}>
+              <Text style={styles.tabText}>Switch account</Text>
+              <TouchableOpacity onPress={() => navigation.navigate('ForgotPasswordScreen')}>
+                <Text style={styles.tabText}>Forgot Password?</Text>
+              </TouchableOpacity>
+            </View>
+            <PrimaryButton
+              isLoading={false}
+              text="Sign In"
+              onPress={loginHandler} disabled={undefined} style={{marginTop: "12%"}} btnStyle={undefined}/>
+            <View style={styles.tabss}>
+              <Text style={styles.tabsText}>{Strings.NO_ACCOUNT}</Text>
+              <TouchableOpacity onPress={() => navigation.navigate('SignupScreen')}>
+                <Text style={styles.tabText}>{Strings.SIGN_UP}</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-          <PrimaryButton
-            isLoading={false}
-            text="Sign In"
-            onPress={loginHandler} disabled={undefined} style={{marginTop: "12%"}} btnStyle={undefined}/>
-          <View style={styles.tabss}>
-            <Text style={styles.tabsText}>{Strings.NO_ACCOUNT}</Text>
-            <TouchableOpacity onPress={() => navigation.navigate('SignupScreen')}>
-              <Text style={styles.tabText}>{Strings.SIGN_UP}</Text>
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
+        </KeyboardAwareScrollView>
       </ImageBackground>
     </View>
   );
