@@ -80,4 +80,5 @@ export const Strings = {
     DEPOSIT_AMOUNT : "Deposit Amount",
     PAYMENT_DEADLINE  : "Payment Deadline",
     PAY_WITH_DRAGON_PAY  : "Pay With Dragon Pay",
+    DELETE_WALLET : "Are You Sure You want to delete this wallet ?"
 }

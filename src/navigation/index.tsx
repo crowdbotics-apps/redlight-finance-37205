@@ -10,8 +10,11 @@ import { ChangePassword as ChangePasswordScreen } from "../screens/changePasswor
 import { Myprofile as MyProfileScreen } from "../screens/myProfile";
 import { SettingScreen as SettingScreen } from "../screens/setting";
 import Home from "../screens/home"
+import { Walletscreen as WalletScreen } from '../screens/WalletScreen';
 
 import DashboardNavigator from "./DashboardNavigator";
+import { AddSubWallet as AddSubWalletScreen} from '../screens/AddSubWallet';
+import { EditSubWallet  as EditSubWalletScreen} from '../screens/EditSubWallet';
 
 const RootStack = createStackNavigator();
 const RootNavigator: FC = () => {
@@ -65,6 +68,18 @@ const RootNavigator: FC = () => {
             <RootStack.Screen
                 name="DashboardNavigaton"
                 component={DashboardNavigator}
+            />
+            <RootStack.Screen
+                name="WalletScreen"
+                component={WalletScreen}
+            />
+            <RootStack.Screen
+                name="AddSubWalletScreen"
+                component={AddSubWalletScreen}
+            />
+            <RootStack.Screen
+                name="EditSubWalletScreen"
+                component={EditSubWalletScreen}
             />
         </RootStack.Navigator>
     )
