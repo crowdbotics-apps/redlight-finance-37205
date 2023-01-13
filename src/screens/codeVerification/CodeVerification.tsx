@@ -15,7 +15,7 @@ import { sendEmailOTP, sendPhoneOTP, verifyEmailOTP, verifyPhoneOTP, signup, for
 import { Strings } from '../../util/Strings';
 
 const CodeVerification = ({ route }) => {
-    const { mode } = route.params
+    const { mode ,screen} = route.params
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [isDisable, setIsDisable] = useState<boolean>(false)
     const [code, setCode] = useState<string>('')
@@ -32,78 +32,82 @@ const CodeVerification = ({ route }) => {
         }
     }
 
-    // const resendHandler = () => {
-    //     setIsDisable(true)
-    //     if (mode === 1) {
-    //         const { email } = route.params
-    //         const data = {
-    //             email: email
-    //         }
-    //         sendEmailOTP(data).then(
-    //             response => {
-    //                 if (response.message === 'Email Send Successfully') {
-    //                     setIsDisable(false)
-    //                     Alert.alert('OTP sent successfully!!', " ",
-    //             response =>{
-    //                 if(response.message === Strings.EMAIL_SEND_SUCCESSFULLY){
-    //                   setIsDisable(false)
-    //                    Alert.alert(Strings.OTP_SENT_SUCCESSFULLY," ",
-    //                         [
-    //                             { text: "OK", onPress: () => console.log("OK Pressed") }
-    //                         ]
-    //                     )
-    //                 }
-    //             })
-    //             .catch(error => {
-    //                 setIsDisable(false)
-    //                 console.log(error.response);
-    //             })
-    //     }
-    //     else {
-    //         const { country_code, phone_number } = route.params.user_profile
-    //         const data = {
-    //             phone_number: phone_number,
-    //             country_code: country_code
-    //         }
-    //         sendPhoneOTP(data).then(
-    //             response =>{
-    //                 if(response.message === Strings.OTP_SENT_SUCCESSFULLY){
-    //                     setIsDisable(false)
-    //                     Alert.alert(Strings.OTP_SENT_SUCCESSFULLY," ",
-    //                         [
-    //                             { text: "OK", onPress: () => console.log("OK Pressed") }
-    //                         ]
-    //                     )
-    //                 }
-    //             })
-    //             .catch(error => {
-    //                 setIsDisable(false)
-    //                 console.log(error.response);
-    //             })
-    //     }
-    // }
+    const moveToHome = () =>{
+        refRBSheet.current.close() 
+        navigation.navigate('DashboardNavigaton')
+    }
+
+    const resendHandler = () => {
+        setIsDisable(true)
+        if (mode === 1) {
+            const { email } = route.params
+            const data = {
+                email: email
+            }
+            sendEmailOTP(data).then(response => {
+                    if(response.message === Strings.EMAIL_SEND_SUCCESSFULLY){
+                      setIsDisable(false)
+                       Alert.alert(Strings.OTP_SENT_SUCCESSFULLY," ",
+                            [
+                                { text: "OK", onPress: () => console.log("OK Pressed") }
+                            ]
+                        )
+                    }
+                })
+                .catch(error => {
+                    setIsDisable(false)
+                    console.log(error.response);
+                })
+        }
+        else {
+            const { phone_number } = route.params.user_profile
+            const data = {
+                phone_number: phone_number.substring(3,),
+                country_code: phone_number.substring(0,3),
+            }
+            sendPhoneOTP(data).then(
+                response =>{
+                    if(response.message === Strings.OTP_SENT_SUCCESSFULLY){
+                        setIsDisable(false)
+                        Alert.alert(Strings.OTP_SENT_SUCCESSFULLY," ",
+                            [
+                                { text: "OK", onPress: () => console.log("OK Pressed") }
+                            ]
+                        )
+                    }
+                })
+                .catch(error => {
+                    setIsDisable(false)
+                    console.log(error.response);
+                })
+        }
+    }
 
 
     const verifyHandler = () => {
         setIsLoading(true)
         if (mode === 1) {
-            const { email } = route.params.user_profile
+            const { email } = route.params
             const data = {
                 email: email,
                 otp: code
             }
-            verifyEmailOTP(data).then(
-                response =>{
-                    if(response?.status === 400){
-                        Alert.alert(response.data.message)
+            verifyEmailOTP(data).then(response =>{
+                    if(response.status === 400){
+                        Alert.alert(response?.data?.message)
                         return;
                     }
-                    if(response.message === Strings.OTP_VERIFICATION_SUCCESSFUL){
+                    if(response.status === 202){
                         setIsLoading(false)
                         setCode('')
                         const user = { ...route.params }
                         delete user.mode
+                        delete user.screen
                         signup(user).then(response => {
+                            if(response?.email){
+                                Alert.alert(response?.email[0])
+                                return;
+                            }
                             refRBSheet.current.open()
                         })
                             .catch(error => {
@@ -117,26 +121,34 @@ const CodeVerification = ({ route }) => {
                 })
         }
         else {
-            console.log(route.params)
-            const { country_code, phone_number } = route.params.user_profile
+            const {phone_number } = route.params.user_profile
             const data = {
-                phone_number: phone_number,
-                country_code: country_code,
+                phone_number: phone_number.substring(3,),
+                country_code: phone_number.substring(0,3),
                 otp: code
             }
-            verifyPhoneOTP(data).then(
-                response =>{
-                    if(response.message === Strings.OTP_VERIFICATION_SUCCESSFUL){
+            verifyPhoneOTP(data).then(response =>{
+                    if(response.status === 400){
+                        Alert.alert(response?.data?.message)
+                        return;
+                    }
+                    if(response.status === 202){
                         setIsLoading(false)
                         setCode('')
                         const user = { ...route.params }
                         delete user.mode
+                        delete user.screen
                         signup(user).then(response => {
+        
+                            if(response?.user_profile?.phone_number){
+                                Alert.alert(response?.user_profile?.phone_number[0])
+                                return;
+                            }
                             refRBSheet.current.open()
                         })
-                            .catch(error => {
-                                console.log(error.response);
-                            })
+                        .catch(error => {
+                            console.log(error.response);
+                        })     
                     }
                 })
                 .catch(error => {
@@ -147,7 +159,6 @@ const CodeVerification = ({ route }) => {
     }
 
     const verifyForgotPasswordHandler = () => {
-        console.log(route.params)
         if (mode === 1) {
             const { email } = route.params
             const data = {
@@ -226,7 +237,7 @@ const CodeVerification = ({ route }) => {
                     <View style={styles.resendContainer}>
                         <Text style={styles.text}>{Strings.DIDNT_RECEIVE_YOUR_CODE}</Text>
                         <TouchableOpacity 
-                            // onPress={resendHandler}
+                            onPress={resendHandler}
                             disabled={isDisable}
                         >
                             <Text style={[
@@ -242,15 +253,7 @@ const CodeVerification = ({ route }) => {
                         isLoading={isLoading}
                         disabled={isDisabled()}
                         text="Verify"
-                        onPress={() => {
-                            if (route.params.screen === "signup") {
-                                verifyHandler()
-                            }
-                            else {
-                                console.log(route.params)
-                                verifyForgotPasswordHandler()
-                            }
-                        }}
+                        onPress={screen === 'signup' ? verifyHandler : verifyForgotPasswordHandler}
                         style={{ marginTop: Platform.OS === 'ios' ? '30%' : '25%' }}
                         btnStyle={{}}
                     />
@@ -274,7 +277,7 @@ const CodeVerification = ({ route }) => {
                     }
                 }}
             >
-                <BottomSheetContainer onPress={() => { refRBSheet.current.close() }} />
+                <BottomSheetContainer onPress={moveToHome} />
             </RBSheet>
         </View>
     )
