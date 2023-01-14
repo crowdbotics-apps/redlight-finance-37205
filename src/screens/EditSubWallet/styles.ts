@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     Header: {
         display: "flex",
         flexDirection: "row",
-        marginTop: "5%",
+        marginTop: "12%",
         justifyContent: "space-between",
         width: "100%",
         padding: "5%"

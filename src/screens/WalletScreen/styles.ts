@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     header: {
         display: "flex",
         flexDirection: "row",
-        marginTop: "8%",
+        marginTop: "15%",
         width: "100%",
     },
     headingText: {

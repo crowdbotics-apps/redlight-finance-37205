@@ -62,7 +62,7 @@ const MyProfile = () => {
         myProfile().then((response) => {
             setName(response.name)
             setEmail(response.email)
-            setUsername(username)
+            setUsername(response.username)
             setImage(response.image)
         }).catch(error => {
             console.log(error.response)

@@ -35,7 +35,7 @@ const AddSubWallet = () => {
     return (
         <View>
             <ImageBackground source={Images.Background} resizeMode='cover' style={styles.Image}>
-                <View style={{ display: "flex", flexDirection: "row", marginTop: "5%", width: "100%", padding: "5%" }}>
+                <View style={{ display: "flex", flexDirection: "row", marginTop: "12%", width: "100%", padding: "5%" }}>
                     <TouchableOpacity onPress={goBackIconHandler}>
                         <Icons.LeftArrow />
                     </TouchableOpacity>
