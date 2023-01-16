@@ -1,15 +1,18 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
-import { ImageBackground, Text, View } from "react-native";
+import { Alert, ImageBackground, Platform, SafeAreaView, Text, View } from "react-native";
 import CheckBox from "react-native-check-box";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { SvgXml } from "react-native-svg";
 import Icons from "../../assets/Icons";
+import LeftArrow from "../../assets/Icons/LeftArrow";
 import Images from "../../assets/Images";
+import CustomHeader from "../../components/CustomHeader";
 import CustomInput from "../../components/CustomInput";
 import PrimaryButton from "../../components/PrimaryButton";
-import { editSubWallet } from "../../services/auth";
+import { deleteWallet, editSubWallet } from "../../services/auth";
 import { Colors } from "../../theme/Colors";
+import { Strings } from "../../util/Strings";
 import styles from "./styles";
 
 const EditSubwallet = ({ route }: any) => {
@@ -31,21 +34,32 @@ const EditSubwallet = ({ route }: any) => {
     const cancelButtonHandler = () => {
         navigation.navigate("WalletScreen")
     }
+    const deleteSubWalletHandler = () => {
+        deleteWallet(id).then((response) => {
+            Alert.alert(walletName + " got deleted!")
+            navigation.navigate("WalletScreen")
+        }).catch(error => {
+            console.log(error.response)
+        })
+    }
     return (
         <View>
             <ImageBackground source={Images.Background} resizeMode='cover' style={styles.Image}>
-                <View style={styles.Header}>
-                    <TouchableOpacity onPress={goBackIconHandler}>
-                        <Icons.LeftArrow />
-                    </TouchableOpacity>
-                    <Text style={styles.HeaderText}>Edit Sub Wallet</Text>
-                    <TouchableOpacity onPress={() => { }}>
-                        <SvgXml
-                            xml={Icons.Trash}
-                            width={30}
-                            height={30}
-                        />
-                    </TouchableOpacity>
+                <View style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+                    <CustomHeader
+                        name={Strings.EDIT_SUB_WALLET}
+                        Icon={<LeftArrow />}
+                        isIconVisible={true}
+                        headerStyle={{ marginTop: Platform.OS === 'ios' ? '12%' : 25 }}
+                        onPress={goBackIconHandler}
+                    />
+                    <SvgXml
+                        xml={Icons.Trash}
+                        width={32}
+                        height={32}
+                        style={{ marginTop: "7%", }}
+                        onPress={deleteSubWalletHandler}
+                    />
                 </View>
                 <View style={styles.Container}>
                     <CustomInput

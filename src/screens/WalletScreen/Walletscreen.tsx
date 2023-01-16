@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { set } from "immer/dist/internal";
 import React, { FC, useEffect, useRef, useState } from "react";
-import { Animated, FlatList, ImageBackground, Text, View } from "react-native";
+import { Alert, Animated, FlatList, ImageBackground, Platform, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { SvgXml } from "react-native-svg";
 import Icons from "../../assets/Icons";
@@ -14,6 +14,8 @@ import { Strings } from "../../util/Strings";
 import styles from "./styles";
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { Colors } from "../../theme/Colors";
+import CustomHeader from "../../components/CustomHeader";
+import LeftArrow from "../../assets/Icons/LeftArrow";
 
 const WalletScreen = () => {
     const [data, setData] = useState([])
@@ -37,6 +39,7 @@ const WalletScreen = () => {
     }
     const deletePopUpButtonHandler = () => {
         deleteWallet(data[currentIndex].id).then((response) => {
+            setIsPopupVisible(false)
         }).catch(error => {
             console.log(error.response)
         })
@@ -51,12 +54,13 @@ const WalletScreen = () => {
     return (
         <View>
             <ImageBackground source={Images.Background} resizeMode='cover' style={styles.Image}>
-                <View style={styles.header}>
-                    <TouchableOpacity onPress={goBackIconHandler} style={styles.leftArrowIcon} >
-                        <Icons.LeftArrow />
-                    </TouchableOpacity>
-                    <Text style={styles.headingText}> My Wallet</Text>
-                </View>
+                <CustomHeader
+                    name={Strings.MY_WALLET}
+                    isIconVisible={true}
+                    Icon={<LeftArrow />}
+                    headerStyle={{ marginTop: Platform.OS === 'ios' ? '12%' : 25 }}
+                    onPress={goBackIconHandler}
+                />
                 <View style={styles.Container}>
                     <View style={{ width: "100%", height: "40%", marginTop: "4%" }}>
                         <Carousel data={data} renderItem={renderItem} itemWidth={370} itemHeight={100} sliderWidth={375} containerCustomStyle={{ height: 0, alignSelf: "center" }} layout={'default'}

@@ -1,14 +1,17 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
-import { ImageBackground, Text, TouchableOpacity, View } from "react-native";
+import { ImageBackground, Platform, Text, TouchableOpacity, View } from "react-native";
 import CheckBox from "react-native-check-box";
 import { Fonts } from "../../assets/fonts";
 import Icons from "../../assets/Icons";
+import LeftArrow from "../../assets/Icons/LeftArrow";
 import Images from "../../assets/Images";
+import CustomHeader from "../../components/CustomHeader";
 import CustomInput from "../../components/CustomInput";
 import PrimaryButton from "../../components/PrimaryButton";
 import { addSubWallet } from "../../services/auth";
 import { Colors } from "../../theme/Colors";
+import { Strings } from "../../util/Strings";
 import styles from "./styles";
 
 const AddSubWallet = () => {
@@ -35,12 +38,12 @@ const AddSubWallet = () => {
     return (
         <View>
             <ImageBackground source={Images.Background} resizeMode='cover' style={styles.Image}>
-                <View style={{ display: "flex", flexDirection: "row", marginTop: "12%", width: "100%", padding: "5%" }}>
-                    <TouchableOpacity onPress={goBackIconHandler}>
-                        <Icons.LeftArrow />
-                    </TouchableOpacity>
-                    <Text style={{ fontFamily: Fonts.PoppinsSemibold, fontSize: 18, fontWeight: "700", lineHeight: 27, color: Colors.white, marginLeft: "28%" }}>Add Sub Wallet</Text>
-                </View>
+                <CustomHeader
+                    name={Strings.ADD_SUB_WALLET}
+                    Icon={<LeftArrow />}
+                    isIconVisible={true}
+                    headerStyle={{ marginTop: Platform.OS === 'ios' ? '12%' : 25 }}
+                    onPress={goBackIconHandler} />
                 <View style={styles.Container}>
                     <CustomInput
                         label="Account Name"
@@ -59,9 +62,9 @@ const AddSubWallet = () => {
                         style={styles.checkBox}
                         onClick={() => setIsDefault(!isDefault)}
                         isChecked={isDefault}
-                        uncheckedCheckBoxColor = {Colors.Gray78}
-                        rightText = "Default Wallet"
-                        rightTextStyle = {styles.checkboxTextStyle}
+                        uncheckedCheckBoxColor={Colors.Gray78}
+                        rightText="Default Wallet"
+                        rightTextStyle={styles.checkboxTextStyle}
                     />
                     <PrimaryButton
                         isLoading={false}
