@@ -40,7 +40,6 @@ const QRScanner : FC = () => {
     useEffect(()=>{
         getAllWallets().then(wallets=>{
             const filteredWallet = wallets.filter(wallet => wallet.is_default === true)[0]
-            console.log('fw',filteredWallet);
             
             getWalletQR(filteredWallet.id).then(response=>{       
                 setWalletName(response.wallet_name)

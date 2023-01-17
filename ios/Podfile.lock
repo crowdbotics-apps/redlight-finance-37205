@@ -502,7 +502,7 @@ SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
   FBLazyVector: fa8275d5086566e22a26ddc385ab5772e7f9b1bd
-  FBReactNativeSpec: 701686031a8480c16e04a609f0a154519f41d0fd
+  FBReactNativeSpec: 8ab1e0daa98d6f96c3a62fd06ee2f279349b56a9
   glog: 73c2498ac6884b13ede40eda8228cb1eee9d9d62
   libwebp: f62cb61d0a484ba548448a4bd52aabf150ff6eef
   Permission-Camera: bf6791b17c7f614b6826019fcfdcc286d3a107f6

@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
         lineHeight: 27,
         textAlign: 'center',
         color: Colors.white,
-        marginTop: "12%"
+        marginTop: "15%"
     },
     User: {
         fontFamily: Fonts.PoppinsRegular,
@@ -32,9 +32,9 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: "400",
         lineHeight: 24,
-        color: Colors.Gray78,
+        color: Colors.white,
         marginTop: -60,
-        marginRight: "5%"
+        marginRight: "15%"
     },
     Email: {
         fontFamily: Fonts.PoppinsRegular,

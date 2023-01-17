@@ -29,10 +29,8 @@ const QRCodeScreen : FC = ({route})=>{
     const [QRref,setQRref] = useState()
    
     const navigation = useNavigation()
-
     useEffect(()=>{
-        getWalletQR(walletId).then(response=>{     
-            console.log('res',response)
+        getWalletQR(walletId).then(response=>{       
             setWalletName(response.wallet_name)
             setUsername(response.user.username)
             setQRString(response.public_address)

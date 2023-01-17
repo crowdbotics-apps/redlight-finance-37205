@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Alert, ImageBackground, Text, View } from "react-native";
+import { Alert, ImageBackground, Text, View,Platform } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Colors } from "../../theme/Colors";
 import Images from "../../assets/Images";
@@ -9,6 +9,9 @@ import PrimaryButton from "../../components/PrimaryButton";
 import { changePassword } from "../../services/auth";
 import { isValidPassword, removeItem, setItem } from "../../util";
 import { useNavigation } from "@react-navigation/core";
+import { Strings } from "../../util/Strings";
+import Icons from "../../assets/Icons";
+import CustomHeader from "../../components/CustomHeader";
 
 const ChangePassword = () => {
     const [currentPassword, setCurrentPassword] = useState();
@@ -48,10 +51,13 @@ const ChangePassword = () => {
     return (
         <View>
             <ImageBackground source={Images.Background} resizeMode='cover' style={styles.image}>
-                <Text style={styles.HeaderText}>Change Password</Text>
-                <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <Text>GoBack</Text>
-                </TouchableOpacity>
+                <CustomHeader 
+                    name={Strings.CHANGE_PASSWORD}
+                    Icon = {<Icons.LeftArrow/>}
+                    isIconVisible={true} 
+                    headerStyle = {{marginTop : Platform.OS === 'ios' ? '12%' : 25}}
+                    onPress={()=>navigation.goBack()}
+                />
                 <View style={{ width: "98%", height: "90%", marginTop: "10%", backgroundColor: Colors.aubergine, borderRadius: 10 }}>
                     <View style={styles.children}>
                         <View style={styles.elevation}>
