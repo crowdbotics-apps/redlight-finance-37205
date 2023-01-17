@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useEffect, useState } from "react";
-import { Alert, ImageBackground, Modal, Text, TouchableOpacity, View } from "react-native";
+import React, {useEffect, useState } from "react";
+import { Alert, ImageBackground, Modal, Text, TouchableOpacity, View,Platform } from "react-native";
 import Icons from "../../assets/Icons";
 import Images from "../../assets/Images";
 import DeleteModal from "../../components/DeleteModal";
@@ -9,6 +9,7 @@ import { deleteAccount } from "../../services/auth";
 import { removeItem } from "../../util";
 import { Strings } from "../../util/Strings";
 import styles from './styles'
+import CustomHeader from "../../components/CustomHeader";
 
 const Setting = ({route} : any) => {
     const {pinPopUp} = route.params
@@ -65,10 +66,13 @@ const Setting = ({route} : any) => {
     return (
         <View>
             <ImageBackground source={Images.Background} resizeMode='cover' style={styles.Image}>
-                <Text style={styles.HeaderText}>Settings</Text>
-                <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <Text>GoBack</Text>
-                </TouchableOpacity>
+                <CustomHeader 
+                    name={Strings.SETTINGS}
+                    Icon = {<Icons.LeftArrow/>}
+                    isIconVisible={true} 
+                    headerStyle = {{marginTop : Platform.OS === 'ios' ? '12%' : 25}}
+                    onPress={()=>navigation.goBack()}
+                />
                 <View style={styles.Container}>
                     <Text style={styles.Heading}>Account</Text>
                     <RowContainer
@@ -81,9 +85,9 @@ const Setting = ({route} : any) => {
                     <RowContainer
                         tabName="Set PIN code"
                         onPressFunction={SetPinCode} />
-                    <RowContainer
+                    {/* <RowContainer
                         tabName="Enable Biometrics"
-                        onPressFunction={ChangePassword} />
+                        onPressFunction={ChangePassword} /> */}
                     <TouchableOpacity onPress={DeleteAccount}>
                         <Text style={styles.deleteAccount}>Delete Account</Text>
                     </TouchableOpacity>

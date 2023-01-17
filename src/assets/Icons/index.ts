@@ -24,6 +24,14 @@ import UploadIcon from  './UploadIcon'
 import Pencil from './Pencil.svg'
 import Trash from './Trash.svg'
 import QRCode from './QRCode.svg'
+import BitcoinTokenSelected from "./BitcoinTokenSelected"
+import SendIcon from "./SendIcon"
+import MoveIcon from "./MoveIcon"
+import DownArrow from './DownArrow.svg'
+import MobileIcon from './MobileIcon'
+import EmailIcon from './EmailIcon'
+import QrIcon from './QrIcon'
+import InfoIcon from './InfoIcon.svg'
 
 const Icons = {
     BackArrow,
@@ -51,7 +59,15 @@ const Icons = {
     UploadIcon,
     Pencil,
     Trash,
-    QRCode
+    QRCode,
+    BitcoinTokenSelected,
+    SendIcon,
+    MoveIcon,
+    DownArrow,
+    MobileIcon,
+    EmailIcon,
+    QrIcon,
+    InfoIcon
 }
 
 export default Icons

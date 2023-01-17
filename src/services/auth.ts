@@ -5,7 +5,7 @@ import api, { getResponseErrorData } from './api'
 const signup = async (data: Object) => {
   try {
     const response = await api.post('signup_login/', data)
-    return response.data
+    return response
   } catch (error) {
     return getResponseErrorData(error).data
   }
@@ -29,20 +29,21 @@ const sendEmailOTP = async (data: Object) => {
   }
 }
 
-const verifyPhoneOTP = async (data: Object) => {
-  try {
-    const response = await api.post('verify_phone_otp/', data)
-    return response.data
-  } catch (error) {
+const verifyPhoneOTP = async (data : Object) => {
+  try{
+    const response = await api.post('verify_phone_otp/',data)
+    return response 
+  } catch(error) {
     return getResponseErrorData(error)
   }
 }
 
-const verifyEmailOTP = async (data: Object) => {
-  try {
-    const response = await api.post('verify_email_otp/', data)
-    return response.data
-  } catch (error) {
+
+const verifyEmailOTP = async (data : Object) => {
+  try{
+    const response = await api.post('verify_email_otp/',data)
+    return response
+  } catch(error) {
     return getResponseErrorData(error).data
   }
 }

@@ -16,6 +16,8 @@ import QRCodeScreen from '../screens/QRCodeScreen';
 import { SetNewPassword as SetNewPasswordScreen } from "../screens/setnewpassword";
 import { ChangePassword as ChangePasswordScreen } from "../screens/changePassword";
 import { SettingScreen as SettingScreen } from "../screens/setting";
+import SendCredit from '../screens/SendCredit';
+import MoveCredit from '../screens/MoveCredit';
 
 const DashboardStack = createStackNavigator()
 
@@ -89,6 +91,14 @@ const DashboardNavigator : FC = () => {
                <DashboardStack.Screen
                 name="SettingScreen"
                 component={SettingScreen}
+            />
+               <DashboardStack.Screen
+                name="SendCredit"
+                component={SendCredit}
+            />
+              <DashboardStack.Screen
+                name="MoveCredit"
+                component={MoveCredit}
             />
         </DashboardStack.Navigator>
     )
