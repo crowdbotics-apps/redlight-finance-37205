@@ -30,7 +30,6 @@ from rest_framework.views import APIView
 from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_encode
-from django.shortcuts import get_object_or_404
 from django.http import Http404
 
 User = get_user_model()
@@ -286,7 +285,7 @@ class UserProfileViewSet(GenericViewSet, RetrieveModelMixin, UpdateModelMixin):
 class UserDetailView(GenericViewSet, RetrieveModelMixin):
     """
     This viewset is for retrieving user details based on query parameters
-        @params: email 
+        @params: email
         @params: phone_number
         @params: public_address
     """
@@ -296,18 +295,20 @@ class UserDetailView(GenericViewSet, RetrieveModelMixin):
     http_method_names = ["get",]
 
     def get_object(self):
-        public_address = self.request.query_params.get('public_address', None)
-        email = self.request.query_params.get('email', None)
-        phone_number = self.request.query_params.get('phone_number', None)
+        public_address = self.request.query_params.get('public_address')
+        email = self.request.query_params.get('email')
+        phone_number = self.request.query_params.get('phone_number')
+
         if public_address:
             obj = User.objects.filter(
                 user_wallet__public_address=public_address).first()
-            if obj is None:
-                raise Http404()
-            return obj
-        if phone_number:
-            queryset = User.objects.filter(
-                user_profile__phone_number=phone_number)
-        if email:
-            queryset = User.objects.filter(email=email)
-        return get_object_or_404(queryset)
+        elif phone_number:
+            obj = User.objects.filter(
+                user_profile__phone_number=phone_number).first()
+        elif email:
+            obj = User.objects.filter(email=email).first()
+        else:
+            raise Http404()
+        if obj is None:
+            raise Http404()
+        return obj

@@ -92,10 +92,21 @@ class UserProfileSerializer(serializers.ModelSerializer):
 class UserDetailSerializer(serializers.ModelSerializer):
     phone_number = serializers.ReadOnlyField(
         source='user_profile.phone_number')
+    public_address = serializers.SerializerMethodField()
 
     class Meta:
         model = User
-        fields = ('id', 'name', 'username', 'email', 'phone_number',)
+        fields = ('id', 'name', 'username', 'email',
+                  'phone_number', 'public_address',)
+
+    def get_public_address(self, instance):
+        try:
+            wallet = Wallet.objects.filter(user=instance.id).first()
+        except Wallet.DoesNotExist:
+            return serializers.ValidationError('Invalid user')
+        private_key = wallet.private_key
+        public_address = WalletMixin().get_wallet_address(private_key=private_key)
+        return public_address
 
 
 class SignupAndLoginSerializer(SignupSerializer):
