@@ -1,19 +1,25 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, {useEffect, useState } from "react";
 import { Alert, ImageBackground, Modal, Text, TouchableOpacity, View,Platform } from "react-native";
 import Icons from "../../assets/Icons";
 import Images from "../../assets/Images";
 import DeleteModal from "../../components/DeleteModal";
+import Popup from "../../components/Popup";
 import { deleteAccount } from "../../services/auth";
 import { removeItem } from "../../util";
 import { Strings } from "../../util/Strings";
 import styles from './styles'
 import CustomHeader from "../../components/CustomHeader";
 
-const Setting = () => {
+const Setting = ({route} : any) => {
+    const {pinPopUp} = route.params
     const [isPopupVisible, setIsPopUpVisible] = useState(false)
     const [password, setPassword] = useState<string>("")
+    const [pinPopUpVisible, setPinPopUpVisible] = useState(false)
     const navigation = useNavigation();
+    useEffect(()=>{
+        setPinPopUpVisible(pinPopUp)
+    },[route])
     const ChangePassword = () => {
         navigation.navigate('ChangePasswordScreen')
     }
@@ -21,7 +27,7 @@ const Setting = () => {
         navigation.navigate('')
     }
     const SetPinCode = () => {
-        navigation.navigate('')
+        navigation.navigate("SetPinScreen")
     }
     const DeleteAccount = () => {
         setIsPopUpVisible(true)
@@ -41,6 +47,9 @@ const Setting = () => {
             removeItem("token")
             navigation.navigate("SigninScreen")
         })
+    }
+    const doneButtonHandler = () => {
+        setPinPopUpVisible(false)
     }
     const RowContainer = ({ tabName, onPressFunction }: any) => {
         return (
@@ -89,7 +98,17 @@ const Setting = () => {
                         setIsPopupVisible={setIsPopUpVisible}
                         password={password}
                         setPassword={setPassword}
-                        onPressFunction={onDeleteAccountHandler} />
+                        onPressFunction={onDeleteAccountHandler} 
+                    />
+                    {true && (<Popup
+                        isCustomInputVisible={false}
+                        isPopupVisible={pinPopUpVisible}
+                        Heading={Strings.PIN_CREATED_SUCCESSFULLY}
+                        buttonLabel="Done"
+                        onPressFunction={doneButtonHandler}
+                        setIsPopupVisible = {setPinPopUpVisible}
+                    />)}
+                    
                 </View>
             </ImageBackground>
         </View>

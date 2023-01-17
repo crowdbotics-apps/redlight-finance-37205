@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React, {useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Alert, Image, ImageBackground, Text, View } from "react-native";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import { IconProps } from "react-native-vector-icons/Icon";
@@ -16,10 +16,10 @@ import { myProfile } from '../../services/auth'
 const MyProfile = () => {
     const navigation = useNavigation();
     const [isPopupVisible, setIsPopupVisible] = useState(false)
-    const [name,setName] = useState('')
-    const [email,setEmail] = useState('')
-    const [username,setUsername] = useState('')
-    const [image,setImage] = useState('')
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [username, setUsername] = useState('')
+    const [image, setImage] = useState('')
     const RowContainer = ({ iconName, OptionText, onPressFunction, textStyle }) => {
         return (
             <View style={styles.Container}>
@@ -56,9 +56,9 @@ const MyProfile = () => {
         })
     }
     const onSettingHandler = () => {
-        navigation.navigate('SettingScreen')
+        navigation.navigate('SettingScreen', { pinPopUp: false })
     }
-    useEffect(()=>{
+    useEffect(() => {
         myProfile().then((response) => {
             setName(response.name)
             setEmail(response.email)
@@ -67,7 +67,7 @@ const MyProfile = () => {
         }).catch(error => {
             console.log(error.response)
         })
-    },[])
+    }, [])
     return (
         <ScrollView>
             <View>

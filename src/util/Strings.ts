@@ -104,5 +104,13 @@ export const Strings = {
     SETTINGS : "Settings",
     CHANGE_PASSWORD : "Change Password",
     USER_DOESNT_EXISTS : "User Doesn't Exists",
-    OVERVIEW_BALANCE : "Overview Balance"
+    OVERVIEW_BALANCE : "Overview Balance",
+    PIN_AND_CONFIRM_PIN_ARE_NOT_SAME: "Pin and confirm Pin are not same!!",
+    PIN_SHOULD_BE_6_DIGITS: "Pin should be 6 Digits.",
+    PIN_CREATED_SUCCESSFULLY: "Your PIN was created successfully",
+    SET_PIN: "Set Pin",
+    CONFIRM_PIN: "Confirm Pin",
+    ADD_SUB_WALLET: "Add Sub Wallet",
+    EDIT_SUB_WALLET: "Edit Sub Wallet",
+    MY_WALLET: "My Wallet",
 }

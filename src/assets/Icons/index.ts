@@ -59,7 +59,7 @@ const Icons = {
     UploadIcon,
     Pencil,
     Trash,
-    QRCode
+    QRCode,
     BitcoinTokenSelected,
     SendIcon,
     MoveIcon,
