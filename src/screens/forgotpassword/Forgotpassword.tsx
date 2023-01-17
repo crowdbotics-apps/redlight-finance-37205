@@ -13,6 +13,7 @@ import PhoneInput from "react-native-phone-number-input";
 import { Fonts } from "../../assets/fonts";
 import { isValidMobile, isValidEmail } from "../../util";
 import Icons from "../../assets/Icons";
+import { Strings } from "../../util/Strings";
 
 const ForgotPassword = () => {
 
@@ -46,7 +47,9 @@ const ForgotPassword = () => {
         else {
             const data = { email: email, screen: "forgotPassword", mode: 1 }
             forgotPasswordSendEmailOtp(data).then((response) => {
-                console.log('res', response, 'data', data)
+                if(response.message === Strings.USER_DOESNT_EXISTS){
+                    return;
+                }
                 setEmail("")
                 navigation.navigate('CodeVerificationScreen', data)
             }).catch(error => {

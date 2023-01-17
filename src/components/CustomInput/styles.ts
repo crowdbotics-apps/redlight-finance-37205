@@ -45,6 +45,14 @@ const styles = StyleSheet.create({
     },
     rightView :{
         
+    },
+    leftView : {
+        height : 40,
+        borderTopLeftRadius : 10,
+        borderBottomLeftRadius : 10,
+        justifyContent : 'center',
+        paddingLeft : 20,
+        backgroundColor : Colors.aubergine
     }
 })
 

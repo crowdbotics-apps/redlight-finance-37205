@@ -80,6 +80,7 @@ export const Strings = {
     DEPOSIT_AMOUNT : "Deposit Amount",
     PAYMENT_DEADLINE  : "Payment Deadline",
     PAY_WITH_DRAGON_PAY  : "Pay With Dragon Pay",
+    DELETE_WALLET : "Are You Sure You want to delete this wallet ?",
     TOKEN_PROFILE : "Token Profile",
     SEND : "Send",
     MOVE :  "Move",
@@ -90,7 +91,6 @@ export const Strings = {
     CASH_OUT_VIA : "Cash Out via",
     METHOD : "Method",
     SELECT_FROM : "Select from",
-    OVERVIEW_BALANCE : "Overview Balance",
     SEND_CREDITS  : "Send Credits",
     ENTER_AMOUNT : "Enter amount",
     SEND_CREDITS_VIA : "Send credits via",
@@ -101,4 +101,8 @@ export const Strings = {
     MOVE_CREDITS : "Move Credits",
     MOVE_TO : "Move to",
     YOU_CANT_MOVE_CREDITS_IN_SAME_WALLET : "You cannot move credits in the same wallet.",
+    SETTINGS : "Settings",
+    CHANGE_PASSWORD : "Change Password",
+    USER_DOESNT_EXISTS : "User Doesn't Exists",
+    OVERVIEW_BALANCE : "Overview Balance"
 }

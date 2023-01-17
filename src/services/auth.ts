@@ -1,29 +1,30 @@
 import { Alert } from 'react-native'
+import { err } from 'react-native-svg/lib/typescript/xml'
 import api, { getResponseErrorData } from './api'
 
 const signup = async (data: Object) => {
   try {
     const response = await api.post('signup_login/', data)
+    return response
+  } catch (error) {
+    return getResponseErrorData(error).data
+  }
+}
+
+const sendPhoneOTP = async (data: Object) => {
+  try {
+    const response = await api.post('send_phone_otp/', data)
     return response.data
   } catch (error) {
     return getResponseErrorData(error).data
   }
 }
 
-const sendPhoneOTP = async (data : Object) => {
-  try{
-    const response = await api.post('send_phone_otp/',data)
-    return response.data  
-  } catch(error) {
-    return getResponseErrorData(error).data
-  }
-}
-
-const sendEmailOTP = async (data : Object) => {
-  try{
-    const response = await api.post('send_email_otp/',data)
-    return response.data  
-  } catch(error) {
+const sendEmailOTP = async (data: Object) => {
+  try {
+    const response = await api.post('send_email_otp/', data)
+    return response.data
+  } catch (error) {
     return getResponseErrorData(error).data
   }
 }
@@ -31,16 +32,17 @@ const sendEmailOTP = async (data : Object) => {
 const verifyPhoneOTP = async (data : Object) => {
   try{
     const response = await api.post('verify_phone_otp/',data)
-    return response.data  
+    return response 
   } catch(error) {
     return getResponseErrorData(error)
   }
 }
 
+
 const verifyEmailOTP = async (data : Object) => {
   try{
     const response = await api.post('verify_email_otp/',data)
-    return response.data  
+    return response
   } catch(error) {
     return getResponseErrorData(error).data
   }
@@ -49,6 +51,7 @@ const verifyEmailOTP = async (data : Object) => {
 const login = async (data: any) => {
   try {
     const response = await api.post('login/', data)
+    console.log(response.data)
     return response.data
   } catch (error) {
     return getResponseErrorData(error)
@@ -134,15 +137,48 @@ const signOut = async () => {
     return getResponseErrorData(error)
   }
 }
-const deleteAccount = async (data : any) => {
-  try{
-    console.log(data, "Inside API call")
-    const response = await api.delete('/delete_account/', {data: data})
-    console.info(response.data, "Inside API");
+const deleteAccount = async (data: any) => {
+  try {
+    const response = await api.delete('/delete_account/', { data: data })
+    return response
+  } catch (error) {
+    return getResponseErrorData(error)
+  }
+}
+const getAllFIATWallets = async () => {
+  try {
+    const response = await api.get('/wallets/?wallet_type=2')
     return response
   } catch (error) {
     return getResponseErrorData(error)
   }
 }
 
-export { login, signup, sendPhoneOTP, sendEmailOTP, verifyEmailOTP, verifyPhoneOTP, forgotPasswordSendEmailOtp, forgotPasswordSendPhoneOtp, resetPassword, forgotPasswordVerifyEmailOtp, forgotPasswordVerifyPhonelOtp, changePassword, myProfile, signOut, deleteAccount }
+const editSubWallet = async (data: any, id: any) => {
+  try {
+    const response = await api.put(`/wallets/${id}/`, data)
+    return response
+  } catch (error) {
+    return getResponseErrorData(error)
+  }
+}
+
+const addSubWallet = async (data: any) => {
+  try {
+    const response = await api.post("/wallets/", data)
+    return response
+  } catch (error) {
+    return getResponseErrorData(error)
+  }
+}
+
+const deleteWallet = async (id: any) => {
+  try {
+    const response = await api.delete(`/wallets/${id}/`)
+    return response
+  } catch (error) {
+    return getResponseErrorData(error)
+  }
+}
+
+export { login, signup, sendPhoneOTP, sendEmailOTP, verifyEmailOTP, verifyPhoneOTP, forgotPasswordSendEmailOtp, forgotPasswordSendPhoneOtp, resetPassword, forgotPasswordVerifyEmailOtp, forgotPasswordVerifyPhonelOtp, changePassword, myProfile, signOut, deleteAccount, getAllFIATWallets, addSubWallet, editSubWallet, deleteWallet }

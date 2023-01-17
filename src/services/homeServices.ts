@@ -20,6 +20,7 @@ const getFiatWallets = async () => {
 
 const getWalletQR = async (walletId : number) => {
     try {
+      console.log(walletId)
       const response = await api.get(`wallet_qr_code/${walletId}/`)
       return response.data
     } catch (error) {
