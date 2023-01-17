@@ -2,11 +2,20 @@ import api, { getResponseErrorData } from './api'
 
 const getAllWallets = async () => {
     try {
-      const response = await api.get('wallets/')
+      const response = await api.get(`wallets/`)
       return response.data
     } catch (error) {
       return getResponseErrorData(error).data
     }
+}
+
+const getFiatWallets = async () => {
+  try {
+    const response = await api.get(`wallets/?wallet_type=2`)
+    return response.data
+  } catch (error) {
+    return getResponseErrorData(error).data
+  }
 }
 
 const getWalletQR = async (walletId : number) => {
@@ -20,4 +29,4 @@ const getWalletQR = async (walletId : number) => {
 }
 
 
-export {getAllWallets,getWalletQR}
+export {getAllWallets,getFiatWallets,getWalletQR}
