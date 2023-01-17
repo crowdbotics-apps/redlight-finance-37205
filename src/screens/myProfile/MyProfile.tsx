@@ -6,7 +6,7 @@ import { IconProps } from "react-native-vector-icons/Icon";
 import Icons from "../../assets/Icons";
 import Images from "../../assets/Images";
 import Popup from "../../components/Popup";
-import { signOut, signup } from "../../services/auth";
+import { getAllFIATWallets, signOut, signup } from "../../services/auth";
 import { Colors } from "../../theme/Colors";
 import { removeItem } from "../../util";
 import { Strings } from "../../util/Strings";
@@ -49,7 +49,11 @@ const MyProfile = () => {
         setIsPopupVisible(true)
     }
     const OnMyWalletHandler = () => {
-        navigation.navigate('')
+        getAllFIATWallets().then((response) => {
+            navigation.navigate('WalletScreen')
+        }).catch(error => {
+            console.log(error.response)
+        })
     }
     const onSettingHandler = () => {
         navigation.navigate('SettingScreen')
@@ -58,7 +62,7 @@ const MyProfile = () => {
         myProfile().then((response) => {
             setName(response.name)
             setEmail(response.email)
-            setUsername(username)
+            setUsername(response.username)
             setImage(response.image)
         }).catch(error => {
             console.log(error.response)

@@ -21,6 +21,9 @@ import LeftArrow from "./LeftArrow"
 import RightArrow from "./RightArrow"
 import ScannerIcon from "./ScannerIcon"
 import UploadIcon from  './UploadIcon'
+import Pencil from './Pencil.svg'
+import Trash from './Trash.svg'
+import QRCode from './QRCode.svg'
 import BitcoinTokenSelected from "./BitcoinTokenSelected"
 import SendIcon from "./SendIcon"
 import MoveIcon from "./MoveIcon"
@@ -49,6 +52,9 @@ const Icons = {
     LeftArrow,
     ScannerIcon,
     UploadIcon,
+    Pencil,
+    Trash,
+    QRCode
     BitcoinTokenSelected,
     SendIcon,
     MoveIcon
