@@ -81,11 +81,18 @@ export const Strings = {
     PAYMENT_DEADLINE  : "Payment Deadline",
     PAY_WITH_DRAGON_PAY  : "Pay With Dragon Pay",
     DELETE_WALLET : "Are You Sure You want to delete this wallet ?",
+    TOKEN_PROFILE : "Token Profile",
+    SEND : "Send",
+    MOVE :  "Move",
     HASSLE_FREE_ONLINE_ANYTIME : "Hassle-free online anytime.",
     REMITTANCE :  "Remittance",
     PANDORAS_VAULT_MERCHANT : "Pandoras Vault Merchant",
     CASH_OUT : "Cash Out",
     CASH_OUT_VIA : "Cash Out via",
     METHOD : "Method",
-    SELECT_FROM : "Select from"
+    SELECT_FROM : "Select from",
+    SETTINGS : "Settings",
+    CHANGE_PASSWORD : "Change Password",
+    USER_DOESNT_EXISTS : "User Doesn't Exists",
+    OVERVIEW_BALANCE : "Overview Balance"
 }
