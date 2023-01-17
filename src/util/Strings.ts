@@ -80,11 +80,16 @@ export const Strings = {
     DEPOSIT_AMOUNT : "Deposit Amount",
     PAYMENT_DEADLINE  : "Payment Deadline",
     PAY_WITH_DRAGON_PAY  : "Pay With Dragon Pay",
+    TOKEN_PROFILE : "Token Profile",
+    SEND : "Send",
+    MOVE :  "Move",
     HASSLE_FREE_ONLINE_ANYTIME : "Hassle-free online anytime.",
     REMITTANCE :  "Remittance",
     PANDORAS_VAULT_MERCHANT : "Pandoras Vault Merchant",
     CASH_OUT : "Cash Out",
     CASH_OUT_VIA : "Cash Out via",
     METHOD : "Method",
-    SELECT_FROM : "Select from"
+    SELECT_FROM : "Select from",
+    OVERVIEW_BALANCE : "Overview Balance",
+    
 }
