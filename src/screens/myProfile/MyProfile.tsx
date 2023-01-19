@@ -89,7 +89,7 @@ const MyProfile = () => {
                         <RowContainer
                             iconName={<Icons.BitcoinToken />}
                             OptionText="Token Portfolio"
-                            onPressFunction={OnMyWalletHandler}
+                            onPressFunction={()=>{}}
                             textStyle={styles.Tabs}
                         />
                         <RowContainer
@@ -101,13 +101,13 @@ const MyProfile = () => {
                         <RowContainer
                             iconName={<Icons.Clock />}
                             OptionText="Transaction History"
-                            onPressFunction={OnMyWalletHandler}
+                            onPressFunction={()=>{}}
                             textStyle={styles.Tabs}
                         />
                         <RowContainer
                             iconName={<Icons.Headset />}
                             OptionText="Help Center"
-                            onPressFunction={OnMyWalletHandler}
+                            onPressFunction={()=>{}}
                             textStyle={styles.Tabs}
                         />
                         <RowContainer

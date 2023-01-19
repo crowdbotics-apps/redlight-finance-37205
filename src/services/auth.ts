@@ -181,4 +181,14 @@ const deleteWallet = async (id: any) => {
   }
 }
 
-export { login, signup, sendPhoneOTP, sendEmailOTP, verifyEmailOTP, verifyPhoneOTP, forgotPasswordSendEmailOtp, forgotPasswordSendPhoneOtp, resetPassword, forgotPasswordVerifyEmailOtp, forgotPasswordVerifyPhonelOtp, changePassword, myProfile, signOut, deleteAccount, getAllFIATWallets, addSubWallet, editSubWallet, deleteWallet }
+const transactionHistory = async () => {
+  try {
+    const response = await api.get("/transaction_history/")
+    return response
+  } catch (error) {
+    return getResponseErrorData(error)
+  }
+}
+
+export { login, signup, sendPhoneOTP, sendEmailOTP, verifyEmailOTP, verifyPhoneOTP, forgotPasswordSendEmailOtp, forgotPasswordSendPhoneOtp, resetPassword, forgotPasswordVerifyEmailOtp, forgotPasswordVerifyPhonelOtp, changePassword, myProfile, signOut, deleteAccount, getAllFIATWallets, addSubWallet, editSubWallet, deleteWallet, transactionHistory }
+
