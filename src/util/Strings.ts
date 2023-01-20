@@ -113,4 +113,13 @@ export const Strings = {
     ADD_SUB_WALLET: "Add Sub Wallet",
     EDIT_SUB_WALLET: "Edit Sub Wallet",
     MY_WALLET: "My Wallet",
+    PASSWORD_WAS_SUCCESSFULLY_UPDATED : "Password was successfully updated!",
+    HELP_CENTER  : "Help Center",
+    CONTACT_US_AT : "Contact us at",
+    LOG_IN : "Log In",
+    ENTER_PIN  :"Enter Pin",
+    PLEASE_ENTER_YOUR_PIN_IN_ORDER_TO_LOG_IN : "Please enter your PIN in order to Log In.",
+    OK : "OK",
+    ERROR : "Error",
+    PLEASE_ENTER_CORRECT_USERNAME_AND_PASSWORD : "Please enter correct username and password."
 }

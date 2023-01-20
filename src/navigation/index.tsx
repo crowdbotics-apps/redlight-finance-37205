@@ -13,6 +13,7 @@ import { AddSubWallet as AddSubWalletScreen } from '../screens/AddSubWallet';
 import { EditSubWallet as EditSubWalletScreen } from '../screens/EditSubWallet';
 import { SetPinScreen as SetPinScreen } from '../screens/SetPinScreen';
 import { ConfirmPinScreen as ConfirmPinScreen } from '../screens/ConfirmPinScreen';
+import { SetNewPassword as SetNewPasswordScreen } from "../screens/setnewpassword";
 
 const RootStack = createStackNavigator();
 const RootNavigator: FC = () => {
@@ -66,6 +67,10 @@ const RootNavigator: FC = () => {
             <RootStack.Screen
                 name="ConfirmPinScreen"
                 component={ConfirmPinScreen}
+            />
+               <RootStack.Screen
+                name="SetNewPasswordScreen"
+                component={SetNewPasswordScreen}
             />
         </RootStack.Navigator>
     )

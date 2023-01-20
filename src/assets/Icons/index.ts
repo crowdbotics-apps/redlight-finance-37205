@@ -32,6 +32,8 @@ import MobileIcon from './MobileIcon'
 import EmailIcon from './EmailIcon'
 import QrIcon from './QrIcon'
 import InfoIcon from './InfoIcon.svg'
+import CallIcon from './CallIcon.svg'
+import Envelope from './Envelope'
 
 const Icons = {
     BackArrow,
@@ -67,7 +69,9 @@ const Icons = {
     MobileIcon,
     EmailIcon,
     QrIcon,
-    InfoIcon
+    InfoIcon,
+    CallIcon,
+    Envelope
 }
 
 export default Icons
