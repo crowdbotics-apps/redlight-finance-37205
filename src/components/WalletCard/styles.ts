@@ -42,6 +42,15 @@ const styles = StyleSheet.create({
         padding:"2%",
 
     },
+    addWalletText : {
+        fontFamily : Fonts.PoppinsSemibold,
+        fontSize : 14, 
+        fontWeight : "700",
+        lineHeight : 21,
+        color : Colors.white,
+        textAlign : "center",
+        marginTop : "5%"
+    }
 })
 
 export default styles

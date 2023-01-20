@@ -7,6 +7,7 @@ import MyProfile from '../screens/myProfile/MyProfile';
 import TokenPortfolio from '../screens/TokenPortfolio';
 import { Colors } from '../theme/Colors';
 import Icons from '../assets/Icons'
+import { ViewTransactionScreen } from '../screens/ViewTransactionScreen';
 
 const tabIconSize = 26
 const Tab = createBottomTabNavigator();
@@ -51,6 +52,15 @@ const DashboardTabNavigator : FC = () =>{
                     tabBarStyle : {display : 'none'},
                     tabBarIcon: ({ focused }) => (
                         focused ? <Icons.ScannerIcon/>: <Icons.ScannerIcon/>
+                    ),
+                }}
+            />
+             <Tab.Screen
+                name="ViewTransaction"
+                component={ViewTransactionScreen}
+                options={{
+                    tabBarIcon: ({ focused }) => (
+                        focused ? <Icons.tabViewTransactionSelected/>:<Icons.tabViewTransaction/>
                     ),
                 }}
             />

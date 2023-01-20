@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
         lineHeight : 27,
         color : Colors.white,
         textAlign : 'center',
-        backgroundColor : Colors.RedBaron,
+        backgroundColor : '#5cb85c',
         paddingVertical : 10,
         borderTopLeftRadius : 10,
         borderTopRightRadius : 10

@@ -35,7 +35,7 @@ const Signin = () => {
       login(data).then((res) => {
         setIsLoading(false)
         if(res?.status === 400){
-          let errorText = res.data?.non_field_errors[0] + Strings.PLEASE_ENTER_CORRECT_USERNAME_AND_PASSWORD
+          let errorText = res.data?.non_field_errors[0] + Strings.PLEASE_ENTER_CORRECT_USERNAME_OR_PASSWORD
           setError(errorText)
           toggleModalHandler()
           return;

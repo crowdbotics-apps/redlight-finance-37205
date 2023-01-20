@@ -15,6 +15,7 @@ import { Strings } from "../../util/Strings";
 import styles from './styles'
 import { myProfile } from '../../services/auth'
 import { uploadPhoto } from "../../services/profileServices";
+import SuccessModal from "../../components/SuccessModal";
 
 const MyProfile = () => {
     const navigation = useNavigation();
@@ -23,6 +24,8 @@ const MyProfile = () => {
     const [email, setEmail] = useState('')
     const [username, setUsername] = useState('')
     const [image, setImage] = useState('')
+    const [isModalVisible,setIsModalVisible] = useState(false)
+    const [successText,setSuccessText] = useState('')
     const RowContainer = ({ iconName, OptionText, onPressFunction, textStyle }) => {
         return (
             <View style={styles.Container}>
@@ -42,7 +45,8 @@ const MyProfile = () => {
         signOut().then((response) => {
             if (response.status == 200) {
                 removeItem("token")
-                Alert.alert("Logged out!")
+                setSuccessText(Strings.LOGGED_OUT_SUCCESSFULLY)
+                toggleModalHandler()
                 setIsPopupVisible(false)
                 navigation.navigate('SigninScreen')
             }
@@ -61,6 +65,9 @@ const MyProfile = () => {
     const onSettingHandler = () => {
         navigation.navigate('SettingScreen', { pinPopUp: false })
     }
+    const onTransactionHistoryHandler = () => {
+        navigation.navigate("TransactionHistoryScreen")
+    }
     useEffect(() => {
         myProfile().then((response) => {
             setName(response.name)
@@ -76,6 +83,10 @@ const MyProfile = () => {
         navigation.navigate('HelpCenter')
     }
 
+    const tokenPortfolioHandler = () =>{
+        navigation.navigate('Token')
+    }
+
     const changeProfilePictureHandler = () =>{
         ImagePicker.openPicker({
             width: 300,
@@ -89,6 +100,10 @@ const MyProfile = () => {
                 console.log(error.response)
             })
           });
+    }
+
+    const toggleModalHandler = () =>{
+        setIsModalVisible (isModalVisible => !isModalVisible)
     }
 
     return (
@@ -122,7 +137,7 @@ const MyProfile = () => {
                         <RowContainer
                             iconName={<Icons.BitcoinToken />}
                             OptionText="Token Portfolio"
-                            onPressFunction={OnMyWalletHandler}
+                            onPressFunction={tokenPortfolioHandler}
                             textStyle={styles.Tabs}
                         />
                         <RowContainer
@@ -134,7 +149,7 @@ const MyProfile = () => {
                         <RowContainer
                             iconName={<Icons.Clock />}
                             OptionText="Transaction History"
-                            onPressFunction={OnMyWalletHandler}
+                            onPressFunction={onTransactionHistoryHandler}
                             textStyle={styles.Tabs}
                         />
                         <RowContainer
@@ -159,6 +174,11 @@ const MyProfile = () => {
                     </View>
                 </ImageBackground>
             </View>
+            <SuccessModal
+                isModalVisible = {isModalVisible}
+                onToggleModal = {toggleModalHandler}
+                successText = {successText}
+            />
         </ScrollView>
     )
 }

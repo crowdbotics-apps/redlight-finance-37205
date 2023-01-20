@@ -8,11 +8,11 @@ import styles from './styles';
 type ErrorModalProps = {
     isModalVisible : boolean | undefined,
     onToggleModal : Function,
-    errorText : string
+    successText : string
 }
 
-const ErrorModal : FC<ErrorModalProps> = props =>{
-    const {isModalVisible,onToggleModal,errorText} = props
+const SuccessModal : FC<ErrorModalProps> = props =>{
+    const {isModalVisible,onToggleModal,successText} = props
     
     const hideModal = () =>{
         onToggleModal()
@@ -20,8 +20,8 @@ const ErrorModal : FC<ErrorModalProps> = props =>{
     return(
         <Modal isVisible={isModalVisible}>
             <View style={styles.modal}>
-                <Text style={styles.header}>{Strings.ERROR}</Text>
-                <Text style={styles.mainText}>{errorText}</Text>
+                <Text style={styles.header}>{Strings.SUCCESS}</Text>
+                <Text style={styles.mainText}>{successText}</Text>
                 <PrimaryButton
                     // isLoading={isLoading}
                     // disabled = {!isCheckboxChecked}
@@ -35,7 +35,7 @@ const ErrorModal : FC<ErrorModalProps> = props =>{
     )
 }
 
-export default ErrorModal
+export default SuccessModal
 
 
 

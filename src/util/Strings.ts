@@ -121,5 +121,10 @@ export const Strings = {
     PLEASE_ENTER_YOUR_PIN_IN_ORDER_TO_LOG_IN : "Please enter your PIN in order to Log In.",
     OK : "OK",
     ERROR : "Error",
-    PLEASE_ENTER_CORRECT_USERNAME_AND_PASSWORD : "Please enter correct username and password."
+    PLEASE_ENTER_CORRECT_USERNAME_OR_PASSWORD : "Please enter correct username or password.",
+    BILL_PAYMENTS : "Bill Payments",
+    S_CREDITS : "S Credits",
+    E_LOAD : "E Load",
+    SUCCESS : "Success",
+    LOGGED_OUT_SUCCESSFULLY : "Logged out successfully!!",
 }

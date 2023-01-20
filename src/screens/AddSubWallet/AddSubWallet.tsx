@@ -27,13 +27,13 @@ const AddSubWallet = () => {
         const data = { wallet_name: walletName, is_default: isDefault }
         addSubWallet(data).then((response) => {
             setWalletName("")
-            navigation.navigate("WalletScreen")
+            navigation.goBack()
         }).catch(error => {
             console.log(error.response)
         })
     }
     const cancelButtonHandler = () => {
-        navigation.navigate("WalletScreen")
+        navigation.goBack()
     }
     return (
         <View>
