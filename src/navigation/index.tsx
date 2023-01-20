@@ -13,7 +13,8 @@ import { AddSubWallet as AddSubWalletScreen } from '../screens/AddSubWallet';
 import { EditSubWallet as EditSubWalletScreen } from '../screens/EditSubWallet';
 import { SetPinScreen as SetPinScreen } from '../screens/SetPinScreen';
 import { ConfirmPinScreen as ConfirmPinScreen } from '../screens/ConfirmPinScreen';
-
+import { TransactionHistoryScreen as TransactionHistoryScreen } from '../screens/TransactionHistoryScreen'
+import { ViewTransactionScreen as ViewTransactionScreen } from '../screens/ViewTransactionScreen'
 const RootStack = createStackNavigator();
 const RootNavigator: FC = () => {
     return (
@@ -66,6 +67,14 @@ const RootNavigator: FC = () => {
             <RootStack.Screen
                 name="ConfirmPinScreen"
                 component={ConfirmPinScreen}
+            />
+            <RootStack.Screen
+                name="TransactionHistoryScreen"
+                component={TransactionHistoryScreen}
+            />
+            <RootStack.Screen
+                name="ViewTransactionScreen"
+                component={ViewTransactionScreen}
             />
         </RootStack.Navigator>
     )

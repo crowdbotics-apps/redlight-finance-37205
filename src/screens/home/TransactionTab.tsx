@@ -12,7 +12,7 @@ const TransactionTab: FC<TransactionTabProps> = Props => {
             </View>
             <View style={styles.transactionHistoryTab}>
                 <Text style={styles.thirdContainerTabText}>{Props.paymentMethod}</Text>
-                <Text style={styles.thirdContainerTabTextPrice}>{"+" + Props.cost}</Text>
+                <Text style={styles.thirdContainerTabTextPrice}>{Props.cost}</Text>
             </View>
         </View>
     )

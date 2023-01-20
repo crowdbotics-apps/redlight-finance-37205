@@ -77,14 +77,15 @@ const styles = StyleSheet.create({
         margin: "5%",
         alignSelf: "stretch"
     },
-    thirdeContainerTab: {
+    thirdeContainerTab: {  
         fontFamily: Fonts.PoppinsRegular,
         fontSize: 12,
         fontWeight: "400",
         lineHeight: 18,
         color: Colors.white,
         textAlign: "left",
-        padding: "2%"
+        paddingHorizontal: "2%",
+
     },
     thirdContainerTabText: {
         fontFamily: Fonts.PoppinsRegular,
@@ -93,7 +94,9 @@ const styles = StyleSheet.create({
         lineHeight: 21,
         color: Colors.white,
         textAlign: "left",
-        paddingHorizontal: "2%"
+        paddingHorizontal: "2%",
+        marginBottom : "2%",
+        marginTop : -10
     },
     button: {
         width: "40%",
@@ -118,13 +121,17 @@ const styles = StyleSheet.create({
         lineHeight: 21,
         color: Colors.lightRed,
         textAlign: "left",
-        paddingHorizontal: "2%"
+        paddingHorizontal: "2%",
+        marginTop : -10,
+        marginBottom : "2%",
     },
     transactionHistoryTab: {
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
-        padding: "0.6%"
+        padding: "0.6%",
+        marginBottom : "3%",
+        marginLeft : "2%"
     },
     transactionHistoryTabContent: {
         fontFamily: Fonts.PoppinsRegular,
@@ -133,7 +140,7 @@ const styles = StyleSheet.create({
         lineHeight: 15,
         textAlign: "right",
         color: Colors.Gray78,
-        padding: "2%"
+        paddingHorizontal: "2.5%"
     },
     servicesContainer: {
         display: "flex",
@@ -141,6 +148,13 @@ const styles = StyleSheet.create({
         flexWrap: "wrap",
         justifyContent: "space-evenly",
         padding: "1%"
+    },
+    transactionHistoryTabb :{
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        marginBottom : "3%",
+        marginTop : -8
     }
 })
 

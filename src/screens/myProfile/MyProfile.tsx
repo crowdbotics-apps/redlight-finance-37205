@@ -58,6 +58,9 @@ const MyProfile = () => {
     const onSettingHandler = () => {
         navigation.navigate('SettingScreen', { pinPopUp: false })
     }
+    const onTransactionHistoryHandler = () => {
+        navigation.navigate("TransactionHistoryScreen")
+    }
     useEffect(() => {
         myProfile().then((response) => {
             setName(response.name)
@@ -101,7 +104,7 @@ const MyProfile = () => {
                         <RowContainer
                             iconName={<Icons.Clock />}
                             OptionText="Transaction History"
-                            onPressFunction={()=>{}}
+                            onPressFunction={onTransactionHistoryHandler}
                             textStyle={styles.Tabs}
                         />
                         <RowContainer
