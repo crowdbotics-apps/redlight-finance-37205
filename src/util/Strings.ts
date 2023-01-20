@@ -113,4 +113,8 @@ export const Strings = {
     ADD_SUB_WALLET: "Add Sub Wallet",
     EDIT_SUB_WALLET: "Edit Sub Wallet",
     MY_WALLET: "My Wallet",
+    BILL_PAYMENTS : "Bill Payments",
+    S_CREDITS : "S Credits",
+    E_LOAD : "E Load",
+
 }

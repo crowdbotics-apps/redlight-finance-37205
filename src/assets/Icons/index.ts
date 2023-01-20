@@ -32,6 +32,14 @@ import MobileIcon from './MobileIcon'
 import EmailIcon from './EmailIcon'
 import QrIcon from './QrIcon'
 import InfoIcon from './InfoIcon.svg'
+import CashInWallet from './CashInWallet.svg'
+import CashOutWallet from './CashOutWallet.svg'
+import ELoad from './ELoad.svg'
+import SCredit from './SCredit.svg'
+import SendCredit from './SendCredit.svg'
+import BillVector from './BillVector.svg'
+import Access from './Access.svg'
+import AddWallet from './AddWallet.svg'
 
 const Icons = {
     BackArrow,
@@ -67,7 +75,15 @@ const Icons = {
     MobileIcon,
     EmailIcon,
     QrIcon,
-    InfoIcon
+    InfoIcon,
+    CashInWallet,
+    CashOutWallet,
+    BillVector,
+    SCredit, 
+    ELoad, 
+    SendCredit,
+    Access,
+    AddWallet
 }
 
 export default Icons
