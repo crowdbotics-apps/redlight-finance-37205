@@ -15,26 +15,34 @@ import { ChangePassword } from '../changePassword';
 import { Strings } from '../../util/Strings';
 import FastImage from 'react-native-fast-image';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import ErrorModal from '../../components/ErrorModal';
 
 
 const Signin = () => {
 
   const [username, setUsername] = useState<string>('')
   const [password, setPassword] = useState<string>('')
-  const [seePassword, setseePassword] = useState(true)
-  const [isModalVisible, setisModalVisible] = useState(false)
+  const [isModalVisible, setIsModalVisible] = useState(false)
+  const [isLoading,setIsLoading] = useState(false)
+  const [error,setError] = useState('')
 
   const navigation = useNavigation();
 
   const loginHandler = () => {
     if (validate()){
       const data = { username: username, password: password }
+      setIsLoading(true)
       login(data).then((res) => {
+        setIsLoading(false)
         if(res?.status === 400){
-          Alert.alert(res.data?.non_field_errors[0])
+          let errorText = res.data?.non_field_errors[0] + Strings.PLEASE_ENTER_CORRECT_USERNAME_OR_PASSWORD
+          setError(errorText)
+          toggleModalHandler()
           return;
         }
         setItem("token", res.token)
+        setUsername("")
+        setPassword("")
         navigation.reset({
           index:0,
           routes:[{
@@ -42,10 +50,9 @@ const Signin = () => {
             }]
         })
       }).catch(error => {
+        setIsLoading(false)
         console.log(error.response);
       })
-      setUsername("")
-      setPassword("")
   }
   }
   const validate  = () =>{
@@ -53,14 +60,16 @@ const Signin = () => {
       return true
     }
     else{
-      Alert.alert(Strings.PLEASE_ENTER_YOUR_USERNAME_AND_PASSWORD)  
+      setError(Strings.PLEASE_ENTER_YOUR_USERNAME_AND_PASSWORD)
+      toggleModalHandler()
+      // Alert.alert(Strings.PLEASE_ENTER_YOUR_USERNAME_AND_PASSWORD)  
       return false
     }
 
   }
-  const changeModalVisbile = () => {
-
-    setisModalVisible(!isModalVisible)
+  
+  const toggleModalHandler = () =>{
+    setIsModalVisible(isModalVisible => !isModalVisible)
   }
   return (
     <View>
@@ -101,7 +110,7 @@ const Signin = () => {
               </TouchableOpacity>
             </View>
             <PrimaryButton
-              isLoading={false}
+              isLoading={isLoading}
               text="Sign In"
               onPress={loginHandler} disabled={undefined} style={{marginTop: "12%"}} btnStyle={undefined}/>
             <View style={styles.tabss}>
@@ -113,6 +122,11 @@ const Signin = () => {
           </View>
         </KeyboardAwareScrollView>
       </ImageBackground>
+      <ErrorModal 
+        isModalVisible={isModalVisible} 
+        onToggleModal={toggleModalHandler}
+        errorText = {error}
+      />
     </View>
   );
 };

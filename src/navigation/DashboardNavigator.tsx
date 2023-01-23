@@ -13,11 +13,19 @@ import ViewAllWalletWithdrawal from '../screens/ViewAllWalletWithdrawal';
 import CashOutDetailsScreen from '../screens/CashOutDetailsScreen';
 import CashOut from '../screens/CashOutScreen';
 import QRCodeScreen from '../screens/QRCodeScreen';
-import { SetNewPassword as SetNewPasswordScreen } from "../screens/setnewpassword";
 import { ChangePassword as ChangePasswordScreen } from "../screens/changePassword";
 import { SettingScreen as SettingScreen } from "../screens/setting";
 import SendCredit from '../screens/SendCredit';
 import MoveCredit from '../screens/MoveCredit';
+import HelpCenter from '../screens/HelpCenter';
+import EnterPin from '../screens/EnterPin';
+import { Walletscreen as WalletScreen } from '../screens/WalletScreen';
+import { AddSubWallet as AddSubWalletScreen } from '../screens/AddSubWallet';
+import { EditSubWallet as EditSubWalletScreen } from '../screens/EditSubWallet';
+import { SetPinScreen as SetPinScreen } from '../screens/SetPinScreen';
+import { ConfirmPinScreen as ConfirmPinScreen } from '../screens/ConfirmPinScreen';
+import { SetNewPassword as SetNewPasswordScreen } from "../screens/setnewpassword";
+import { TransactionHistoryScreen as TransactionHistoryScreen } from '../screens/TransactionHistoryScreen'
 
 const DashboardStack = createStackNavigator()
 
@@ -81,10 +89,6 @@ const DashboardNavigator : FC = () => {
                 component={CashOutDetailsScreen}
             />
                <DashboardStack.Screen
-                name="SetNewPasswordScreen"
-                component={SetNewPasswordScreen}
-            />
-               <DashboardStack.Screen
                 name="ChangePasswordScreen"
                 component={ChangePasswordScreen}
             />
@@ -99,6 +103,42 @@ const DashboardNavigator : FC = () => {
               <DashboardStack.Screen
                 name="MoveCredit"
                 component={MoveCredit}
+            />
+             <DashboardStack.Screen
+                name="HelpCenter"
+                component={HelpCenter}
+            />
+            <DashboardStack.Screen
+                name="EnterPinScreen"
+                component={EnterPin}
+            />
+            <DashboardStack.Screen
+                name="WalletScreen"
+                component={WalletScreen}
+            />
+            <DashboardStack.Screen
+                name="AddSubWalletScreen"
+                component={AddSubWalletScreen}
+            />
+            <DashboardStack.Screen
+                name="EditSubWalletScreen"
+                component={EditSubWalletScreen}
+            />
+            <DashboardStack.Screen
+                name="SetPinScreen"
+                component={SetPinScreen}
+            />
+            <DashboardStack.Screen
+                name="ConfirmPinScreen"
+                component={ConfirmPinScreen}
+            />
+               <DashboardStack.Screen
+                name="SetNewPasswordScreen"
+                component={SetNewPasswordScreen}
+            />
+            <DashboardStack.Screen
+                name="TransactionHistoryScreen"
+                component={TransactionHistoryScreen}
             />
         </DashboardStack.Navigator>
     )

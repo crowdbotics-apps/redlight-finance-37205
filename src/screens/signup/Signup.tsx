@@ -13,6 +13,7 @@ import {sendEmailOTP,sendPhoneOTP} from '../../services/auth'
 import { isValidEmail,isValidPassword ,isValidUsername,isValidMobile,isValidName} from '../../util';
 import { Colors } from '../../theme/Colors'
 import { Strings } from '../../util/Strings';
+import ErrorModal from '../../components/ErrorModal';
 
 const Signup = ()=>{
     const[email,setEmail] = useState<string>('')
@@ -27,6 +28,7 @@ const Signup = ()=>{
     const [isLoading,setIsLoading] = useState<boolean>(false)
     const [mode,setMode] = useState<Number>(1)
     const [error,setError] = useState<string>('')
+    const [isModalVisible,setIsModalVisible] = useState(false)
 
     const navigation = useNavigation();
 
@@ -44,6 +46,7 @@ const Signup = ()=>{
                     return true
                 else
                     setError(Strings.EMAIL_CANT_BE_EMPTY)
+                    toggleModalHandler()
                     return false
             }
             else{
@@ -51,26 +54,32 @@ const Signup = ()=>{
                     return true
                 else
                     setError(Strings.MOBILE_CANT_BE_EMPTY)
+                    toggleModalHandler()
                     return false
             }
         }
         else if(firstName === ''){
             setError(Strings.FIRST_NAME_CANT_BE_EMPTY)
+            toggleModalHandler()
             return false
         }
         else if(lastName === ''){
             setError(Strings.LAST_NAME_CANT_BE_EMPTY)
+            toggleModalHandler()
             return false
         }
         else if(userName === ''){
             setError(Strings.USERNAME_CANT_BE_EMPTY)
+            toggleModalHandler()
             return false
         }
         else if(password === ''){
             setError(Strings.PASSWORD_CANT_BE_EMPTY)
+            toggleModalHandler()
             return false
         }
         setError(Strings.INPUT_FIELD_IS_EMPTY);
+        toggleModalHandler()
         return false
     }
 
@@ -81,6 +90,7 @@ const Signup = ()=>{
                     return true
                 }else{
                     setError(Strings.NAME_MUST_CONTAIN_ALPHABETS_ONLY)
+                    toggleModalHandler()
                     return false;
                 }
             }
@@ -88,6 +98,7 @@ const Signup = ()=>{
         }
         else{
             setError(Strings.NAME_MUST_CONTAIN_ALPHABETS_ONLY)
+            toggleModalHandler()
             return false;
         }
     }
@@ -98,6 +109,7 @@ const Signup = ()=>{
         }
         else{
             setError(Strings.PASSWORD_AND_CONFIRM_PASSWORD_ARE_NOT_SAME);
+            toggleModalHandler()
             return false
         }
     }
@@ -108,6 +120,7 @@ const Signup = ()=>{
         }
         else{
             setError(Strings.USERNAME_MUST_CONATIN_APLHABETS_NUMBERS_AND_UNDERSCORES);
+            toggleModalHandler()
             return false
         }
     }
@@ -118,6 +131,7 @@ const Signup = ()=>{
         }
         else{
             setError(Strings.PASSWORD_SHOULD_BE_8_CHARACTERS_LONG)
+            toggleModalHandler()
             return false
         }
     }
@@ -128,6 +142,7 @@ const Signup = ()=>{
         }
         else{
             setError(Strings.EMAIL_ADDRESS_IS_NOT_VALID)
+            toggleModalHandler()
             return false
         }
     }
@@ -138,6 +153,7 @@ const Signup = ()=>{
         }
         else{
             setError(Strings.MOBILE_MUST_BE_OF_10_DIGITS)
+            toggleModalHandler()
             return false
         }
     }
@@ -220,12 +236,10 @@ const Signup = ()=>{
                 })
             }
         }
-        else{
-            Alert.alert(error," ",
-            [
-                { text: "OK", onPress: () => console.log("OK Pressed") } 
-            ])
-        }
+    }
+
+    const toggleModalHandler = () =>{
+        setIsModalVisible(isModalVisible => !isModalVisible)
     }
     
     return(
@@ -333,6 +347,11 @@ const Signup = ()=>{
                     />
                 </KeyboardAwareScrollView>
             </ImageBackground>
+            <ErrorModal
+                isModalVisible = {isModalVisible}
+                onToggleModal = {toggleModalHandler}
+                errorText={error}
+            />
         </View>
     )
 }

@@ -1,6 +1,7 @@
 import { useNavigation } from "@react-navigation/core";
-import React, { useState } from "react";
+import React, { useState,useRef } from "react";
 import { ImageBackground, View, Text, ScrollView, Alert } from "react-native";
+import RBSheet from 'react-native-raw-bottom-sheet';
 import Images from "../../assets/Images";
 import Circle from "../../components/Circle";
 import CustomInput from "../../components/CustomInput";
@@ -8,12 +9,15 @@ import Header from "../../components/Header";
 import PrimaryButton from "../../components/PrimaryButton";
 import { resetPassword } from "../../services/auth";
 import { isValidPassword } from "../../util";
+import PasswordSuccessfullPopup from "./PasswordSuccessfullPopup";
+import { Colors } from "../../theme/Colors";
 import styles from './styles'
 
 const SetNewPassword = ({ route }) => {
     const [newPassword, setNewPassword] = useState<string>("");
     const [confirmPassword, setConfirmPassword] = useState<string>("");
     const navigation = useNavigation();
+    const refRBSheet = useRef();
 
     const handleSubmit = () => {
         const { token, uid } = route.params
@@ -29,11 +33,9 @@ const SetNewPassword = ({ route }) => {
                     return 
                 }
                 console.log('res', response, 'data', data)
+                refRBSheet.current.open()
                 setNewPassword("");
                 setConfirmPassword("");
-                navigation.navigate('SigninScreen')
-                Alert.alert("Your password has been set Successfully")
-
             }).catch(error => {
                 console.log(error.response);
             })
@@ -41,6 +43,10 @@ const SetNewPassword = ({ route }) => {
         else {
             Alert.alert("Your New Password and Confirm Password Doesn't match")
         }
+    }
+    const moveToHome = () =>{
+        refRBSheet.current.close()
+        navigation.navigate('SigninScreen')
     }
     return (
         <View style={{ marginTop: -10 }}>
@@ -72,6 +78,25 @@ const SetNewPassword = ({ route }) => {
                     </View>
                 </ScrollView>
             </ImageBackground>
+           <RBSheet
+                ref={refRBSheet}
+                closeOnDragDown={false}
+                closeOnPressMask={false}
+                height={450}
+                customStyles={{
+                    wrapper: {
+                        //    backgroundColor  : "transparent"     
+                    },
+                    container: {
+                        backgroundColor: Colors.aubergine,
+                        borderTopLeftRadius: 20,
+                        borderTopRightRadius: 20,
+                        paddingHorizontal: 30
+                    }
+                }}
+            >
+                <PasswordSuccessfullPopup onPress={moveToHome} />
+            </RBSheet>
         </View>
     )
 }

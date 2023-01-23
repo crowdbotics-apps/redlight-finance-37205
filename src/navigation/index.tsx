@@ -5,16 +5,8 @@ import { Signup as SignupScreen } from '../screens/signup'
 import { CodeVerification as CodeVerificationScreen } from "../screens/codeVerification";
 import { Signin as SigninScreen } from "../screens/signin";
 import { ForgotPassword as ForgotPasswordScreen } from "../screens/forgotpassword";
-import Home from "../screens/home"
-import { Walletscreen as WalletScreen } from '../screens/WalletScreen';
-
 import DashboardNavigator from "./DashboardNavigator";
-import { AddSubWallet as AddSubWalletScreen } from '../screens/AddSubWallet';
-import { EditSubWallet as EditSubWalletScreen } from '../screens/EditSubWallet';
-import { SetPinScreen as SetPinScreen } from '../screens/SetPinScreen';
-import { ConfirmPinScreen as ConfirmPinScreen } from '../screens/ConfirmPinScreen';
-import { TransactionHistoryScreen as TransactionHistoryScreen } from '../screens/TransactionHistoryScreen'
-import { ViewTransactionScreen as ViewTransactionScreen } from '../screens/ViewTransactionScreen'
+
 const RootStack = createStackNavigator();
 const RootNavigator: FC = () => {
     return (
@@ -48,34 +40,7 @@ const RootNavigator: FC = () => {
                 name="DashboardNavigaton"
                 component={DashboardNavigator}
             />
-            <RootStack.Screen
-                name="WalletScreen"
-                component={WalletScreen}
-            />
-            <RootStack.Screen
-                name="AddSubWalletScreen"
-                component={AddSubWalletScreen}
-            />
-            <RootStack.Screen
-                name="EditSubWalletScreen"
-                component={EditSubWalletScreen}
-            />
-            <RootStack.Screen
-                name="SetPinScreen"
-                component={SetPinScreen}
-            />
-            <RootStack.Screen
-                name="ConfirmPinScreen"
-                component={ConfirmPinScreen}
-            />
-            <RootStack.Screen
-                name="TransactionHistoryScreen"
-                component={TransactionHistoryScreen}
-            />
-            <RootStack.Screen
-                name="ViewTransactionScreen"
-                component={ViewTransactionScreen}
-            />
+            
         </RootStack.Navigator>
     )
 }
