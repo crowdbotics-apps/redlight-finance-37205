@@ -32,6 +32,8 @@ import MobileIcon from './MobileIcon'
 import EmailIcon from './EmailIcon'
 import QrIcon from './QrIcon'
 import InfoIcon from './InfoIcon.svg'
+import CallIcon from './CallIcon.svg'
+import Envelope from './Envelope'
 import CashInWallet from './CashInWallet.svg'
 import CashOutWallet from './CashOutWallet.svg'
 import ELoad from './ELoad.svg'
@@ -40,6 +42,8 @@ import SendCredit from './SendCredit.svg'
 import BillVector from './BillVector.svg'
 import Access from './Access.svg'
 import AddWallet from './AddWallet.svg'
+import tabViewTransaction from './tabViewTransaction'
+import tabViewTransactionSelected from "./tabViewTransactionSelected"
 
 const Icons = {
     BackArrow,
@@ -76,6 +80,8 @@ const Icons = {
     EmailIcon,
     QrIcon,
     InfoIcon,
+    CallIcon,
+    Envelope,
     CashInWallet,
     CashOutWallet,
     BillVector,
@@ -83,7 +89,9 @@ const Icons = {
     ELoad, 
     SendCredit,
     Access,
-    AddWallet
+    AddWallet,
+    tabViewTransaction,
+    tabViewTransactionSelected
 }
 
 export default Icons

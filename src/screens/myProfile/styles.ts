@@ -67,7 +67,10 @@ const styles = StyleSheet.create({
     imageVector: {
         marginTop: "5%",
         marginRight: "60%",
-        paddingHorizontal: "15%"
+        // paddingHorizontal: "15%",
+        height : 84,
+        width  :84,
+        borderRadius : 40,
     },
     imageSize: {
         width: "2%",
