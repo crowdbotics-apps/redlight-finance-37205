@@ -116,5 +116,6 @@ export const Strings = {
     BILL_PAYMENTS : "Bill Payments",
     S_CREDITS : "S Credits",
     E_LOAD : "E Load",
+    PLEASE_ENTER_YOUR_WALLET_NAME : "Please Enter Your Wallet Name!",
 
 }

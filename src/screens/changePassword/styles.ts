@@ -22,6 +22,28 @@ const styles = StyleSheet.create({
         marginLeft: "3%",
         padding: 5
     },
+    input : {
+        borderRadius : 10,
+        backgroundColor : Colors.aubergine,
+        color  : Colors.white,
+        elevation : 5,
+        shadowColor: '#000000',
+        shadowOffset: { width: 2, height: 2 },
+        shadowOpacity: 0.8,
+        shadowRadius: 5,
+    },
+    container : {
+        width: "98%", 
+        height: "90%", 
+        marginTop: "5%", 
+        backgroundColor: Colors.aubergine, 
+        borderRadius: 10
+    },
+    button : {
+        marginTop: "54%", 
+        width: "88%", 
+        alignSelf: 'center'
+    }
 })
 
 export default styles

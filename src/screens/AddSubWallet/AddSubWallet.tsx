@@ -1,9 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
-import { ImageBackground, Platform, Text, TouchableOpacity, View } from "react-native";
+import { Alert, ImageBackground, Platform, Text, TouchableOpacity, View } from "react-native";
 import CheckBox from "react-native-check-box";
-import { Fonts } from "../../assets/fonts";
-import Icons from "../../assets/Icons";
 import LeftArrow from "../../assets/Icons/LeftArrow";
 import Images from "../../assets/Images";
 import CustomHeader from "../../components/CustomHeader";
@@ -14,7 +12,8 @@ import { Colors } from "../../theme/Colors";
 import { Strings } from "../../util/Strings";
 import styles from "./styles";
 
-const AddSubWallet = () => {
+const AddSubWallet = ({ route }: any) => {
+    const { screen, refresh } = route.params
     const navigation = useNavigation()
     const [walletName, setWalletName] = useState<string>('')
     const [isDefault, setIsDefault] = useState(false)
@@ -25,12 +24,25 @@ const AddSubWallet = () => {
     }
     const createButtonhandler = () => {
         const data = { wallet_name: walletName, is_default: isDefault }
-        addSubWallet(data).then((response) => {
-            setWalletName("")
-            navigation.goBack()
-        }).catch(error => {
-            console.log(error.response)
-        })
+        if (walletName !== "" && walletName !== undefined) {
+            addSubWallet(data).then((response) => {
+                setWalletName("")
+                if (screen === "Walletscreen") {
+                    navigation.navigate("WalletScreen")
+                    refresh()
+                }
+                else {
+                    // navigation.navigate("DashboardNavigaton", {refresh : "true"})
+                    navigation.goBack()
+                    refresh()
+                }
+            }).catch(error => {
+                console.log(error.response)
+            })
+        }
+        else {
+            Alert.alert(Strings.PLEASE_ENTER_YOUR_WALLET_NAME)
+        }
     }
     const cancelButtonHandler = () => {
         navigation.goBack()
@@ -56,6 +68,7 @@ const AddSubWallet = () => {
                         isleftIconVisible={false}
                         isRightIconVisible={false}
                         keyboardType={"default"}
+                        secureTextEntry={false}
                     />
                     <CheckBox
                         checkedCheckBoxColor={Colors.RedBaron}

@@ -91,6 +91,7 @@ const Signin = () => {
               onChangeText={setPassword} 
               isRightIconVisible={true} 
               isleftIconVisible={true} 
+              secureTextEntry = {true}
               leftIcon = {<Icons.LockIcon/>}
             />
             <View style={styles.tabs}>
@@ -106,7 +107,7 @@ const Signin = () => {
             <View style={styles.tabss}>
               <Text style={styles.tabsText}>{Strings.NO_ACCOUNT}</Text>
               <TouchableOpacity onPress={() => navigation.navigate('SignupScreen')}>
-                <Text style={styles.tabText}>{Strings.SIGN_UP}</Text>
+                <Text style={styles.tabText}>{" "+Strings.SIGN_UP}</Text>
               </TouchableOpacity>
             </View>
           </View>
