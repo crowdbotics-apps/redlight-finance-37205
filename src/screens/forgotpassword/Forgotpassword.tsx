@@ -31,31 +31,32 @@ const ForgotPassword = () => {
             setSelectedTab(1)
     }
     const handleContinue = () => {
-        validate();
-        if (selectedTab === 1) {
-            const data = { country_code: countryCode, phone_number: phoneNumber, screen: "forgotPassword" }
-            forgotPasswordSendPhoneOtp(data).then(response => {
-                if (response.message === 'OTP Send Successfully') {
-                    console.log('res', response, 'data', data)
-                    setPhoneNumber("")
+        if (validate()) {
+            if (selectedTab === 1) {
+                const data = { country_code: countryCode, phone_number: phoneNumber, screen: "forgotPassword" }
+                forgotPasswordSendPhoneOtp(data).then(response => {
+                    if (response.message === 'OTP Send Successfully') {
+                        console.log('res', response, 'data', data)
+                        setPhoneNumber("")
+                        navigation.navigate('CodeVerificationScreen', data)
+                    }
+                }).catch(error => {
+                    console.log(error.response);
+                })
+            }
+            else {
+                const data = { email: email, screen: "forgotPassword", mode: 1 }
+                forgotPasswordSendEmailOtp(data).then((response) => {
+                    if (response.message === Strings.USER_DOESNT_EXISTS) {
+                        return;
+                    }
+                    setEmail("")
                     navigation.navigate('CodeVerificationScreen', data)
-                }
-            }).catch(error => {
-                console.log(error.response);
-            })
-        }
-        else {
-            const data = { email: email, screen: "forgotPassword", mode: 1 }
-            forgotPasswordSendEmailOtp(data).then((response) => {
-                if(response.message === Strings.USER_DOESNT_EXISTS){
-                    return;
-                }
-                setEmail("")
-                navigation.navigate('CodeVerificationScreen', data)
-            }).catch(error => {
+                }).catch(error => {
 
-                console.log(error.response);
-            })
+                    console.log(error.response);
+                })
+            }
         }
     }
 
@@ -63,12 +64,13 @@ const ForgotPassword = () => {
         if (selectedTab === 1) {
             if (phoneNumber === undefined || phoneNumber === "") {
                 Alert.alert("Please Enter your correct Phone Number");
-                return
+                return false
             }
         }
         else {
             if (email === "" || email === undefined || !isValidEmail(email)) {
                 Alert.alert("Please Enter your correct Email");
+                return false
             }
         }
     }

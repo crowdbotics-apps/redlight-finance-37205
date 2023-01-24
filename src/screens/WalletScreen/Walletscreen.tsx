@@ -22,8 +22,8 @@ const WalletScreen = () => {
     const [currentIndex, setCurrentIndex] = useState(0)
     const navigation = useNavigation()
     const [isPopupVisible, setIsPopupVisible] = useState(false)
-    const renderItem = ({ item, index }: any) => (
-        <WalletCard item={item} index={index} />
+    const renderItem = ({ item, index, refresh }: any) => (
+        <WalletCard item={item} index={index} refresh={getAllWallets} />
     );
     const goBackIconHandler = () => {
         navigation.goBack()
@@ -35,7 +35,7 @@ const WalletScreen = () => {
         setIsPopupVisible(true)
     }
     const addSubWalletButtonHandler = () => {
-        navigation.navigate("AddSubWalletScreen")
+        navigation.navigate("AddSubWalletScreen", { screen: "Walletscreen", refresh : getAllWallets })
     }
     const deletePopUpButtonHandler = () => {
         deleteWallet(data[currentIndex].id).then((response) => {
@@ -45,12 +45,15 @@ const WalletScreen = () => {
         })
     }
     useEffect(() => {
+        getAllWallets()
+    }, []);
+    const getAllWallets = () => {
         getAllFIATWallets().then((response) => {
             setData(response.data)
         }).catch(error => {
             console.log(error.response)
         })
-    }, [data]);
+    }
     return (
         <View>
             <ImageBackground source={Images.Background} resizeMode='cover' style={styles.Image}>

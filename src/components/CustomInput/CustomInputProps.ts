@@ -11,4 +11,5 @@ export type CustomInputProps = {
     isleftIconVisible : Boolean | undefined,
     isRightIconVisible : Boolean | undefined,
     keyboardType : KeyboardTypeOptions | undefined,
+    secureTextEntry : boolean
 }

@@ -14,23 +14,25 @@ import TransactionTab from './TransactionTab'
 import ServiceTab from './ServiceTab'
 import { Strings } from '../../util/Strings'
 
-const Home: FC = () => {
+const Home: FC = ({route}: any) => {
     const [data, setData] = useState([])
     const [currentIndex, setCurrentIndex] = useState(0)
     const navigation = useNavigation()
     const renderItem = ({ item, index, }: any) => (
-        <WalletCard item={item} index={index} screen="Homescreen" />
+        <WalletCard item={item} index={index} screen="Homescreen" refresh = {getWallets} />
     )
         ;
     useEffect(() => {
+        getWallets()
+    }, []);
+    const getWallets = () => {
         getAllFIATWallets().then((response) => {
             response.data.push({ key: 1 })
             setData(response.data)
         }).catch(error => {
             console.log(error.response)
         })
-    }, [data]);
-
+    }
     const cashInTabHandler = () => {
         navigation.navigate('CashInScreen')
     }

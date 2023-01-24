@@ -8,13 +8,13 @@ import Icons from "../../assets/Icons";
 import styles from './styles'
 import { WalletCardProps } from "./WalletCardProps";
 
-const WalletCard = ({ item, index }: any) => {
+const WalletCard = ({ item, index, refresh }: any) => {
     const navigation = useNavigation()
     const getQRCodeByWalletId = () => {
         navigation.navigate("QRCode", { walletId: item.id })
     }
     const addSubWalletHandler = () => {
-        navigation.navigate("AddSubWalletScreen")
+        navigation.navigate("AddSubWalletScreen", {screen : "HomeScreen", refresh : refresh})
     }
     return (
         <View>

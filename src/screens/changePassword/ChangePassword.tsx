@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import { Alert, ImageBackground, Text, View,Platform } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { Colors } from "../../theme/Colors";
+import { Alert, ImageBackground, Text, View, Platform } from "react-native";
 import Images from "../../assets/Images";
 import styles from "./styles";
 import CustomInput from "../../components/CustomInput";
@@ -26,14 +24,11 @@ const ChangePassword = () => {
             return
         }
         if (newPassword === confirmPassword) {
-            console.log("password matched")
             changePassword(data).then((response) => {
                 if (response?.status == 400) {
-                    console.log(response)
                     Alert.alert("Current Password is incorrect!")
                     return
                 }
-                console.log('res', response, 'data', data)
                 setNewPassword("")
                 setConfirmPassword("")
                 Alert.alert("Password Changed successfully")
@@ -48,50 +43,50 @@ const ChangePassword = () => {
             return
         }
     }
+    const goBackHandler = () => {
+        navigation.goBack()
+    }
     return (
         <View>
             <ImageBackground source={Images.Background} resizeMode='cover' style={styles.image}>
-                <CustomHeader 
+                <CustomHeader
                     name={Strings.CHANGE_PASSWORD}
-                    Icon = {<Icons.LeftArrow/>}
-                    isIconVisible={true} 
-                    headerStyle = {{marginTop : Platform.OS === 'ios' ? '12%' : 25}}
-                    onPress={()=>navigation.goBack()}
+                    Icon={<Icons.LeftArrow />}
+                    isIconVisible={true}
+                    headerStyle={{ marginTop: Platform.OS === 'ios' ? '12%' : 25 }}
+                    onPress={goBackHandler}
                 />
-                <View style={{ width: "98%", height: "90%", marginTop: "10%", backgroundColor: Colors.aubergine, borderRadius: 10 }}>
+                <View style={styles.container}>
                     <View style={styles.children}>
-                        <View style={styles.elevation}>
+                        <View style={styles.input}>
                             <CustomInput
                                 label="Current Password"
                                 placeholder="somestrongpasssword"
                                 isRightIconVisible={true}
                                 onChangeText={setCurrentPassword}
                                 value={currentPassword}
-                                containerStyle={{ elevation: 40 }}
+                            />
+                            <CustomInput
+                                label="New Password"
+                                placeholder="somestrong_passsword345"
+                                isRightIconVisible={true}
+                                onChangeText={setNewPassword}
+                                value={newPassword}
+                            />
+                            <CustomInput
+                                label="Confirm New Password"
+                                placeholder="somestrong_passsword345"
+                                isRightIconVisible={true}
+                                onChangeText={setConfirmPassword}
+                                value={confirmPassword}
                             />
                         </View>
-                        <CustomInput
-                            label="New Password"
-                            placeholder="somestrong_passsword345"
-                            isRightIconVisible={true}
-                            onChangeText={setNewPassword}
-                            value={newPassword}
-                            containerStyle={{ elevation: 20 }}
-                        />
-                        <CustomInput
-                            label="Confirm New Password"
-                            placeholder="somestrong_passsword345"
-                            isRightIconVisible={true}
-                            onChangeText={setConfirmPassword}
-                            value={confirmPassword}
-                            containerStyle={{ elevation: 20 }}
-                        />
                     </View>
                     <PrimaryButton
                         text="Update Password"
                         isLoading={false}
                         onPress={updatePassword}
-                        btnStyle={{ marginTop: "54%", width: "88%", alignSelf: 'center' }} />
+                        btnStyle={styles.button} />
                 </View>
             </ImageBackground>
         </View>

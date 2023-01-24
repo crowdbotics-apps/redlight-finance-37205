@@ -7,7 +7,6 @@ import { Colors } from '../../theme/Colors'
 import { CustomInputProps } from './CustomInputProps'
 
 const CustomInput :FC<CustomInputProps> = props =>{
-    const [isSecureText,setIsSecureText] = useState<boolean>(false)
     const { 
         label,
         placeholder,
@@ -19,8 +18,10 @@ const CustomInput :FC<CustomInputProps> = props =>{
         isRightIconVisible = false ,
         inputStyle,
         keyboardType,         
+        secureTextEntry = false,
         } = props;
 
+        const [isSecureText, setIsSecureText] = useState(secureTextEntry)
     const toggleIconHandler = ()=>{
         setIsSecureText(!isSecureText)
     }
@@ -55,7 +56,7 @@ const CustomInput :FC<CustomInputProps> = props =>{
                     />
                 </View>
                 {isRightIconVisible ?
-                    <TouchableOpacity style={styles.rightIconView} onPress={toggleIconHandler}>
+                    <TouchableOpacity style={styles.rightIconView} onPress = {toggleIconHandler}>
                         {isSecureText ?  
                         <Icon name="eye-off-outline" size={24} color={Colors.white}/> 
                         : <Icons.EyeIcon/>
