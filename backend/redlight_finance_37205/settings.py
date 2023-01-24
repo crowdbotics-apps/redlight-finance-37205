@@ -73,6 +73,7 @@ INSTALLED_APPS = [
 LOCAL_APPS = [
     'home',
     'users.apps.UsersConfig',
+    'wallet'
 ]
 THIRD_PARTY_APPS = [
     'rest_framework',
@@ -87,6 +88,7 @@ THIRD_PARTY_APPS = [
     'django_extensions',
     'drf_yasg',
     'storages',
+    'django_filters',
 ]
 MODULES_APPS = get_modules()
 
@@ -210,6 +212,17 @@ REST_AUTH_REGISTER_SERIALIZERS = {
     "REGISTER_SERIALIZER": "home.api.v1.serializers.SignupSerializer",
 }
 
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.TokenAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+    ),
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ),
+}
+
+
 # Custom user model
 AUTH_USER_MODEL = "users.User"
 
@@ -222,12 +235,17 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 DEFAULT_FROM_EMAIL = env.str("DEFAULT_FROM_EMAIL", "")
 SUPPORT_EMAIL = env.str("SUPPORT_EMAIL", "")
 
+#Twilio configurations
+TWILIO_VERIFY_SERVICE_SID = env.str("TWILIO_VERIFY_SERVICE_SID","")
+TWILIO_ACCOUNT_SID = env.str("TWILIO_ACCOUNT_SID","")
+TWILIO_AUTH_TOKEN = env.str("TWILIO_AUTH_TOKEN","")
 
 # AWS S3 config
 AWS_ACCESS_KEY_ID = env.str("AWS_ACCESS_KEY_ID", "")
 AWS_SECRET_ACCESS_KEY = env.str("AWS_SECRET_ACCESS_KEY", "")
 AWS_STORAGE_BUCKET_NAME = env.str("AWS_STORAGE_BUCKET_NAME", "")
 AWS_STORAGE_REGION = env.str("AWS_STORAGE_REGION", "")
+AWS_MEDIA_LOCATION = "media"
 
 USE_S3 = (
     AWS_ACCESS_KEY_ID and

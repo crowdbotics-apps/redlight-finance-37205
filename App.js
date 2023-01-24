@@ -1,6 +1,6 @@
-import React, { useContext } from "react"
+import 'react-native-gesture-handler';
+import React, { useContext, useEffect } from "react"
 import { Provider } from "react-redux"
-import "react-native-gesture-handler"
 import { NavigationContainer } from "@react-navigation/native"
 import { createStackNavigator } from "@react-navigation/stack"
 import {
@@ -12,6 +12,8 @@ import {
 import { screens } from "@screens"
 import { modules, reducers, hooks, initialRoute } from "@modules"
 import { connectors } from "@store"
+import RootNavigator from './src/navigation';
+import SplashScreen from 'react-native-splash-screen'
 
 const Stack = createStackNavigator()
 
@@ -76,9 +78,17 @@ const App = () => {
     effects[hook.name] = hook.value()
   })
 
+  useEffect(()=>{
+    setTimeout(()=>{
+      SplashScreen.hide();
+    },1000)
+    
+  },[])
   return (
     <Provider store={store}>
-      <Navigation />
+      <NavigationContainer>
+        <RootNavigator/>
+      </NavigationContainer>
     </Provider>
   )
 }
