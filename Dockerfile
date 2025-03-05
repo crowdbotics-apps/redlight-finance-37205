@@ -27,4 +27,5 @@ COPY --chown=django:django ./backend .
 
 # Collect static files and serve app
 RUN python3 manage.py collectstatic --no-input
-CMD gunicorn -k uvicorn.workers.UvicornWorker --workers=2 redlight_finance_37205.wsgi:application --bind 0.0.0.0:$PORT --reload
+#CMD gunicorn -k uvicorn.workers.UvicornWorker --workers=2 redlight_finance_37205.wsgi:application --bind 0.0.0.0:$PORT --reload
+CMD waitress-serve --port=$PORT redlight_finance_37205.wsgi:application
